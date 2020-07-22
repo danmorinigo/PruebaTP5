@@ -5,19 +5,23 @@
 #ifndef ABB_BSTNODE_H
 #define ABB_BSTNODE_H
 
+#include "aeropuerto.h"
+
 template <class T>
 class BSTNode
 {
 private:
-    T data;
+    string codIATA;
+    T data;//aqui van los datos de aeropuerto
     BSTNode<T>* left; //Left children
     BSTNode<T>* right; //Right children
     BSTNode<T>* parent;
 
 public:
-    BSTNode(T data);
+    BSTNode(T data, string codigoIATA);
     T get_data();
-    void set_data(T data);
+    string get_IATA();
+    void set_data(T data); //aqui va abjeto aeropuerto
     void set_right(BSTNode<T>* right, BSTNode<T>* parent);
     void set_left(BSTNode<T>* left, BSTNode<T>* parent);
     void set_left(BSTNode<T>* left);
@@ -32,12 +36,19 @@ public:
 };
 
 template <class T>
-BSTNode<T>::BSTNode(T data)
+BSTNode<T>::BSTNode(T data, string codigoIATA)
 {
     this->data = data;
+    this->codIATA = codigoIATA;
     this->left = NULL;
     this->right = NULL;
     this->parent = NULL;
+}
+
+template <class T>
+string BSTNode<T>::get_IATA()
+{
+    return this->codIATA;
 }
 
 template <class T>

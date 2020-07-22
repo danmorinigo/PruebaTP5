@@ -16,7 +16,7 @@ private:
     BSTNode<T>* root;
 
     // methods
-    BSTNode<T>* insert(BSTNode<T>* node, T data);
+    BSTNode<T>* insert(BSTNode<T>* node, T data, string codigoIATA);
     void print_in_order(BSTNode<T> * node);
     BSTNode<T>* search(BSTNode<T>* node, T data);
     T find_min(BSTNode<T>* node);
@@ -34,7 +34,7 @@ public:
 
      // Adds a new node to the actual BST. If its the tree is empty
      // the node inserted will be the root
-    void insert(T data);
+    void insert(T data, string codigoIATA);
 
     // Prints all the data stored in the BST, sorted from the
     // smallest value to the greatest value.
@@ -74,26 +74,26 @@ BST<T>::BST() {
 }
 
 template <class T>
-BSTNode<T>* BST<T>::insert(BSTNode<T>* node, T data) {
+BSTNode<T>* BST<T>::insert(BSTNode<T>* node, T data, string codigoIATA) {
 
     if (node == NULL) {
-        node = new BSTNode<T>(data);
+        node = new BSTNode<T>(data, codigoIATA);
     }
 
-    else if (data > node->get_data()) {
-        node->set_right(insert(node->get_right(), data), node);
+    else if (codigoIATA > node->get_IATA()) {
+        node->set_right(insert(node->get_right(), data, codigoIATA), node);
     }
 
     else {
-        node->set_left(insert(node->get_left(), data), node);
+        node->set_left(insert(node->get_left(), data, codigoIATA), node);
     }
     return node;
 }
 
 template <class T>
-void BST<T>::insert(T data)
+void BST<T>::insert(T data, string codigoIATA)
 {
-    this->root = insert(this->root, data);
+    this->root = insert(this->root, data, codigoIATA);
 }
 
 template <class T>
@@ -102,7 +102,7 @@ void BST<T>::print_in_order(BSTNode<T>* node)
     if (node != NULL)
     {
         print_in_order(node->get_left());
-        std::cout<<node->get_data()<<' ';
+        std::cout<<node->get_IATA()<<' ';
         print_in_order(node->get_right());
     }
 }
@@ -306,6 +306,7 @@ void BST<T>::delete_all(BSTNode<T>* node)
         return;
     this->delete_all(node->get_left());
     this->delete_all(node->get_right());
+    delete node->get_data();
     delete node;
 }
 
