@@ -3,6 +3,8 @@
 //
 
 #include "BSTNode.h"
+#include "cola.h"
+
 #include<iostream>
 
 #ifndef ABB_BST_H
@@ -18,6 +20,9 @@ private:
     // methods
     BSTNode<T>* insert(BSTNode<T>* node, T data, string codigoIATA);
     void print_in_order(BSTNode<T> * node);
+    void imprime_acostado(BSTNode<T> * node, int cont);
+    void imprime_en_ancho(BSTNode<T> * node);
+    void mostrarCola(Cola* mostrando);
     BSTNode<T>* search(BSTNode<T>* node, T data);
     T find_min(BSTNode<T>* node);
     T find_max(BSTNode<T>* node);
@@ -31,6 +36,10 @@ public:
 
     // Creates an empty tree
     BST();
+
+    void imprime_acostado();
+
+    void imprime_en_ancho();
 
      // Adds a new node to the actual BST. If its the tree is empty
      // the node inserted will be the root
@@ -111,6 +120,74 @@ template <class T>
 void BST<T>::print_in_order()
 {
     this->print_in_order(this->root);
+}
+
+template <class T>
+void BST<T>::imprime_en_ancho(){
+    this->imprime_en_ancho(this->root);
+}
+
+template <class T>
+void BST<T>::imprime_en_ancho(BSTNode<T> * node){
+    if(!this->root){
+        cout << "\nArbol vacio\n";
+        return;
+    }
+    Cola conForma, paraMostrar;
+    conForma.insertar(node);
+    BSTNode<T>* visitado;
+    int largoLista, nivel = 0;
+    while(!conForma.vacia()){
+        largoLista = conForma.obtenerTamanio();
+        for(int i = 0; i < largoLista; i++){
+            BSTNode<T>* aLista = conForma.consultar();
+            conForma.eliminar();
+            paraMostrar.insertar(aLista);
+        }
+        Cola aux(paraMostrar);
+        cout << "Nivel " << nivel++ << ": ";
+        mostrarCola(&aux);
+        largoLista = paraMostrar.obtenerTamanio();
+        for(int f = 0; f < largoLista; f++){
+            visitado = paraMostrar.consultar();
+            paraMostrar.eliminar();
+            if(visitado->get_left()){
+                conForma.insertar(visitado->get_left());
+            }
+            if(visitado->get_right()){
+                conForma.insertar(visitado->get_right());
+            }
+        }
+    }
+}
+
+template <class T>
+void BST<T>::imprime_acostado(BSTNode<T> * node, int cont){
+    if (!node){
+        return;
+    }else{
+        imprime_acostado(node->get_right(), cont + 1);
+        for(int i = 0; i < cont; i++){
+            cout << "   ";
+        }
+        cout << node->get_IATA() << endl;
+        imprime_acostado(node->get_left(), cont + 1);
+    }
+}
+
+template <class T>
+void BST<T>::imprime_acostado(){
+    imprime_acostado(this->root, 0);
+}
+
+template <class T>
+void BST<T>::mostrarCola(Cola* mostrando){
+    int tamanio = mostrando->obtenerTamanio();
+    for (int i = 0; i < tamanio; i++){
+        cout << mostrando->eliminar();
+        if(i < tamanio - 1) cout << " * ";
+    }
+    cout << endl;
 }
 
 template <class T>
