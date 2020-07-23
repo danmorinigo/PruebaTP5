@@ -160,6 +160,15 @@ void BST<T>::imprime_en_ancho(BSTNode<T> * node){
         }
     }
 }
+template <class T>
+void BST<T>::mostrarCola(Cola* mostrando){
+    int tamanio = mostrando->obtenerTamanio();
+    for (int i = 0; i < tamanio; i++){
+        cout << mostrando->eliminar();
+        if(i < tamanio - 1) cout << " * ";
+    }
+    cout << endl;//aca impreime la linea de ese nivel si
+}
 
 template <class T>
 void BST<T>::imprime_acostado(BSTNode<T> * node, int cont){
@@ -181,17 +190,7 @@ void BST<T>::imprime_acostado(){
 }
 
 template <class T>
-void BST<T>::mostrarCola(Cola* mostrando){
-    int tamanio = mostrando->obtenerTamanio();
-    for (int i = 0; i < tamanio; i++){
-        cout << mostrando->eliminar();
-        if(i < tamanio - 1) cout << " * ";
-    }
-    cout << endl;
-}
-
-template <class T>
-BSTNode<T>* BST<T>::search(BSTNode<T>* node, T data)
+BSTNode<T>* BST<T>::search(BSTNode<T>* node, T data)//aca hay que cambiar que busque por codigo
 {
     if (node == NULL || node->get_data() == data)
         return node;
