@@ -171,6 +171,7 @@ void BST<T>::imprime_en_ancho(BSTNode<T> * node){
     int alturaDelArbol = this->obtenerAltura();
 
     for (int i; i< alturaDelArbol +1; i++){
+        std::cout<< "Nivel "<<i<<": ";
         this->mostrarNivel(node,i);
         std::cout<<std::endl;
     }
