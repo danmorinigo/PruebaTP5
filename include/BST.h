@@ -19,6 +19,8 @@ private:
 
     // methods
     BSTNode<T>* insert(BSTNode<T>* node, T data, string codigoIATA);
+    int obtenerAltura(BSTNode<T>* node);
+    void mostrarNivel(BSTNode<T> * node, int nivel);
     void print_in_order(BSTNode<T> * node);
     void imprime_acostado(BSTNode<T> * node, int cont);
     void imprime_en_ancho(BSTNode<T> * node);
@@ -36,6 +38,8 @@ public:
 
     // Creates an empty tree
     BST();
+    
+    int obtenerAltura ();
 
     void imprime_acostado();
 
@@ -83,6 +87,26 @@ BST<T>::BST() {
 }
 
 template <class T>
+int BST<T>::obtenerAltura(BSTNode<T>* node) {
+    if (node !=NULL){
+        int alturaLadoIzquierdo = obtenerAltura(node->get_left()) + 1;
+        int alturaLadoDerecho = obtenerAltura(node->get_right()) + 1;
+        if (alturaLadoIzquierdo > alturaLadoDerecho){
+            return alturaLadoIzquierdo;
+        }
+        return alturaLadoDerecho;
+    }
+    
+    return -1;
+}
+
+
+template <class T>
+int BST<T>::obtenerAltura() {
+    this->obtenerAltura(this->root);
+}
+
+template <class T>
 BSTNode<T>* BST<T>::insert(BSTNode<T>* node, T data, string codigoIATA) {
 
     if (node == NULL) {
@@ -123,11 +147,35 @@ void BST<T>::print_in_order()
 }
 
 template <class T>
+void BST<T>::mostrarNivel(BSTNode<T> * node, int nivel){
+    if(node != NULL){
+        if(nivel == 0){
+            std::cout<< node->get_data()->obtenerCodigo()<< " - ";
+        }
+        mostrarNivel(node->get_left(), nivel-1);
+        mostrarNivel(node->get_right(), nivel-1);
+    }
+}
+
+template <class T>
 void BST<T>::imprime_en_ancho(){
     this->imprime_en_ancho(this->root);
 }
 
 template <class T>
+void BST<T>::imprime_en_ancho(BSTNode<T> * node){
+    if(!this->root){
+        cout << "\nArbol vacio\n";
+        return;
+    }
+    int alturaDelArbol = this->obtenerAltura();
+
+    for (int i; i< alturaDelArbol +1; i++){
+        this->mostrarNivel(node,i);
+        std::cout<<std::endl;
+    }
+}
+/*template <class T>
 void BST<T>::imprime_en_ancho(BSTNode<T> * node){
     if(!this->root){
         cout << "\nArbol vacio\n";
@@ -159,7 +207,9 @@ void BST<T>::imprime_en_ancho(BSTNode<T> * node){
             }
         }
     }
-}
+}*/
+
+
 template <class T>
 void BST<T>::mostrarCola(Cola* mostrando){
     int tamanio = mostrando->obtenerTamanio();
