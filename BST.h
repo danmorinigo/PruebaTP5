@@ -38,7 +38,7 @@ public:
 
     // Creates an empty tree
     BST();
-    
+
     int obtenerAltura ();
 
     void imprime_acostado();
@@ -96,14 +96,14 @@ int BST<T>::obtenerAltura(BSTNode<T>* node) {
         }
         return alturaLadoDerecho;
     }
-    
+
     return -1;
 }
 
 
 template <class T>
 int BST<T>::obtenerAltura() {
-    this->obtenerAltura(this->root);
+    return this->obtenerAltura(this->root);
 }
 
 template <class T>
@@ -169,8 +169,7 @@ void BST<T>::imprime_en_ancho(BSTNode<T> * node){
         return;
     }
     int alturaDelArbol = this->obtenerAltura();
-
-    for (int i; i< alturaDelArbol +1; i++){
+    for (int i = 0; i< alturaDelArbol +1; i++){
         std::cout<< "Nivel "<<i<<": ";
         this->mostrarNivel(node,i);
         std::cout<<std::endl;
