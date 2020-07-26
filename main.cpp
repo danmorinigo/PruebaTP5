@@ -6,12 +6,23 @@
 #include "include/BST.h"
 #include "include/aeropuerto.h"
 #include "include/manejoDeArchivos.h"
+#include "include/verificadorDatos.h"
 
 const string ARCHIVO_IATA = "Aeropuertos.txt";
 using namespace std;
 
 int main()
 {
+    VerificadorDatos chequeo;
+    string dato = "pup";
+    cout << dato << " es IATA: " << chequeo.esIATA(dato) << endl;
+    dato = "12323,54";
+    cout << dato << " es DOUBLE: " << chequeo.esDouble(dato) << endl;
+    dato = "012323P";
+    cout << dato << " es ENTERO: " << chequeo.esEntero(dato) << endl;
+
+    /*
+
     manejoDeArchivos archivo;
     BST<Aeropuerto*>* aeropuertos = new BST<Aeropuerto*>();
 
@@ -30,5 +41,7 @@ int main()
     cout << "----------------------------------------------\n";
     //delete aero;
     delete aeropuertos;
+    */
+    return 0;
 }
 
