@@ -46,5 +46,47 @@ bool VerificadorDatos::esIATA(string aVerificar){
     }
     return esOno;
 }
+bool VerificadorDatos::esAeropuerto(string aVerificar){
+    istringstream cadena(aVerificar);
+    string tempStr;
+    unsigned cantDatos = 0;
+    while(!cadena.eof()){
+        cadena >> tempStr;//IATA?
+        if(!esIATA(tempStr)){
+            return false;
+        }
+        cantDatos++;
+        cadena >> tempStr;//Nombre? siempre si
+        cantDatos++;
+        cadena >> tempStr;//Ciudad? siempre si
+        cantDatos++;
+        cadena >> tempStr;//Pais? siempre si
+        cantDatos++;
+        cadena >> tempStr;//Superficie?
+        if(!esDouble(tempStr)){
+            return false;
+        }
+        cantDatos++;
+        cadena >> tempStr;//Terminales?
+        if(!esEntero(tempStr)){
+            return false;
+        }
+        cantDatos++;
+        cadena >> tempStr;//Destinos Nacionales?
+        if(!esEntero(tempStr)){
+            return false;
+        }
+        cantDatos++;
+        cadena >> tempStr;//Destinos InterNacionales?
+        if(!esEntero(tempStr)){
+            return false;
+        }
+        cantDatos++;
+    }
+    if(cantDatos != 8){
+        return false;
+    }
+    return true;
+}
 VerificadorDatos::~VerificadorDatos(){
 }

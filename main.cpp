@@ -15,19 +15,12 @@ using namespace std;
 int main()
 {
     VerificadorDatos chequeo;
-    string dato = "pup";
-    cout << dato << " es IATA: " << chequeo.esIATA(dato) << endl;
-    dato = "12323,54";
-    cout << dato << " es DOUBLE: " << chequeo.esDouble(dato) << endl;
-    dato = "012323P";
-    cout << dato << " es ENTERO: " << chequeo.esEntero(dato) << endl;
-
-
-
     manejoDeArchivos archivo;
     BST<Aeropuerto*>* aeropuertos = new BST<Aeropuerto*>();
 
-    archivo.cargarAeropuertos(aeropuertos, ARCHIVO_IATA);
+    if(archivo.existe(ARCHIVO_IATA)){
+        archivo.cargarAeropuertos(aeropuertos, ARCHIVO_IATA);
+    }
 
     /*cout << "-------------INORDER:-------------------------\n";
     aeropuertos->print_in_order();
