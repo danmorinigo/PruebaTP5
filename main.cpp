@@ -3,10 +3,10 @@
 //
 
 #include<iostream>
-#include "include/BST.h"
-#include "include/aeropuerto.h"
-#include "include/manejoDeArchivos.h"
-#include "include/verificadorDatos.h"
+#include "BST.h"
+#include "aeropuerto.h"
+#include "manejoDeArchivos.h"
+#include "verificadorDatos.h"
 
 
 const string ARCHIVO_IATA = "Aeropuertos.txt";
@@ -22,7 +22,7 @@ int main()
     dato = "012323P";
     cout << dato << " es ENTERO: " << chequeo.esEntero(dato) << endl;
 
-    
+
 
     manejoDeArchivos archivo;
     BST<Aeropuerto*>* aeropuertos = new BST<Aeropuerto*>();
@@ -43,7 +43,7 @@ int main()
     //delete aero;
     cout<< "Altura del arbol: "<< aeropuertos->obtenerAltura()<<endl;
     delete aeropuertos;
-    
+
     return 0;
 }
 
