@@ -35,6 +35,13 @@ int main()
     cout << "----------------------------------------------\n";
     //delete aero;
     cout<< "Altura del arbol: "<< aeropuertos->obtenerAltura()<<endl;
+    cout << "----------------------------------------------\n";
+    string buscado = "EZE";
+    cout << "Existe " << buscado << " ?\n" << aeropuertos->buscar(buscado) << endl;
+    cout << "----------------------------------------------\n";
+    buscado = "Aeropuerto Whiteman";
+    cout << "Existe " << buscado << " ?\n" << aeropuertos->buscar(buscado) << endl;
+    cout << "----------------------------------------------\n";
     delete aeropuertos;
 
     return 0;

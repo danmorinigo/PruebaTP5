@@ -3,7 +3,7 @@
 manejoDeArchivos::manejoDeArchivos(){
 }
 string manejoDeArchivos::quitarGuion(string texto){
-    for(int i = 0; i < texto.length(); i++){
+    for(unsigned i = 0; i < texto.length(); i++){
         if(texto[i] == '-'){
             texto[i] = ' ';
         }

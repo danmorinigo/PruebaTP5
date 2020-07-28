@@ -26,6 +26,8 @@ private:
     void imprime_en_ancho(BSTNode<T> * node);
     void mostrarCola(Cola* mostrando);
     BSTNode<T>* search(BSTNode<T>* node, T data);
+    BSTNode<T>* buscarIATA(BSTNode<T>* node, string IATA);
+    BSTNode<T>* buscarNombre(BSTNode<T>* node, string IATA);
     T find_min(BSTNode<T>* node);
     T find_max(BSTNode<T>* node);
     T successor(BSTNode<T>* node);
@@ -38,6 +40,8 @@ public:
 
     // Creates an empty tree
     BST();
+
+    bool buscar(string aBuscar);
 
     int obtenerAltura ();
 
@@ -86,6 +90,36 @@ BST<T>::BST() {
     this->root = NULL;
 }
 
+template <class T>
+bool BST<T>::buscar(string aBuscar){
+    cout << "Busca por IATA...\n";
+    BSTNode<T>* encontrado = buscarIATA(this->root, aBuscar);
+    if(!encontrado){
+        cout << "Busca por Nombre...\n";
+        encontrado = buscarNombre(this->root, aBuscar);
+    }
+    return (encontrado != 0);
+}
+template <class T>
+BSTNode<T>* BST<T>::buscarIATA(BSTNode<T>* node, string IATA){
+    if (node == NULL || node->get_IATA() == IATA)
+        return node;
+
+    if (IATA > node->get_IATA())
+        return buscarIATA(node->get_right(), IATA);
+
+    return buscarIATA(node->get_left(), IATA);
+}
+template <class T>
+BSTNode<T>* BST<T>::buscarNombre(BSTNode<T>* node, string nombreAeropuerto){
+    if (node == NULL || node->get_data()->obtenerNombre() == nombreAeropuerto)
+        return node;
+    BSTNode<T>* buscado = buscarNombre(node->get_left(), nombreAeropuerto);
+    if(!buscado){
+        buscado = buscarNombre(node->get_right(), nombreAeropuerto);
+    }
+    return buscado;
+}
 template <class T>
 int BST<T>::obtenerAltura(BSTNode<T>* node) {
     if (node !=NULL){
