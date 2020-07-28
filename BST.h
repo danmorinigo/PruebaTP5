@@ -19,6 +19,9 @@ private:
 
     // methods
     BSTNode<T>* insert(BSTNode<T>* node, T data, string codigoIATA);
+
+    void eliminar(BSTNode<T>* nodo);
+
     int obtenerAltura(BSTNode<T>* node);
     void mostrarNivel(BSTNode<T> * node, int nivel);
     void print_in_order(BSTNode<T> * node);
@@ -386,6 +389,45 @@ T BST<T>::predecessor(T data)
     if(data_node == NULL)
         return -1;
     else return predecessor(data_node);
+}
+
+template <class T>
+void BST<T>::eliminar(BSTNode<T>* node)
+{
+    if (node->isLeaf())
+        delete node;
+    else if (node->rightChildOnly())
+    {
+        // The only child will be connected to the parent's of node directly
+        node->get_right()->set_parent(node->get_parent());
+        // Bypass node
+        BSTNode<T>* aux = node;
+        node = node->get_right();
+        delete aux;
+    }
+    else if (node->leftChildOnly())
+    {
+        // The only child will be connected to the parent's of node directly
+        node->get_left()->set_parent(node->get_parent());
+        // Bypass node
+        BSTNode<T>* aux = node;
+        node = node->get_left();
+        delete aux;
+    }
+    // The node has two children (left and right)
+    else
+    {
+        /*
+        // Find successor or predecessor to avoid quarrel
+        T successor_data = this->successor(data);
+
+        // Replace node's key with successor's key
+        node->set_data(successor_data);
+
+        // Delete the old successor's key
+        node->set_right(remove(node->get_right(), successor_data));
+        */
+    }
 }
 
 template <class T>
