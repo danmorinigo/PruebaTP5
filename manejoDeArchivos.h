@@ -20,6 +20,8 @@ public:
 
     //antes verificar que la linea sea un aeropuerto
     void agregarAero(BST<Aeropuerto*>* arbol, string linea);
+
+    string quitarGuion(string texto);
     ~manejoDeArchivos();
 };
 #endif // MANEJODEARCHIVOS_H_INCLUDED

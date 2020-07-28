@@ -2,6 +2,14 @@
 
 manejoDeArchivos::manejoDeArchivos(){
 }
+string manejoDeArchivos::quitarGuion(string texto){
+    for(int i = 0; i < texto.length(); i++){
+        if(texto[i] == '-'){
+            texto[i] = ' ';
+        }
+    }
+    return texto;
+}
 void manejoDeArchivos::agregarAero(BST<Aeropuerto*>* arbol, string linea){
     istringstream cadena(linea);
     Aeropuerto* auxAero = new Aeropuerto;
@@ -11,11 +19,11 @@ void manejoDeArchivos::agregarAero(BST<Aeropuerto*>* arbol, string linea){
     cadena >> auxS;
     auxAero->asignarCodigo(auxS);
     cadena >> auxS;
-    auxAero->asignarNombre(auxS);
+    auxAero->asignarNombre(quitarGuion(auxS));
     cadena >> auxS;
-    auxAero->asignarCiudad(auxS);
+    auxAero->asignarCiudad(quitarGuion(auxS));
     cadena >> auxS;
-    auxAero->asignarPais(auxS);
+    auxAero->asignarPais(quitarGuion(auxS));
     cadena >> auxD;
     auxAero->asignarSup(auxD);
     cadena >> auxU;
