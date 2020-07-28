@@ -29,7 +29,7 @@ void Aeropuerto::asignarPais(string pais){
 void Aeropuerto::asignarSup(double sup){
     this->superficie = sup;
 }
-void Aeropuerto::asignarTerminales(unsigned teminales){
+void Aeropuerto::asignarTerminales(unsigned terminales){
     this->terminales = terminales;
 }
 void Aeropuerto::asignarDestNac(unsigned nacionales){

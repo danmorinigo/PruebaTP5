@@ -22,7 +22,6 @@ int main()
     if(archivo.existe(ARCHIVO_IATA)){
         archivo.cargarAeropuertos(aeropuertos, ARCHIVO_IATA);
     }
-
     menu.setAeropuertos(aeropuertos);
     
     while (menu.getOpcion() != '0'){
@@ -34,24 +33,3 @@ int main()
     delete aeropuertos;
     return 0;
 }
-    /*cout << "-------------INORDER:-------------------------\n";
-    aeropuertos->print_in_order();
-    cout << "\n----------------------------------------------\n";
-    cout << "<Enter>"; cin.get();*/
-   /* cout << "-------------EN ANCHO:-------------------------\n";
-    aeropuertos->imprime_en_ancho();
-    cout << "----------------------------------------------\n";
-    cout << "<Enter>"; cin.get();
-    cout << "-------------ACOSTADO:-------------------------\n";
-    aeropuertos->imprime_acostado();
-    cout << "----------------------------------------------\n";
-    //delete aero;
-    cout<< "Altura del arbol: "<< aeropuertos->obtenerAltura()<<endl;
-    cout << "----------------------------------------------\n";
-    string buscado = "EZE";
-    cout << "Existe " << buscado << " ?\n" << aeropuertos->buscar(buscado) << endl;
-    cout << "----------------------------------------------\n";
-    buscado = "Aeropuerto Whiteman";
-    cout << "Existe " << buscado << " ?\n" << aeropuertos->buscar(buscado) << endl;
-    cout << "----------------------------------------------\n";*/
-    

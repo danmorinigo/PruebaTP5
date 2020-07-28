@@ -3,7 +3,7 @@
 //
 
 #include "BSTNode.h"
-#include "cola.h"
+//#include "cola.h"
 
 #include<iostream>
 
@@ -24,7 +24,7 @@ private:
     void print_in_order(BSTNode<T> * node);
     void imprime_acostado(BSTNode<T> * node, int cont);
     void imprime_en_ancho(BSTNode<T> * node);
-    void mostrarCola(Cola* mostrando);
+    //void mostrarCola(Cola* mostrando);
     BSTNode<T>* search(BSTNode<T>* node, T data);
     BSTNode<T>* buscarIATA(BSTNode<T>* node, string IATA);
     BSTNode<T>* buscarNombre(BSTNode<T>* node, string IATA);
@@ -95,7 +95,7 @@ BSTNode<T>* BST<T>::buscar(string aBuscar){
     cout << "Busca por IATA...\n";
     BSTNode<T>* encontrado = buscarIATA(this->root, aBuscar);
     if(!encontrado){
-        cout << "Busca por Nombre...\n";
+        cout << "No se encontró el código."<<endl;//"Busca por Nombre...\n";
         encontrado = buscarNombre(this->root, aBuscar);
     }
     return encontrado;
@@ -244,7 +244,7 @@ void BST<T>::imprime_en_ancho(BSTNode<T> * node){
 }*/
 
 
-template <class T>
+/*template <class T>
 void BST<T>::mostrarCola(Cola* mostrando){
     int tamanio = mostrando->obtenerTamanio();
     for (int i = 0; i < tamanio; i++){
@@ -253,7 +253,7 @@ void BST<T>::mostrarCola(Cola* mostrando){
     }
     cout << endl;//aca impreime la linea de ese nivel si
 }
-
+*/
 template <class T>
 void BST<T>::imprime_acostado(BSTNode<T> * node, int cont){
     if (!node){

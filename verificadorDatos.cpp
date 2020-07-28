@@ -3,26 +3,26 @@
 VerificadorDatos::VerificadorDatos(){
 }
 bool VerificadorDatos::esEntero(string aVerificar){
-    bool condicion;
+    bool esEntero;
     for(unsigned i = 0; i < aVerificar.length(); i++){
-        condicion = (aVerificar[i] > 47 && aVerificar[i] < 58);//es un numero 0 al 9
-        if(!condicion){
+        esEntero = (aVerificar[i] > 47 && aVerificar[i] < 58);//es un numero 0 al 9
+        if(!esEntero){
             return false;
         }
     }
     return true;
 }
 bool VerificadorDatos::esDouble(string aVerificar){
-    bool condicion1, condicion2, condicion3;
+    bool esEntero, esUnPunto, esUnaComa;
     unsigned signoPuntuacion = 0;
     for(unsigned i = 0; i < aVerificar.length(); i++){
-        condicion1 = (aVerificar[i] > 47 && aVerificar[i] < 58);//es un numero 0 al 9
-        condicion2 = (aVerificar[i] == 46);//es un punto
-        condicion3 = (aVerificar[i] == 44);//es una coma
-        if(!condicion1 && !condicion2 && !condicion3){//si no es ninguno de los anteriores no pasa
+        esEntero = (aVerificar[i] > 47 && aVerificar[i] < 58);//es un numero 0 al 9
+        esUnPunto = (aVerificar[i] == 46);//es un punto
+        esUnaComa = (aVerificar[i] == 44);//es una coma
+        if(!esEntero && !esUnPunto && !esUnaComa){//si no es ninguno de los anteriores no pasa
             return false;
         }
-        if(condicion2 || condicion3){
+        if(esUnPunto || esUnaComa){
             signoPuntuacion++;
         }
         if(signoPuntuacion > 1){//solo se permite un punto o coma
@@ -33,18 +33,18 @@ bool VerificadorDatos::esDouble(string aVerificar){
 }
 //el if verifica que sea letra, o bien mayuscula o bien minuscula
 bool VerificadorDatos::esIATA(string aVerificar){
-    bool esOno = false;
+    bool esValido = false;
     if(aVerificar.length() == 3){//IATA son 3 letras
         for(int i = 0; i < 3; i++){
-            esOno = true;
-            bool condicion1 = (aVerificar[i] > 64 && aVerificar[i] < 91); //es una mayuscula
-            bool condicion2 = (aVerificar[i] > 96 && aVerificar[i] < 123);//es una minuscula
-            if(!condicion1 && !condicion2){//si ambas son falsas no pasa verificacion
+            esValido = true;
+            bool esMayuscula = (aVerificar[i] > 64 && aVerificar[i] < 91); //es una mayuscula
+            bool esMinuscula = (aVerificar[i] > 96 && aVerificar[i] < 123);//es una minuscula
+            if(!esMayuscula && !esMinuscula){//si ambas son falsas no pasa verificacion
                 return false;
             }
         }
     }
-    return esOno;
+    return esValido;
 }
 bool VerificadorDatos::esAeropuerto(string aVerificar){
     istringstream cadena(aVerificar);
