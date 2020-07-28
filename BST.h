@@ -41,7 +41,7 @@ public:
     // Creates an empty tree
     BST();
 
-    bool buscar(string aBuscar);
+    BSTNode<T>* buscar(string aBuscar);
 
     int obtenerAltura ();
 
@@ -91,14 +91,14 @@ BST<T>::BST() {
 }
 
 template <class T>
-bool BST<T>::buscar(string aBuscar){
+BSTNode<T>* BST<T>::buscar(string aBuscar){
     cout << "Busca por IATA...\n";
     BSTNode<T>* encontrado = buscarIATA(this->root, aBuscar);
     if(!encontrado){
         cout << "Busca por Nombre...\n";
         encontrado = buscarNombre(this->root, aBuscar);
     }
-    return (encontrado != 0);
+    return encontrado;
 }
 template <class T>
 BSTNode<T>* BST<T>::buscarIATA(BSTNode<T>* node, string IATA){

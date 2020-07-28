@@ -37,6 +37,7 @@ public:
     unsigned obtenerTerminales();
     unsigned obtenerDestNac();
     unsigned obtenerDestInternac();
+    void mostrarInformacion();
 };
 
 

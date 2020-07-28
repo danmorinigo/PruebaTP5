@@ -4,10 +4,10 @@
 
 #include<iostream>
 #include "BST.h"
-#include "aeropuerto.h"
+#include "menu.h"
 #include "manejoDeArchivos.h"
 #include "verificadorDatos.h"
-
+//#include "aeropuerto.h"
 
 const string ARCHIVO_IATA = "Aeropuertos.txt";
 using namespace std;
@@ -16,17 +16,29 @@ int main()
 {
     VerificadorDatos chequeo;
     manejoDeArchivos archivo;
+    Menu menu;
     BST<Aeropuerto*>* aeropuertos = new BST<Aeropuerto*>();
 
     if(archivo.existe(ARCHIVO_IATA)){
         archivo.cargarAeropuertos(aeropuertos, ARCHIVO_IATA);
     }
 
+    menu.setAeropuertos(aeropuertos);
+    
+    while (menu.getOpcion() != '0'){
+        menu.mostrarMenuPrincipal();
+        menu.hacerEleccion();
+        menu.pausa();
+    }
+
+    delete aeropuertos;
+    return 0;
+}
     /*cout << "-------------INORDER:-------------------------\n";
     aeropuertos->print_in_order();
     cout << "\n----------------------------------------------\n";
     cout << "<Enter>"; cin.get();*/
-    cout << "-------------EN ANCHO:-------------------------\n";
+   /* cout << "-------------EN ANCHO:-------------------------\n";
     aeropuertos->imprime_en_ancho();
     cout << "----------------------------------------------\n";
     cout << "<Enter>"; cin.get();
@@ -41,9 +53,5 @@ int main()
     cout << "----------------------------------------------\n";
     buscado = "Aeropuerto Whiteman";
     cout << "Existe " << buscado << " ?\n" << aeropuertos->buscar(buscado) << endl;
-    cout << "----------------------------------------------\n";
-    delete aeropuertos;
-
-    return 0;
-}
-
+    cout << "----------------------------------------------\n";*/
+    

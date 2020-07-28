@@ -62,3 +62,14 @@ unsigned Aeropuerto::obtenerDestNac(){
 unsigned Aeropuerto::obtenerDestInternac(){
     return this->destinosInternacionales;
 }
+void Aeropuerto::mostrarInformacion(){
+     cout<<endl<< " INFORMACION DEL AEROPUERO: "<<endl;
+     cout<< "Codigo IATA: "<<this-> IATA<<endl;
+     cout<< "Nombre: "<< this-> nombre <<endl;
+     cout<< "Ciudad: "<< this-> ciudad <<endl;
+     cout<< "Pais: "<< this-> pais <<endl;
+     cout<< "Superficie: "<< this-> superficie <<endl;
+     cout<< "Cantidad de terminales: "<< this-> terminales <<endl;
+     cout<< "Cant. Destinos nacionales: "<< this-> destinosNacionales <<endl;
+     cout<< "Cant. Destinos internacionales: "<< this-> destinosInternacionales <<endl;
+}
