@@ -23,6 +23,7 @@ void Menu::limpiarPantalla(){
         system ("clear");
     #endif
 }
+
 void Menu::mostrarMenuPrincipal(){
     this->limpiarPantalla();
     cout << endl;
@@ -52,8 +53,8 @@ void Menu::hacerEleccion(){
                     this->pausa();
                 }break;
         case '3': { this-> limpiarPantalla();
-                    //this->darDeBajaAeropuerto();
-                     cout << "ACA DEBERIA MOSTRAR: 'Ingrese codigo IATA del aeropuerto a dar de baja: '"<<endl;
+                    this->darDeBajaAeropuerto();
+//                     cout << "ACA DEBERIA MOSTRAR: 'Ingrese codigo IATA del aeropuerto a dar de baja: '"<<endl;
                     this->pausa();
                 }break;
         case '4': { this-> limpiarPantalla();
@@ -131,17 +132,76 @@ void Menu::agregarAeropuerto(){
 
 }
 
+BSTNode<Aeropuerto*>* Menu::buscarMenor(BSTNode<Aeropuerto*> *aeropuerto){
+    if(aeropuerto == NULL){
+        return NULL;
+    }
+    if(aeropuerto->get_left()){
+        return buscarMenor(aeropuerto->get_left());
+    }
+    return aeropuerto;
+}
+
+void Menu::reemplazar(BSTNode<Aeropuerto*>* antiguo, BSTNode<Aeropuerto*>* nuevo){
+    if(antiguo->get_parent()){
+        if(antiguo->get_data() == antiguo->get_parent()->get_left()->get_data()){
+            antiguo->get_parent()->set_left(nuevo);
+        }
+        else if(antiguo->get_data() == antiguo->get_parent()->get_right()->get_data()){
+            antiguo->get_parent()->set_right(nuevo);
+        }
+    }
+    if(nuevo){
+        nuevo->set_parent(antiguo->get_parent());
+    }
+}
+
+void Menu::destruir(BSTNode<Aeropuerto*>* aeropuerto){
+    aeropuerto->set_left(NULL);
+    aeropuerto->set_right(NULL);
+    
+    delete aeropuerto;
+}
+
+
+void Menu::eliminarAeropuerto(string codigo){
+    BSTNode<Aeropuerto*>* aeropuerto;
+    aeropuerto = this->aeropuertos->buscar (codigo);
+    
+    if(aeropuerto->get_right() && aeropuerto->get_left()){
+        BSTNode<Aeropuerto*>* menor = buscarMenor(aeropuerto->get_right());
+        aeropuerto->set_data(menor->get_data());
+        eliminarAeropuerto(menor->get_IATA());
+    }
+    else if(aeropuerto->get_left()){
+        reemplazar(aeropuerto, aeropuerto->get_left());
+        destruir(aeropuerto);
+    }
+    else if(aeropuerto->get_right()){
+        reemplazar(aeropuerto, aeropuerto->get_right());
+        destruir(aeropuerto);
+    }
+    else{
+        reemplazar(aeropuerto, NULL);
+        destruir(aeropuerto);
+    }
+
+    
+}
+
 void Menu::darDeBajaAeropuerto(){
     string codigo;
     cout<<"DAR DE BAJA UN AEROPUERTO."<<endl;
     cout<< "Ingrese el codigo IATA del aeropuerto que quiere dar de baja: ";
     cin >> codigo;
-    //this->aeropuertos->remove(codigo);
+    
+    eliminarAeropuerto(codigo);
 }
 
 void Menu::despedida(){
     enmarcar("FIN DEL PROGRAMA");
 }
+
 void Menu::pausa(){
     cout << "<Enter>";
     cin.get();

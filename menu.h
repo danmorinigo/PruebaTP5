@@ -15,6 +15,7 @@ private:
     char opcion;
     BST<Aeropuerto*>* aeropuertos;
 
+
 public:
     // Constructor sin par�metros de la clase Menu.
     //PRE: Ninguna
@@ -37,7 +38,21 @@ public:
 
     void agregarAeropuerto();
 
+    /*Uso para buscar el menor de los dos hijos*/
+    BSTNode<Aeropuerto*>* buscarMenor(BSTNode<Aeropuerto*> *aeropuerto);
+    
+    /*Uso para reemplazar un nodo por otro*/
+    void reemplazar(BSTNode<Aeropuerto*>* antiguo, BSTNode<Aeropuerto*>* nuevo);
+
+    /*Uso para destruir un nodo*/
+    void destruir(BSTNode<Aeropuerto*>* aeropuerto);
+
+    /*Cree este metodo porque necesitaba volver a llamarlo recursivamente, pero si usaba el metodo darDeBaja otra vez
+     tenia que pasar por el cin del codigo, entonces la funcion darDeBaja, llama a esta, con el codigo que introduce el usuario.*/
+    void eliminarAeropuerto(string codigo);
+    
     void darDeBajaAeropuerto();
+    
     //PRE:  --
     //POST: Muestra cartel de despedida.
     void despedida();
