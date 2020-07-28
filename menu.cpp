@@ -3,7 +3,7 @@
 Menu::Menu(){
    this-> opcion = '.';
    this-> aeropuertos = NULL;
-   
+
 }
 
 char Menu::getOpcion(){
@@ -159,7 +159,7 @@ void Menu::reemplazar(BSTNode<Aeropuerto*>* antiguo, BSTNode<Aeropuerto*>* nuevo
 void Menu::destruir(BSTNode<Aeropuerto*>* aeropuerto){
     aeropuerto->set_left(NULL);
     aeropuerto->set_right(NULL);
-    
+
     delete aeropuerto;
 }
 
@@ -167,7 +167,7 @@ void Menu::destruir(BSTNode<Aeropuerto*>* aeropuerto){
 void Menu::eliminarAeropuerto(string codigo){
     BSTNode<Aeropuerto*>* aeropuerto;
     aeropuerto = this->aeropuertos->buscar (codigo);
-    
+
     if(aeropuerto->get_right() && aeropuerto->get_left()){
         BSTNode<Aeropuerto*>* menor = buscarMenor(aeropuerto->get_right());
         aeropuerto->set_data(menor->get_data());
@@ -186,16 +186,24 @@ void Menu::eliminarAeropuerto(string codigo){
         destruir(aeropuerto);
     }
 
-    
+
 }
 
 void Menu::darDeBajaAeropuerto(){
     string codigo;
     cout<<"DAR DE BAJA UN AEROPUERTO."<<endl;
+    //----------------------------------------------------------------------
+    cout<< "Ingrese el codigo IATA nombre del aeropuerto que quiere dar de baja: \n";
+    cout << "Aeropuerto: ";
+    cin >> codigo;
+
+    //----------------------------------------------------------------------
+    /* A PARTIR DE ACA MODIFICO
     cout<< "Ingrese el codigo IATA del aeropuerto que quiere dar de baja: ";
     cin >> codigo;
-    
+
     eliminarAeropuerto(codigo);
+    */
 }
 
 void Menu::despedida(){

@@ -14,6 +14,7 @@ using namespace std;
 
 int main()
 {
+
     VerificadorDatos chequeo;
     manejoDeArchivos archivo;
     Menu menu;
@@ -23,7 +24,7 @@ int main()
         archivo.cargarAeropuertos(aeropuertos, ARCHIVO_IATA);
     }
     menu.setAeropuertos(aeropuertos);
-    
+
     while (menu.getOpcion() != '0'){
         menu.mostrarMenuPrincipal();
         menu.hacerEleccion();
