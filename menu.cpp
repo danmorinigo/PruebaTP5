@@ -27,6 +27,9 @@ void Menu::limpiarPantalla(){
 void Menu::mostrarMenuPrincipal(){
     this->limpiarPantalla();
     cout << endl;
+    enmarcar("////////////////// TRABAJO PRACTICO Nº5: AEROPUERTOS //////////////////");
+    cout << endl;
+    cout << endl;
     cout << "\t1- Consultar por un aeropuerto en particular." << endl;
     cout << "\t2- Dar de alta un nuevo aeropuerto." << endl;
     cout << "\t3- Dar de baja un aeropuerto." << endl;
@@ -167,25 +170,29 @@ void Menu::destruir(BSTNode<Aeropuerto*>* aeropuerto){
 void Menu::eliminarAeropuerto(string codigo){
     BSTNode<Aeropuerto*>* aeropuerto;
     aeropuerto = this->aeropuertos->buscar (codigo);
-
-    if(aeropuerto->get_right() && aeropuerto->get_left()){
-        BSTNode<Aeropuerto*>* menor = buscarMenor(aeropuerto->get_right());
-        aeropuerto->set_data(menor->get_data());
-        eliminarAeropuerto(menor->get_IATA());
+    if(aeropuerto){
+        this->aeropuertos->eliminar(codigo);
+        cout<<" Se eliminó el aeropuerto: "<<codigo<<"."<<endl;
+      /* if(aeropuerto->get_right() && aeropuerto->get_left()){
+          BSTNode<Aeropuerto*>* menor = buscarMenor(aeropuerto->get_right());
+          aeropuerto->set_data(menor->get_data());
+          eliminarAeropuerto(menor->get_IATA());
+        }
+        else if(aeropuerto->get_left()){
+               reemplazar(aeropuerto, aeropuerto->get_left());
+               destruir(aeropuerto);
+            }
+            else if(aeropuerto->get_right()){
+                reemplazar(aeropuerto, aeropuerto->get_right());
+                destruir(aeropuerto);
+             }
+              else{
+                reemplazar(aeropuerto, NULL);
+                destruir(aeropuerto);
+              }*/
+    } else {
+        cout<< " No se econtró el aeropuerto para borrar."<<endl;
     }
-    else if(aeropuerto->get_left()){
-        reemplazar(aeropuerto, aeropuerto->get_left());
-        destruir(aeropuerto);
-    }
-    else if(aeropuerto->get_right()){
-        reemplazar(aeropuerto, aeropuerto->get_right());
-        destruir(aeropuerto);
-    }
-    else{
-        reemplazar(aeropuerto, NULL);
-        destruir(aeropuerto);
-    }
-
 
 }
 
@@ -193,10 +200,10 @@ void Menu::darDeBajaAeropuerto(){
     string codigo;
     cout<<"DAR DE BAJA UN AEROPUERTO."<<endl;
     //----------------------------------------------------------------------
-    cout<< "Ingrese el codigo IATA nombre del aeropuerto que quiere dar de baja: \n";
-    cout << "Aeropuerto: ";
+    cout<< "Ingrese el codigo IATA del aeropuerto que desea dar de baja: ";
+    //cout << "Aeropuerto: ";
     cin >> codigo;
-
+    eliminarAeropuerto(codigo);
     //----------------------------------------------------------------------
     /* A PARTIR DE ACA MODIFICO
     cout<< "Ingrese el codigo IATA del aeropuerto que quiere dar de baja: ";
