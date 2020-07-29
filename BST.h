@@ -21,7 +21,8 @@ private:
     BSTNode<T>* insert(BSTNode<T>* node, T data, string codigoIATA);
 
     void eliminar(BSTNode<T>* nodo);
-
+    //BSTNode<T>* sucesorDirecto(BSTNode<T>* node);
+    //BSTNode<T>* find_minDIRECTO(BSTNode<T>* node);
     int obtenerAltura(BSTNode<T>* node);
     void mostrarNivel(BSTNode<T> * node, int nivel);
     void print_in_order(BSTNode<T> * node);
@@ -50,7 +51,7 @@ public:
     // Creates an empty tree
     BST();
 
-    BSTNode<T>* buscar(string aBuscar);
+    BSTNode<T>* buscar(string& aBuscar);
 
     int obtenerAltura ();
 
@@ -58,6 +59,7 @@ public:
 
     void imprime_en_ancho();
 
+    //void eliminarDirecto(BSTNode<T>* node);
      // Adds a new node to the actual BST. If its the tree is empty
      // the node inserted will be the root
     void insert(T data, string codigoIATA);
@@ -105,11 +107,11 @@ BST<T>::BST() {
 }
 
 template <class T>
-BSTNode<T>* BST<T>::buscar(string aBuscar){
+BSTNode<T>* BST<T>::buscar(string& aBuscar){
     cout << "Busca por IATA...\n";
     BSTNode<T>* encontrado = buscarIATA(this->root, aBuscar);
     if(!encontrado){
-        cout << "No se encontró el código."<<endl;//"Busca por Nombre...\n";
+        cout << "Busca por Nombre...\n";
         encontrado = buscarNombre(this->root, aBuscar);
     }
     return encontrado;
@@ -124,6 +126,7 @@ BSTNode<T>* BST<T>::buscarIATA(BSTNode<T>* node, string IATA){
 
     return buscarIATA(node->get_left(), IATA);
 }
+
 template <class T>
 BSTNode<T>* BST<T>::buscarNombre(BSTNode<T>* node, string nombreAeropuerto){
     if (node == NULL || node->get_data()->obtenerNombre() == nombreAeropuerto)
@@ -134,6 +137,7 @@ BSTNode<T>* BST<T>::buscarNombre(BSTNode<T>* node, string nombreAeropuerto){
     }
     return buscado;
 }
+
 template <class T>
 int BST<T>::obtenerAltura(BSTNode<T>* node) {
     if (node !=NULL){
@@ -401,45 +405,83 @@ T BST<T>::predecessor(T data)
         return -1;
     else return predecessor(data_node);
 }
-
-/*template <class T>
-void BST<T>::eliminar(BSTNode<T>* node)
+/*
+template <class T>
+void BST<T>::eliminarDirecto(BSTNode<T>* node)
 {
     if (node->isLeaf())
+    {
+        if(this->root == node){
+            this->root = 0;
+        }
         delete node;
+    }
     else if (node->rightChildOnly())
     {
         // The only child will be connected to the parent's of node directly
         node->get_right()->set_parent(node->get_parent());
         // Bypass node
-        BSTNode<T>* aux = node;
-        node = node->get_right();
-        delete aux;
+        //BSTNode<T>* aux = node;
+        //node = node->get_right();
+        delete node;
     }
     else if (node->leftChildOnly())
     {
         // The only child will be connected to the parent's of node directly
         node->get_left()->set_parent(node->get_parent());
         // Bypass node
-        BSTNode<T>* aux = node;
-        node = node->get_left();
-        delete aux;
-    }*/
+        //BSTNode<T>* aux = node;
+        //node = node->get_left();
+        delete node;
+    }
     // The node has two children (left and right)
-    //else
-   // {
-        /*
+    else
+    {
         // Find successor or predecessor to avoid quarrel
-        T successor_data = this->successor(data);
-
+        BSTNode<T>* nodoSucesorDirecto = this->sucesorDirecto(node);
+        //T successor_data = this->successor(data);
+        node->set_IATA(nodoSucesorDirecto->get_IATA());
+        node->set_data(nodoSucesorDirecto->get_data());
         // Replace node's key with successor's key
-        node->set_data(successor_data);
+        //node->set_data(successor_data);
 
         // Delete the old successor's key
-        node->set_right(remove(node->get_right(), successor_data));
-        */
-    //}
-//}
+        BSTNode<T>* hijoDerecho = node->get_right();
+        eliminarDirecto(hijoDerecho);
+        node->set_right(hijoDerecho->get_right());
+
+    }
+}
+template <class T>
+BSTNode<T>* BST<T>::find_minDIRECTO(BSTNode<T>* node)
+{
+    if(node == NULL)
+        return NULL;//-1;
+    else if(node->get_left() == NULL)
+        return node;
+    else
+        return find_min(node->get_left());
+}
+template <class T>
+BSTNode<T>* BST<T>::sucesorDirecto(BSTNode<T>* node)
+{
+    if (node->get_right() != NULL)
+    {
+        return find_min(node->get_right());
+    }
+    BSTNode<T>* sucesor = NULL;
+    BSTNode<T>* antecestor = this->root;
+    while(antecestor != node) {
+        if(node->get_IATA < antecestor->get_IATA) {
+            sucesor = antecestor;
+            antecestor = antecestor->get_left();
+        }
+        else
+            antecestor = antecestor->get_right();
+    }
+    return sucesor;
+}
+*/
 
 template <class T>
 BSTNode<T> * BST<T>::remove(BSTNode<T>* node, T data)
@@ -499,6 +541,7 @@ void BST<T>::remove(T data)
 {
     this->root = remove(this->root, data);
 }
+
 /**************************************************************/
 /*************************************************************/
 template <class T>

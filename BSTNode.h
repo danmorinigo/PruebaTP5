@@ -21,6 +21,7 @@ public:
     BSTNode(T data, string codigoIATA);
     T get_data();
     string get_IATA();
+    void set_IATA(string IATA);
     void set_data(T data); //aqui va abjeto aeropuerto
     void set_right(BSTNode<T>* right, BSTNode<T>* parent);
     void set_left(BSTNode<T>* left, BSTNode<T>* parent);
@@ -55,6 +56,12 @@ template <class T>
 T BSTNode<T>::get_data()
 {
     return this->data;
+}
+
+template <class T>
+void BSTNode<T>::set_IATA(string IATA)
+{
+    this->codIATA = IATA;
 }
 
 template <class T>

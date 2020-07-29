@@ -19,11 +19,11 @@ private:
 public:
     // Constructor sin par�metros de la clase Menu.
     //PRE: Ninguna
-    //POST: Se crea un objeto de Clase Menu. 
+    //POST: Se crea un objeto de Clase Menu.
     Menu();
-    
+
     char getOpcion();
-    
+
     void setAeropuertos(BST<Aeropuerto*>*);
     //PRE:  --
     //POST: Borra lo impreso en pantalla. Cursor vuelve a posicion (1, 1).
@@ -31,7 +31,7 @@ public:
     //PRE:  --
     //POST: Muestra opciones del programa.
     void mostrarMenuPrincipal();
-    
+
     void hacerEleccion();
 
     void consultarAeropuerto();
@@ -40,7 +40,7 @@ public:
 
     /*Uso para buscar el menor de los dos hijos*/
     BSTNode<Aeropuerto*>* buscarMenor(BSTNode<Aeropuerto*> *aeropuerto);
-    
+
     /*Uso para reemplazar un nodo por otro*/
     void reemplazar(BSTNode<Aeropuerto*>* antiguo, BSTNode<Aeropuerto*>* nuevo);
 
@@ -50,9 +50,9 @@ public:
     /*Cree este metodo porque necesitaba volver a llamarlo recursivamente, pero si usaba el metodo darDeBaja otra vez
      tenia que pasar por el cin del codigo, entonces la funcion darDeBaja, llama a esta, con el codigo que introduce el usuario.*/
     void eliminarAeropuerto(string codigo);
-    
+
     void darDeBajaAeropuerto();
-    
+
     //PRE:  --
     //POST: Muestra cartel de despedida.
     void despedida();
@@ -71,7 +71,7 @@ public:
 
     //Destructor
     //PRE:  --
-    //POST: 
+    //POST:
     ~Menu();
 };
 

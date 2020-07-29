@@ -56,6 +56,7 @@ void Menu::hacerEleccion(){
                     this->pausa();
                 }break;
         case '3': { this-> limpiarPantalla();
+                    //this-> eliminarAeropuerto(); //AGREGADO PARA PROBAR
                     this->darDeBajaAeropuerto();
 //                     cout << "ACA DEBERIA MOSTRAR: 'Ingrese codigo IATA del aeropuerto a dar de baja: '"<<endl;
                     this->pausa();
@@ -80,11 +81,16 @@ void Menu::hacerEleccion(){
 }
 
 void Menu::consultarAeropuerto(){
+    char buscado[100];  //AGREGADO
     string abuscar;
     BSTNode<Aeropuerto*>* aeropuerto;
     this->limpiarPantalla();
-    cout<<endl<<"Ingrese el codigo IATA del aeropuerto que desea buscar: ";
-    cin >> abuscar;
+    cout<<endl<<"Ingrese el codigo IATA o nombre del aeropuerto que desea buscar:\n";
+    cout << "\nIATA/Nombre del aeropuerto: ";//AGREGADO
+    //cin >> abuscar;
+    cin.get();  //AGREGADO, SINO PASABA DE LARGO
+    cin.getline(buscado, 100);   //AGREGADO, TOMA LA CADENA (CON ESPACIOS)
+    abuscar = buscado;  //AGREGADO, LO PASO AL STRING ORIGINAL
     aeropuerto = this->aeropuertos->buscar (abuscar);
     if (aeropuerto){
        aeropuerto->get_data()->mostrarInformacion();
@@ -168,11 +174,12 @@ void Menu::destruir(BSTNode<Aeropuerto*>* aeropuerto){
 
 
 void Menu::eliminarAeropuerto(string codigo){
+    this->limpiarPantalla();
     BSTNode<Aeropuerto*>* aeropuerto;
-    aeropuerto = this->aeropuertos->buscar (codigo);
+    aeropuerto = this->aeropuertos->buscar(codigo);
     if(aeropuerto){
         this->aeropuertos->eliminar(codigo);
-        cout<<" Se eliminó el aeropuerto: "<<codigo<<"."<<endl;
+        cout<<" Se eliminó el aeropuerto: "<< codigo <<"."<<endl;
       /* if(aeropuerto->get_right() && aeropuerto->get_left()){
           BSTNode<Aeropuerto*>* menor = buscarMenor(aeropuerto->get_right());
           aeropuerto->set_data(menor->get_data());
