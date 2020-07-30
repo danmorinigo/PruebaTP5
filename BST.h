@@ -612,9 +612,9 @@ BSTNode<T> * BST<T>::eliminar(BSTNode<T>* node, string IATA)
 
             // Replace node's key with successor's key
             node->set_data(successor_data);
-
+            node->set_IATA(successor_data->obtenerCodigo()); 
             // Delete the old successor's key
-            node->set_right(eliminar(node->get_right(), IATA));
+            node->set_right(eliminar(node->get_right(), successor_data->obtenerCodigo()));
         }
     }
 

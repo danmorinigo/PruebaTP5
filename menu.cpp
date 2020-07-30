@@ -70,6 +70,7 @@ void Menu::hacerEleccion(){
         case '5': { this-> limpiarPantalla();
                     this->aeropuertos->imprime_en_ancho();
                     cout<<endl;
+                    this->aeropuertos->imprime_acostado();
                     //cout << "ACA DEBERIA MOSTRAR ARBOL RECORRIDO EN ANCHO"<<endl;
                     this->pausa();
                 }break;
