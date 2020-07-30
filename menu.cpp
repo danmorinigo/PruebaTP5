@@ -176,12 +176,18 @@ void Menu::destruir(BSTNode<Aeropuerto*>* aeropuerto){
 
 void Menu::eliminarAeropuerto(string codigo){
     this->limpiarPantalla();
+    BSTNode<Aeropuerto*>* aux;
+    aux = aeropuertos->quitar(codigo);
+    //cout << (aux == 0) << endl;
+    //cin.get();
+    /*
+
     BSTNode<Aeropuerto*>* aeropuerto;
     aeropuerto = this->aeropuertos->buscar(codigo);
     if(aeropuerto){
         this->aeropuertos->eliminar(codigo);
         cout<<" Se eliminó el aeropuerto: "<< codigo <<"."<<endl;
-      /* if(aeropuerto->get_right() && aeropuerto->get_left()){
+       if(aeropuerto->get_right() && aeropuerto->get_left()){
           BSTNode<Aeropuerto*>* menor = buscarMenor(aeropuerto->get_right());
           aeropuerto->set_data(menor->get_data());
           eliminarAeropuerto(menor->get_IATA());
@@ -197,11 +203,12 @@ void Menu::eliminarAeropuerto(string codigo){
               else{
                 reemplazar(aeropuerto, NULL);
                 destruir(aeropuerto);
-              }*/
+              }
     } else {
         cout<< " No se econtró el aeropuerto para borrar."<<endl;
     }
 
+    */
 }
 
 void Menu::darDeBajaAeropuerto(){
