@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const bool MUESTRAMEM = false;
+const bool MUESTRAMEM = true;
 
 class Aeropuerto{
 private:

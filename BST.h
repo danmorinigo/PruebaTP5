@@ -21,6 +21,7 @@ private:
     BSTNode<T>* insert(BSTNode<T>* node, T data, string codigoIATA);
 
     void eliminar(BSTNode<T>* nodo);
+    void liberarNodo(BSTNode<T>* node);
     //BSTNode<T>* sucesorDirecto(BSTNode<T>* node);
     //BSTNode<T>* find_minDIRECTO(BSTNode<T>* node);
     int obtenerAltura(BSTNode<T>* node);
@@ -166,7 +167,7 @@ BSTNode<T>* BST<T>::quitar(BSTNode<T>* node, string IATA){
     if (node->get_IATA() == IATA)
     {
         if (node->isLeaf()){
-            delete node;
+            liberarNodo(node);
             node = 0;
         }
         else if (node->rightChildOnly())
@@ -176,7 +177,8 @@ BSTNode<T>* BST<T>::quitar(BSTNode<T>* node, string IATA){
             // Bypass node
             BSTNode<T>* aux = node;
             node = node->get_right();
-            delete aux;
+            liberarNodo(aux);
+            //delete aux;
         }
         else if (node->leftChildOnly())
         {
@@ -185,7 +187,8 @@ BSTNode<T>* BST<T>::quitar(BSTNode<T>* node, string IATA){
             // Bypass node
             BSTNode<T>* aux = node;
             node = node->get_left();
-            delete aux;
+            liberarNodo(aux);
+            //delete aux;
         }
 
         // The node has two children (left and right)
@@ -686,6 +689,14 @@ void BST<T>::delete_all(BSTNode<T>* node)
         return;
     this->delete_all(node->get_left());
     this->delete_all(node->get_right());
+    delete node->get_data();
+    delete node;
+}
+
+
+template <class T>
+void BST<T>::liberarNodo(BSTNode<T>* node)
+{
     delete node->get_data();
     delete node;
 }

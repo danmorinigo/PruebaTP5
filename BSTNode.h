@@ -7,6 +7,8 @@
 
 #include "aeropuerto.h"
 
+using namespace std;
+
 template <class T>
 class BSTNode
 {
@@ -19,6 +21,7 @@ private:
 
 public:
     BSTNode(T data, string codigoIATA);
+    ~BSTNode();
     T get_data();
     string get_IATA();
     void set_IATA(string IATA);
@@ -39,6 +42,7 @@ public:
 template <class T>
 BSTNode<T>::BSTNode(T data, string codigoIATA)
 {
+    cout << "Constructor BSTNODE de " << codigoIATA << endl;
     this->data = data;
     this->codIATA = codigoIATA;
     this->left = NULL;
@@ -46,6 +50,10 @@ BSTNode<T>::BSTNode(T data, string codigoIATA)
     this->parent = NULL;
 }
 
+template <class T>
+BSTNode<T>::~BSTNode(){
+    cout << "Destructor BSTNODE de " << codIATA << endl;
+}
 template <class T>
 string BSTNode<T>::get_IATA()
 {
