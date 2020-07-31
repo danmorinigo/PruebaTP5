@@ -47,8 +47,8 @@ private:
     void delete_all(BSTNode<T>* node);
 
     BSTNode<T>* quitar(BSTNode<T>* node, string IATA);
-    T successorQUITAR(BSTNode<T>* node);
-    T find_minQUITAR(BSTNode<T>* node);
+    T successorQUITAR(BSTNode<T>* node, T datoOriginal);
+    T find_minQUITAR(BSTNode<T>* node, T datoOriginal);
 public:
     //methods
 
@@ -58,7 +58,7 @@ public:
     BSTNode<T>* buscar(string& aBuscar);
 
     BSTNode<T>* quitar(string IATA);
-    T successorQUITAR(string IATA);
+    T successorQUITAR(string IATA, T datoOriginal);
     T find_minQUITAR();
 
     int obtenerAltura ();
@@ -115,14 +115,20 @@ BST<T>::BST() {
 }
 
 template <class T>
-T BST<T>::find_minQUITAR(BSTNode<T>* node)
+T BST<T>::find_minQUITAR(BSTNode<T>* node, T datoOriginal)
 {
+    T aux;
     if(node == NULL)
         return NULL;//-1;
-    else if(node->get_left() == NULL)
-        return node->get_data();
-    else
-        return find_minQUITAR(node->get_left());
+    else if(node->get_left() == NULL){
+        aux = node->get_data();
+        //Cambio IATA por el del que vamos a eliminar
+        node->set_IATA(datoOriginal->obtenerCodigo());
+        //Queda apuntando al aeropuerto* del nodo que vamos a eliminar..
+        node->set_data(datoOriginal);
+        return aux;
+    }else
+        return find_minQUITAR(node->get_left(), datoOriginal);
 }
 
 template <class T>
@@ -131,21 +137,22 @@ T BST<T>::find_minQUITAR()
     return find_minQUITAR(this->root);
 }
 template <class T>
-T BST<T>::successorQUITAR(string IATA)
+T BST<T>::successorQUITAR(string IATA, T datoOriginal)
 {
     BSTNode<T>* data_node = this->buscarIATA(this->root, IATA);
     // Return the key. If the key is not found or successor is not found, return -1
     if(data_node == NULL)
         return 0;//-1;
-    else return successorQUITAR(data_node);
+    else return successorQUITAR(data_node, datoOriginal);
 }
 template <class T>
-T BST<T>::successorQUITAR(BSTNode<T>* node)
+T BST<T>::successorQUITAR(BSTNode<T>* node, T datoOriginal)
 {
     if (node->get_right() != NULL)
     {
-        return find_minQUITAR(node->get_right());
+        return find_minQUITAR(node->get_right(), datoOriginal);
     }
+    T auxiliar;
     BSTNode<T>* sucesor = NULL;
     BSTNode<T>* anterior = this->root;
     while(anterior != node) {
@@ -156,7 +163,12 @@ T BST<T>::successorQUITAR(BSTNode<T>* node)
         else
             anterior = anterior->get_right();
     }
-    return sucesor->get_data();
+    auxiliar = sucesor->get_data();
+    //Cambio IATA por el del que vamos a eliminar
+    sucesor->set_data(datoOriginal);
+    //Queda apuntando al aeropuerto* del nodo que vamos a eliminar..
+    sucesor->set_IATA(datoOriginal->obtenerCodigo());
+    return auxiliar;
 }
 template <class T>
 BSTNode<T>* BST<T>::quitar(BSTNode<T>* node, string IATA){
@@ -188,21 +200,36 @@ BSTNode<T>* BST<T>::quitar(BSTNode<T>* node, string IATA){
             BSTNode<T>* aux = node;
             node = node->get_left();
             liberarNodo(aux);
-            //delete aux;
         }
 
         // The node has two children (left and right)
         else
         {
             // Find successor or predecessor to avoid quarrel
-            T dato_del_sucesor = this->successorQUITAR(IATA);
+            //string auxIATA =
+            T dato_del_sucesor = this->successorQUITAR(IATA, node->get_data());
 
             // Replace node's key with successor's key
+            //----------------------------------------
+            /*
+            node->get_data()->asignarCodigo(dato_del_sucesor->obtenerCodigo());
+            node->get_data()->asignarNombre(string);
+            node->get_data()->asignarCiudad(string);
+            node->get_data()->asignarPais(string);
+            node->get_data()->asignarSup(double);
+            node->get_data()->asignarTerminales(unsigned);
+            void asignarDestNac(unsigned);
+            void asignarDestInternac(unsigned);
+            */
+            //----------------------------------------
             node->set_data(dato_del_sucesor);
             node->set_IATA(dato_del_sucesor->obtenerCodigo());
 
             // Delete the old successor's key
-            node->set_right(quitar(node->get_right(), dato_del_sucesor->obtenerCodigo()));
+            // ahora el nodo a eliminar tiene nuevamente los datos que estamos eliminando
+            // por eso nuevamente busca por IATA
+            node->set_right(quitar(node->get_right(), IATA));
+            //node->set_right(quitar(node->get_right(), dato_del_sucesor->obtenerCodigo()));
         }
     }
 
