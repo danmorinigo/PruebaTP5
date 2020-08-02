@@ -1,14 +1,10 @@
-//
 // Created by carolina on 3/6/20.
-//
-
-#include "BSTNode.h"
-//#include "cola.h"
-
-#include<iostream>
 
 #ifndef ABB_BST_H
 #define ABB_BST_H
+
+#include "BSTNode.h"
+#include<iostream>
 
 template <class T>
 class BST
@@ -19,36 +15,29 @@ private:
 
     // methods
     BSTNode<T>* insert(BSTNode<T>* node, T data, string codigoIATA);
-
-    void eliminar(BSTNode<T>* nodo);
     void liberarNodo(BSTNode<T>* node);
-    //BSTNode<T>* sucesorDirecto(BSTNode<T>* node);
-    //BSTNode<T>* find_minDIRECTO(BSTNode<T>* node);
     int obtenerAltura(BSTNode<T>* node);
     void mostrarNivel(BSTNode<T> * node, int nivel);
     void print_in_order(BSTNode<T> * node);
     void imprime_acostado(BSTNode<T> * node, int cont);
     void imprime_en_ancho(BSTNode<T> * node);
-    //void mostrarCola(Cola* mostrando);
     BSTNode<T>* search(BSTNode<T>* node, T data);
     BSTNode<T>* buscarIATA(BSTNode<T>* node, string IATA);
     BSTNode<T>* buscarNombre(BSTNode<T>* node, string IATA);
     T find_min(BSTNode<T>* node);
     T find_max(BSTNode<T>* node);
     T successor(BSTNode<T>* node);
-    /************************************************/
-    T sucesor(BSTNode<T>* node);
-    /*************************************************/
     T predecessor(BSTNode<T>* node);
     BSTNode<T>* remove(BSTNode<T>* node, T data);
-    /***********************************************/
-    BSTNode<T>* eliminar(BSTNode<T>* node, string IATA);
-    /*************************************************/
     void delete_all(BSTNode<T>* node);
-
     BSTNode<T>* quitar(BSTNode<T>* node, string IATA);
     T aeropuertoReemplazante(BSTNode<T>* node, T aeroAborrar);
     T buscarMenorPorIATA(BSTNode<T>* node, T aeroAborrar);
+
+    //BSTNode<T>* sucesorDirecto(BSTNode<T>* node);
+    //BSTNode<T>* find_minDIRECTO(BSTNode<T>* node);
+    // BSTNode<T>* eliminar(BSTNode<T>* node, string IATA);
+    //T sucesor(BSTNode<T>* node);
 public:
     //methods
 
@@ -58,7 +47,9 @@ public:
     BSTNode<T>* buscar(string& aBuscar);
 
     BSTNode<T>* quitar(string IATA);
+
     T aeropuertoReemplazante(string IATA, T aeroAborrar);
+
     T buscarMenorPorIATA();
 
     int obtenerAltura ();
@@ -88,9 +79,6 @@ public:
 
     // Finds the successor of a given data value.
     T successor(T data);
-    /******************************************************************/
-    T sucesor(string IATA);
-    /*****************************************************************/
     // Finds the predecessor of a given data value.
     T predecessor(T data);
 
@@ -106,7 +94,6 @@ public:
     // Deletes all the nodes in the BST
     void delete_all();
     ~BST<T>();
-
 };
 
 template <class T>
@@ -136,6 +123,7 @@ T BST<T>::buscarMenorPorIATA()
 {
     return buscarMenorPorIATA(this->root);
 }
+
 template <class T>
 T BST<T>::aeropuertoReemplazante(string IATA, T aeroAborrar)
 {
@@ -145,6 +133,7 @@ T BST<T>::aeropuertoReemplazante(string IATA, T aeroAborrar)
         return 0;//-1;
     else return aeropuertoReemplazante(nodoDiccionario, aeroAborrar);
 }
+
 template <class T>
 T BST<T>::aeropuertoReemplazante(BSTNode<T>* node, T aeroAborrar)
 {
@@ -170,6 +159,7 @@ T BST<T>::aeropuertoReemplazante(BSTNode<T>* node, T aeroAborrar)
     nodoReemplazante->set_IATA(aeroAborrar->obtenerCodigo());
     return aeroEncontrado;
 }
+
 template <class T>
 BSTNode<T>* BST<T>::quitar(BSTNode<T>* node, string IATA){
 // The given node is not found in BST
@@ -241,6 +231,7 @@ BSTNode<T>* BST<T>::quitar(BSTNode<T>* node, string IATA){
 
     return node;
 }
+
 template <class T>
 BSTNode<T>* BST<T>::quitar(string IATA){
     return this->quitar(this->root, IATA);
@@ -256,6 +247,7 @@ BSTNode<T>* BST<T>::buscar(string& aBuscar){
     }
     return encontrado;
 }
+
 template <class T>
 BSTNode<T>* BST<T>::buscarIATA(BSTNode<T>* node, string IATA){
     if (node == NULL || node->get_IATA() == IATA)
@@ -292,7 +284,6 @@ int BST<T>::obtenerAltura(BSTNode<T>* node) {
     return -1;
 }
 
-
 template <class T>
 int BST<T>::obtenerAltura() {
     return this->obtenerAltura(this->root);
@@ -304,7 +295,6 @@ BSTNode<T>* BST<T>::insert(BSTNode<T>* node, T data, string codigoIATA) {
     if (node == NULL) {
         node = new BSTNode<T>(data, codigoIATA);
     }
-
     else if (codigoIATA > node->get_IATA()) {
         node->set_right(insert(node->get_right(), data, codigoIATA), node);
     }
@@ -367,51 +357,7 @@ void BST<T>::imprime_en_ancho(BSTNode<T> * node){
         std::cout<<std::endl;
     }
 }
-/*template <class T>
-void BST<T>::imprime_en_ancho(BSTNode<T> * node){
-    if(!this->root){
-        cout << "\nArbol vacio\n";
-        return;
-    }
-    Cola conForma, paraMostrar;
-    conForma.insertar(node);
-    BSTNode<T>* visitado;
-    int largoLista, nivel = 0;
-    while(!conForma.vacia()){
-        largoLista = conForma.obtenerTamanio();
-        for(int i = 0; i < largoLista; i++){
-            BSTNode<T>* aLista = conForma.consultar();
-            conForma.eliminar();
-            paraMostrar.insertar(aLista);
-        }
-        Cola aux(paraMostrar);
-        cout << "Nivel " << nivel++ << ": ";
-        mostrarCola(&aux);
-        largoLista = paraMostrar.obtenerTamanio();
-        for(int f = 0; f < largoLista; f++){
-            visitado = paraMostrar.consultar();
-            paraMostrar.eliminar();
-            if(visitado->get_left()){
-                conForma.insertar(visitado->get_left());
-            }
-            if(visitado->get_right()){
-                conForma.insertar(visitado->get_right());
-            }
-        }
-    }
-}*/
 
-
-/*template <class T>
-void BST<T>::mostrarCola(Cola* mostrando){
-    int tamanio = mostrando->obtenerTamanio();
-    for (int i = 0; i < tamanio; i++){
-        cout << mostrando->eliminar();
-        if(i < tamanio - 1) cout << " * ";
-    }
-    cout << endl;//aca impreime la linea de ese nivel si
-}
-*/
 template <class T>
 void BST<T>::imprime_acostado(BSTNode<T> * node, int cont){
     if (!node){
@@ -605,9 +551,98 @@ void BST<T>::remove(T data)
     this->root = remove(this->root, data);
 }
 
-/**************************************************************/
-/*************************************************************/
 template <class T>
+BSTNode<T>* BST<T>::get_root(){
+    return this->root;
+}
+
+template <class T>
+bool BST<T>::empty()
+{
+    return this->root == NULL;
+}
+
+template <class T>
+void BST<T>::delete_all(BSTNode<T>* node)
+{
+    if(node == NULL)
+        return;
+    this->delete_all(node->get_left());
+    this->delete_all(node->get_right());
+    delete node->get_data();
+    delete node;
+}
+
+template <class T>
+void BST<T>::liberarNodo(BSTNode<T>* node)
+{
+    delete node->get_data();
+    delete node;
+}
+
+template <class T>
+void BST<T>::delete_all()
+{
+    this->delete_all(this->root);
+}
+
+template <class T>
+BST<T>::~BST<T>()
+{
+    this->delete_all();
+}
+
+
+#endif //ABB_BST_H
+
+/*template <class T>
+void BST<T>::imprime_en_ancho(BSTNode<T> * node){
+    if(!this->root){
+        cout << "\nArbol vacio\n";
+        return;
+    }
+    Cola conForma, paraMostrar;
+    conForma.insertar(node);
+    BSTNode<T>* visitado;
+    int largoLista, nivel = 0;
+    while(!conForma.vacia()){
+        largoLista = conForma.obtenerTamanio();
+        for(int i = 0; i < largoLista; i++){
+            BSTNode<T>* aLista = conForma.consultar();
+            conForma.eliminar();
+            paraMostrar.insertar(aLista);
+        }
+        Cola aux(paraMostrar);
+        cout << "Nivel " << nivel++ << ": ";
+        mostrarCola(&aux);
+        largoLista = paraMostrar.obtenerTamanio();
+        for(int f = 0; f < largoLista; f++){
+            visitado = paraMostrar.consultar();
+            paraMostrar.eliminar();
+            if(visitado->get_left()){
+                conForma.insertar(visitado->get_left());
+            }
+            if(visitado->get_right()){
+                conForma.insertar(visitado->get_right());
+            }
+        }
+    }
+}*/
+
+
+/*template <class T>
+void BST<T>::mostrarCola(Cola* mostrando){
+    int tamanio = mostrando->obtenerTamanio();
+    for (int i = 0; i < tamanio; i++){
+        cout << mostrando->eliminar();
+        if(i < tamanio - 1) cout << " * ";
+    }
+    cout << endl;//aca impreime la linea de ese nivel si
+}
+*/
+
+/*************************************************************/
+/*template <class T>
 T BST<T>::sucesor(BSTNode<T>* node)
 {
     if (node->get_right() != NULL)
@@ -694,51 +729,5 @@ template <class T>
 void BST<T>::eliminar(string IATA)
 {
     this->root = eliminar(this->root,IATA);
-}
+}*/
 /********************************************/
-/*******************************************************************************************************/
-template <class T>
-BSTNode<T>* BST<T>::get_root(){
-    return this->root;
-}
-
-template <class T>
-bool BST<T>::empty()
-{
-    return this->root == NULL;
-}
-
-
-template <class T>
-void BST<T>::delete_all(BSTNode<T>* node)
-{
-    if(node == NULL)
-        return;
-    this->delete_all(node->get_left());
-    this->delete_all(node->get_right());
-    delete node->get_data();
-    delete node;
-}
-
-
-template <class T>
-void BST<T>::liberarNodo(BSTNode<T>* node)
-{
-    delete node->get_data();
-    delete node;
-}
-
-template <class T>
-void BST<T>::delete_all()
-{
-    this->delete_all(this->root);
-}
-
-template <class T>
-BST<T>::~BST<T>()
-{
-    this->delete_all();
-}
-
-
-#endif //ABB_BST_H

@@ -46,23 +46,17 @@ void Menu::hacerEleccion(){
     switch (this->opcion){
         case '1': { this-> limpiarPantalla();
                     this->consultarAeropuerto();
-                    //cout << "ACA DEBERIA MOSTRAR: 'Ingrese código IATA del aeropuerto: '"<<endl;
-                   // cin>> opcion2;
                     this->pausa();
                 }break;
         case '2': { this-> limpiarPantalla();
                     this-> agregarAeropuerto();
-                    //cout << "ACA DEBERIA MOSTRAR MENU DE INGRESO DE NUEVO AEROPUERTO."<<endl;
                     this->pausa();
                 }break;
         case '3': { this-> limpiarPantalla();
-                    //this-> eliminarAeropuerto(); //AGREGADO PARA PROBAR
                     this->darDeBajaAeropuerto();
-//                     cout << "ACA DEBERIA MOSTRAR: 'Ingrese codigo IATA del aeropuerto a dar de baja: '"<<endl;
                     this->pausa();
                 }break;
         case '4': { this-> limpiarPantalla();
-                    //cout << "ACA DEBERIA MOSTRAR LOS AEROPUERTOS IN-ORDER."<<endl;
                     this->aeropuertos->print_in_order();
                     cout<<endl;
                     this->pausa();
@@ -70,8 +64,7 @@ void Menu::hacerEleccion(){
         case '5': { this-> limpiarPantalla();
                     this->aeropuertos->imprime_en_ancho();
                     cout<<endl;
-                    this->aeropuertos->imprime_acostado();
-                    //cout << "ACA DEBERIA MOSTRAR ARBOL RECORRIDO EN ANCHO"<<endl;
+                    //this->aeropuertos->imprime_acostado();
                     this->pausa();
                 }break;
         case '0': { this-> limpiarPantalla();
@@ -88,7 +81,6 @@ void Menu::consultarAeropuerto(){
     this->limpiarPantalla();
     cout<<endl<<"Ingrese el codigo IATA o nombre del aeropuerto que desea buscar:\n";
     cout << "\nIATA/Nombre del aeropuerto: ";//AGREGADO
-    //cin >> abuscar;
     cin.get();  //AGREGADO, SINO PASABA DE LARGO
     cin.getline(buscado, 100);   //AGREGADO, TOMA LA CADENA (CON ESPACIOS)
     abuscar = buscado;  //AGREGADO, LO PASO AL STRING ORIGINAL
@@ -169,46 +161,13 @@ void Menu::reemplazar(BSTNode<Aeropuerto*>* antiguo, BSTNode<Aeropuerto*>* nuevo
 void Menu::destruir(BSTNode<Aeropuerto*>* aeropuerto){
     aeropuerto->set_left(NULL);
     aeropuerto->set_right(NULL);
-
     delete aeropuerto;
 }
-
 
 void Menu::eliminarAeropuerto(string codigo){
     this->limpiarPantalla();
     BSTNode<Aeropuerto*>* aux;
     aux = aeropuertos->quitar(codigo);
-    //cout << (aux == 0) << endl;
-    //cin.get();
-    /*
-
-    BSTNode<Aeropuerto*>* aeropuerto;
-    aeropuerto = this->aeropuertos->buscar(codigo);
-    if(aeropuerto){
-        this->aeropuertos->eliminar(codigo);
-        cout<<" Se eliminó el aeropuerto: "<< codigo <<"."<<endl;
-       if(aeropuerto->get_right() && aeropuerto->get_left()){
-          BSTNode<Aeropuerto*>* menor = buscarMenor(aeropuerto->get_right());
-          aeropuerto->set_data(menor->get_data());
-          eliminarAeropuerto(menor->get_IATA());
-        }
-        else if(aeropuerto->get_left()){
-               reemplazar(aeropuerto, aeropuerto->get_left());
-               destruir(aeropuerto);
-            }
-            else if(aeropuerto->get_right()){
-                reemplazar(aeropuerto, aeropuerto->get_right());
-                destruir(aeropuerto);
-             }
-              else{
-                reemplazar(aeropuerto, NULL);
-                destruir(aeropuerto);
-              }
-    } else {
-        cout<< " No se econtró el aeropuerto para borrar."<<endl;
-    }
-
-    */
 }
 
 void Menu::darDeBajaAeropuerto(){
@@ -216,16 +175,9 @@ void Menu::darDeBajaAeropuerto(){
     cout<<"DAR DE BAJA UN AEROPUERTO."<<endl;
     //----------------------------------------------------------------------
     cout<< "Ingrese el codigo IATA del aeropuerto que desea dar de baja: ";
-    //cout << "Aeropuerto: ";
     cin >> codigo;
     eliminarAeropuerto(codigo);
     //----------------------------------------------------------------------
-    /* A PARTIR DE ACA MODIFICO
-    cout<< "Ingrese el codigo IATA del aeropuerto que quiere dar de baja: ";
-    cin >> codigo;
-
-    eliminarAeropuerto(codigo);
-    */
 }
 
 void Menu::despedida(){
@@ -254,11 +206,9 @@ void Menu::enmarcar(string texto){
 
 void Menu::salir(){
     this->limpiarPantalla();
-    //cabecera();
     despedida();
     this-> pausa();
 }
 
 Menu::~Menu(){
-
 }

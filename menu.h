@@ -74,6 +74,4 @@ public:
     //POST:
     ~Menu();
 };
-
-
 #endif // MENU_H_INCLUDED
