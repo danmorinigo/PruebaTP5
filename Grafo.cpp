@@ -107,29 +107,28 @@ int Grafo::mejorCamino(NodoGrafo *origen, NodoGrafo *destino) {
 
     colaPrioridad.push(verticeCosto(origen, 0));
     cambiarDistancia(&distancia, origen, 0);
-
-    while (!colaPrioridad.empty()){
+    verticeActual = colaPrioridad.top().first;
+    while (!colaPrioridad.empty() && verticeActual != destino){
         verticeActual = colaPrioridad.top().first;
         costoActual = colaPrioridad.top().second;
         colaPrioridad.pop();
+        cout << verticeActual -> obtenerNombre() << endl;
+        cout << costoActual << endl;
         verticeActual->definirVisitado(true);
         aux = verticeActual -> obtenerCaminos();
-        if (verticeActual == destino){
-             return obtenerDistancia(&distancia, verticeActual);
-        }
         for (int i = 0; i < aux.size(); i++) {
             if (!(aux[i].obtenerVerticeApunta() -> obtenerVisitado())){
                 actualizarCosto(&colaPrioridad, costoActual, aux[i].obtenerVerticeApunta(), aux[i].obtenerCosto(), &distancia);
             }
         }
     }
-    return -1;
+    return obtenerDistancia(&distancia, verticeActual);;
 }
 
 void Grafo::actualizarCosto(priority_queue<verticeCosto> * colaPrioridad, int costoActual, NodoGrafo *adyacente, int costo, vector<verticeCosto> * distancia) {
     if ((costoActual + costo) <= obtenerDistancia(distancia, adyacente)){
-        colaPrioridad->push(verticeCosto(adyacente, costoActual + costo));
         cambiarDistancia(distancia, adyacente, costoActual + costo);
+        colaPrioridad->push(verticeCosto(adyacente, costoActual + costo));
     }
 }
 

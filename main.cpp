@@ -75,7 +75,7 @@ int main()
     //habilitando a consultar los datos (precio y horasVuelo).
 
 
-    cout << endl << grafo.mejorCamino(grafo.obtenerVertice("MZT"), grafo.obtenerVertice("MID"));
+    grafo.mejorCamino(grafo.obtenerVertice("MZT"), grafo.obtenerVertice("MID"));
     */
 
     return 0;
