@@ -5,11 +5,10 @@
 #ifndef GRAFO_NODOGRAFO_H
 #define GRAFO_NODOGRAFO_H
 #include <string>
-#include <list>
 #include <iostream>
 #include "Arista.h"
 #include <vector>
-
+#include <queue>
 
 using namespace std;
 
@@ -23,6 +22,9 @@ private:
     string nombre;
     NodoGrafo * siguiente;
     vector<Arista> aristas;
+    bool visitado;
+
+
 
 public:
     //Constructor con parametro
@@ -41,6 +43,9 @@ public:
 
     void insertarArista(Arista nueva);
 
+    bool obtenerVisitado();
+    void definirVisitado(bool estado);
+
     string obtenerNombre();
     // PRE : nodo creado
     // POST : Devuelve el puntero al siguiente nodo
@@ -48,7 +53,7 @@ public:
     NodoGrafo * obtenerSiguiente();
 
     vector<Arista> obtenerCaminos(); //Metodo que devuelve todos los caminos de un vertice
-    
+
 };
 
 

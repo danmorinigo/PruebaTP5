@@ -5,7 +5,7 @@
 #ifndef GRAFO_GRAFO_H
 #define GRAFO_GRAFO_H
 #include "NodoGrafo.h"
-
+typedef pair<NodoGrafo*, int> verticeCosto;
 
 class Grafo{
     //Atributos
@@ -54,8 +54,17 @@ public:
 
     Arista obtenerArista(NodoGrafo *origen, NodoGrafo *destino);
 
+    int mejorCamino(NodoGrafo *origen, NodoGrafo * destino);
 
+    void actualizarCosto(priority_queue<verticeCosto> * colaPrioridad, int costoActual, NodoGrafo * adyacente, int costo, vector<verticeCosto> * distancia);
 
+    void setearVerticesComoNoVistos();
+
+    void setearDistanciaInfinito(vector<verticeCosto> * distancia);
+
+    void cambiarDistancia(vector<verticeCosto> * distancia, NodoGrafo * vertice, int valor);
+
+    int obtenerDistancia(vector<verticeCosto> * distancia, NodoGrafo * vertice);
 };
 
 

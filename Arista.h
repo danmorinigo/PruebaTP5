@@ -19,7 +19,7 @@ private:
     NodoGrafo * adyacente;
 
 public:
-    Arista();
+    Arista(int costo, float tiempo, NodoGrafo * destino);
     void insertarCosto(int costo);
     void insertarHorasVuelo(float horasVuelo);
     void insertarVerticeApunta(NodoGrafo * vertice);

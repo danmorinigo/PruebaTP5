@@ -6,6 +6,7 @@
 NodoGrafo::NodoGrafo(string datoNuevo) {
     siguiente = 0;
     this -> nombre = datoNuevo;
+    visitado = false;
 }
 
 
@@ -33,4 +34,12 @@ void NodoGrafo::insertarArista(Arista nueva) {
 
 vector<Arista> NodoGrafo::obtenerCaminos() {
     return aristas;
+}
+
+void NodoGrafo::definirVisitado(bool estado) {
+    this -> visitado = estado;
+}
+
+bool NodoGrafo::obtenerVisitado() {
+    return visitado;
 }

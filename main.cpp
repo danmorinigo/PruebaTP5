@@ -35,19 +35,36 @@ int main()
 
     //===================================PARA PROBAR EL GRAFO====================================
     /*
-
     Grafo grafo;
 
-
-    grafo.insertarVertice("EZE", 1);
-    grafo.insertarVertice("MIA", 1);
-    grafo.insertarVertice("FCO", 1);
-    grafo.insertarVertice("TXL", 1);
-
+    grafo.insertarVertice("TIJ", 1);
+    grafo.insertarVertice("MZT", 1);
+    grafo.insertarVertice("MTY", 1);
+    grafo.insertarVertice("BJX", 1);
+    grafo.insertarVertice("GDL", 1);
+    grafo.insertarVertice("SAN", 1);
+    grafo.insertarVertice("TAM", 1);
+    grafo.insertarVertice("MEX", 1);
+    grafo.insertarVertice("CUN", 1);
+    grafo.insertarVertice("GDL", 1);
+    grafo.insertarVertice("MID", 1);
 
     //Recibe la direccion de memoria del origen y destino (vertices) y los datos del camino
-    grafo.insertarArista(grafo.obtenerVertice("EZE"), grafo.obtenerVertice("MIA"), 122483, 9.2);
-    grafo.insertarArista(grafo.obtenerVertice("EZE"), grafo.obtenerVertice("FCO"), 222205, 13);
+    grafo.insertarArista(grafo.obtenerVertice("TIJ"), grafo.obtenerVertice("MTY"), 800, 9.2);
+    grafo.insertarArista(grafo.obtenerVertice("MTY"), grafo.obtenerVertice("BJX"), 700, 13);
+    grafo.insertarArista(grafo.obtenerVertice("BJX"), grafo.obtenerVertice("SAN"), 900, 2.2);
+    grafo.insertarArista(grafo.obtenerVertice("BJX"), grafo.obtenerVertice("TAM"), 400, 10.8);
+    grafo.insertarArista(grafo.obtenerVertice("BJX"), grafo.obtenerVertice("MEX"), 350, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("SAN"), grafo.obtenerVertice("MID"), 1200, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("TAM"), grafo.obtenerVertice("MID"), 450, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("MEX"), grafo.obtenerVertice("MID"), 450, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("MEX"), grafo.obtenerVertice("CUN"), 650, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("CUN"), grafo.obtenerVertice("GDL"), 650, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("GDL"), grafo.obtenerVertice("BJX"), 250, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("GDL"), grafo.obtenerVertice("MTY"), 450, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("GDL"), grafo.obtenerVertice("MZT"), 500, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("MZT"), grafo.obtenerVertice("BJX"), 300, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("MZT"), grafo.obtenerVertice("TIJ"), 400, 5.5);
 
     //Cantidad de vertices
     cout << grafo.obtenerTamanio() << endl;
@@ -57,8 +74,8 @@ int main()
     //y cuando la direccion del destino que esta cargada en la arista coincide con el pasado como atributo devuelve esa arista
     //habilitando a consultar los datos (precio y horasVuelo).
 
-    cout << grafo.obtenerArista(grafo.obtenerVertice("EZE"), grafo.obtenerVertice("FCO")).obtenerCosto();
 
+    cout << endl << grafo.mejorCamino(grafo.obtenerVertice("MZT"), grafo.obtenerVertice("MID"));
     */
 
     return 0;

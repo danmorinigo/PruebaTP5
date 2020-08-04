@@ -4,7 +4,10 @@
 
 #include "Arista.h"
 
-Arista::Arista() {
+Arista::Arista(int costo, float tiempo, NodoGrafo *destino) {
+    this -> costo = costo;
+    this -> horasVuelo = tiempo;
+    this -> adyacente = destino;
 }
 
 void Arista::insertarCosto(int costo) {
