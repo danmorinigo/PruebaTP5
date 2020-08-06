@@ -85,6 +85,7 @@ void Menu::hacerEleccion(){
                 }break;
         case '6': { this-> limpiarPantalla();
                     if (this->hayVuelosCargados()){
+                    	this->opcionVuelos = '.';
                        this->solicitarPartidaYDestino();
                        while (this->getOpcionVuelos() != '0'){
                             this->mostrarMenuVuelos();
