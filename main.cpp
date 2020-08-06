@@ -6,9 +6,10 @@
 #include "menu.h"
 #include "manejoDeArchivos.h"
 #include "verificadorDatos.h"
-//#include "aeropuerto.h"
-
+#include "Grafo.h"
 const string ARCHIVO_IATA = "Aeropuertos.txt";
+const string ARCHIVO_VUELOS = "vuelos.txt";
+
 using namespace std;
 
 int main()
@@ -18,12 +19,18 @@ int main()
     manejoDeArchivos archivo;
     Menu menu;
     BST<Aeropuerto*>* aeropuertos = new BST<Aeropuerto*>();
+    Grafo* vuelos = new Grafo;
 
     if(archivo.existe(ARCHIVO_IATA)){
         archivo.cargarAeropuertos(aeropuertos, ARCHIVO_IATA);
     }
     menu.setAeropuertos(aeropuertos);
-
+    if(archivo.existe(ARCHIVO_VUELOS)){
+        archivo.cargarVuelos(vuelos, ARCHIVO_VUELOS);
+    } else{
+        vuelos = NULL;
+    }
+    menu.setVuelos(vuelos);
     while (menu.getOpcion() != '0'){
         menu.mostrarMenuPrincipal();
         menu.hacerEleccion();
@@ -31,7 +38,10 @@ int main()
     }
 
     delete aeropuertos;
-    
+    delete vuelos;
+
+    return 0;
+}
 
     //===================================PARA PROBAR EL GRAFO====================================
     /*
@@ -78,5 +88,3 @@ int main()
     grafo.mejorCamino(grafo.obtenerVertice("MZT"), grafo.obtenerVertice("MID"));
     */
 
-    return 0;
-}

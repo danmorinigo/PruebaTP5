@@ -4,6 +4,7 @@
 
 #include "BST.h"
 #include "aeropuerto.h"
+#include "Grafo.h"
 #include "verificadorDatos.h"
 
 using namespace std;
@@ -20,6 +21,10 @@ public:
 
     //antes verificar que la linea sea un aeropuerto
     void agregarAero(BST<Aeropuerto*>* arbol, string linea);
+    
+    void cargarVuelos(Grafo* vuelos, string nombreArchivo);
+    
+    void agregarVuelo(Grafo* vuelos, string linea);
 
     string quitarGuion(string texto);
     ~manejoDeArchivos();

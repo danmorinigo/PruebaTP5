@@ -2,18 +2,33 @@
 
 Menu::Menu(){
    this-> opcion = '.';
+   this-> opcionVuelos = '.';
+   this-> partida = "";
+   this-> destino = "";
    this-> aeropuertos = NULL;
-
+   this-> vuelos = NULL;
 }
 
 char Menu::getOpcion(){
     return this-> opcion;
 }
 
+char Menu::getOpcionVuelos(){
+    return this-> opcionVuelos;
+}
 
 void Menu::setAeropuertos(BST<Aeropuerto*>* aeropuertos){
     this-> aeropuertos = aeropuertos;
 }
+
+void Menu::setVuelos(Grafo* vuelos){
+    this-> vuelos = vuelos;
+    cout<<endl<<"SE CARGARON LOS VUELOS"<<endl;
+}
+
+bool Menu::hayVuelosCargados(){
+    return (this-> vuelos != NULL);
+} 
 
 void Menu::limpiarPantalla(){
     #ifdef _WIN32
@@ -35,6 +50,7 @@ void Menu::mostrarMenuPrincipal(){
     cout << "\t3- Dar de baja un aeropuerto." << endl;
     cout << "\t4- Mostrar todos los aeropuertos (recorrido in orden)." << endl;
     cout << "\t5- Mostrar arbol de aeropuertos (recorrido en ancho)." << endl;
+    cout << "\t6- Vuelos." << endl;
     cout << "\t0- Salir." << endl;
     cout << endl;
     cout << "\tEleccion: ";
@@ -66,6 +82,21 @@ void Menu::hacerEleccion(){
                     cout<<endl;
                     //this->aeropuertos->imprime_acostado();
                     this->pausa();
+                }break;
+        case '6': { this-> limpiarPantalla();
+                    if (this->hayVuelosCargados()){
+                       this->solicitarPartidaYDestino();
+                       while (this->getOpcionVuelos() != '0'){
+                            this->mostrarMenuVuelos();
+                            this->hacerEleccionMenuVuelos();
+                            this->pausa();
+                        }
+                        cout<<endl;
+                    } else {
+                        cout << "NO HAY VUELOS CARGADOS."<<endl;
+                        this->pausa();
+                    }
+                    //this->aeropuertos->imprime_acostado();
                 }break;
         case '0': { this-> limpiarPantalla();
                     this-> despedida();
@@ -131,7 +162,6 @@ void Menu::agregarAeropuerto(){
     cout<<endl;
 
     this->aeropuertos->insert(nuevoAeropuerto, nuevoAeropuerto->obtenerCodigo());
-
 }
 
 BSTNode<Aeropuerto*>* Menu::buscarMenor(BSTNode<Aeropuerto*> *aeropuerto){
@@ -178,6 +208,55 @@ void Menu::darDeBajaAeropuerto(){
     cin >> codigo;
     eliminarAeropuerto(codigo);
     //----------------------------------------------------------------------
+}
+
+void Menu::solicitarPartidaYDestino(){
+    this->limpiarPantalla();
+    cout << endl;
+    enmarcar("Eleccion del Vuelo.");
+    cout << endl;
+    cout <<"A continuacion debe ingresar los aeropuertos de partida y de destino."<<endl;
+    cout <<endl<< "Ingrese codigo IATA del aeropuerto de partida: ";
+    cin >> this->partida;
+    cout<<endl;
+    cout << "Ingrese codigo IATA del aeropuerto de destino: ";
+    cin >> this->destino;
+    cout<<endl;
+}
+
+void Menu::mostrarMenuVuelos(){
+    this->limpiarPantalla();
+    cout << endl;
+    enmarcar("Seleccione una opcion de optimizacion: ");
+    cout << endl;
+    cout << endl;
+    cout << "\t1- Encontrar la ruta con menor costo." << endl;
+    cout << "\t2- Encontrar la ruta mas rapida." << endl;
+    cout << "\t0- Salir." << endl;
+    cout << endl;
+    cout << "\tEleccion: ";
+    cin >> this->opcionVuelos;
+}
+
+void Menu::hacerEleccionMenuVuelos(){
+   // char opcion2;
+    switch (this->opcionVuelos){
+        case '1': { this-> limpiarPantalla();
+                    cout << "La ruta con menor costo es: "<<endl;
+                    this->vuelos->mejorCamino(this->vuelos->obtenerVertice(this->partida), this->vuelos->obtenerVertice(this->destino));
+                    cout<<endl;
+                    this->pausa();
+                }break;
+        case '2': { this-> limpiarPantalla();
+                    cout << "La ruta mas rapida es: "<<endl;
+                    cout<<endl;
+                    this->pausa();
+                }break;
+        case '0': { this-> limpiarPantalla();
+                   // this-> despedida();
+                    this->pausa();
+                }break;
+    }
 }
 
 void Menu::despedida(){

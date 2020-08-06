@@ -4,6 +4,7 @@
 #include <string>
 #include "BST.h"
 #include "aeropuerto.h"
+#include "Grafo.h"
 
 const int ANCHO_PANTALLA = 60;
 
@@ -13,7 +14,11 @@ class Menu {
 
 private:
     char opcion;
+    char opcionVuelos;
+    string partida;
+    string destino;
     BST<Aeropuerto*>* aeropuertos;
+    Grafo* vuelos;
 
 
 public:
@@ -24,7 +29,13 @@ public:
 
     char getOpcion();
 
+    char getOpcionVuelos();
+
     void setAeropuertos(BST<Aeropuerto*>*);
+
+    void setVuelos(Grafo*);
+
+    bool hayVuelosCargados();
     //PRE:  --
     //POST: Borra lo impreso en pantalla. Cursor vuelve a posicion (1, 1).
     void limpiarPantalla();
@@ -52,6 +63,12 @@ public:
     void eliminarAeropuerto(string codigo);
 
     void darDeBajaAeropuerto();
+
+    void solicitarPartidaYDestino();
+
+    void mostrarMenuVuelos();
+
+    void hacerEleccionMenuVuelos();
 
     //PRE:  --
     //POST: Muestra cartel de despedida.
