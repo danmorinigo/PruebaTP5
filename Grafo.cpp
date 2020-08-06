@@ -94,68 +94,87 @@ Arista Grafo::obtenerArista(NodoGrafo *origen, NodoGrafo *destino) {
 }
 
 
-int Grafo::mejorCamino(NodoGrafo *origen, NodoGrafo *destino) {
+void Grafo::mejorCamino(NodoGrafo *origen, NodoGrafo *destino) {
 
-    priority_queue<verticeCosto> colaPrioridad;
     vector<Arista> aux;
-    vector<verticeCosto> distancia;
-
+    vector<VerticeCosto> distancia;
+    priority_queue<VerticeCosto> colaPrioridad;
     NodoGrafo * verticeActual;
-    int costoActual;
+
     setearVerticesComoNoVistos();
     setearDistanciaInfinito(&distancia);
 
-    colaPrioridad.push(verticeCosto(origen, 0));
+
     cambiarDistancia(&distancia, origen, 0);
-    verticeActual = colaPrioridad.top().first;
+    colaPrioridad.push(VerticeCosto(origen,0));
+
+
     while (!colaPrioridad.empty() && verticeActual != destino){
-        verticeActual = colaPrioridad.top().first;
-        costoActual = colaPrioridad.top().second;
+        verticeActual = colaPrioridad.top().vertice;
         colaPrioridad.pop();
-        cout << verticeActual -> obtenerNombre() << endl;
-        cout << costoActual << endl;
-        verticeActual->definirVisitado(true);
-        aux = verticeActual -> obtenerCaminos();
+        verticeActual -> definirVisitado(true);
+        aux = verticeActual -> obtenerCaminos(); // obtengo los adyacentes
+
         for (int i = 0; i < aux.size(); i++) {
             if (!(aux[i].obtenerVerticeApunta() -> obtenerVisitado())){
-                actualizarCosto(&colaPrioridad, costoActual, aux[i].obtenerVerticeApunta(), aux[i].obtenerCosto(), &distancia);
+                actualizarCosto(verticeActual, &colaPrioridad, aux[i].obtenerVerticeApunta(), aux[i].obtenerCosto(), &distancia);
             }
         }
     }
-    return obtenerDistancia(&distancia, verticeActual);;
+
+    if (obtenerDistancia(&distancia, verticeActual) != 0){
+        mostrarCamino(verticeActual, origen);
+    } else {
+        cout << "NO EXISTE UN CAMINO ENTRE ORIGEN-DESTINO" << endl;
+    }
+
 }
 
-void Grafo::actualizarCosto(priority_queue<verticeCosto> * colaPrioridad, int costoActual, NodoGrafo *adyacente, int costo, vector<verticeCosto> * distancia) {
-    if ((costoActual + costo) <= obtenerDistancia(distancia, adyacente)){
-        cambiarDistancia(distancia, adyacente, costoActual + costo);
-        colaPrioridad->push(verticeCosto(adyacente, costoActual + costo));
+void Grafo::actualizarCosto(NodoGrafo * verticeActual, priority_queue<VerticeCosto> * colaPrioridad, NodoGrafo * adyacente, int costo, vector<VerticeCosto> * distancia) {
+    if (obtenerDistancia(distancia, adyacente) > (obtenerDistancia(distancia, verticeActual) + costo)) {
+        cambiarDistancia(distancia, adyacente, obtenerDistancia(distancia, verticeActual) + costo);
+        adyacente -> definirAnterior(verticeActual);
+        colaPrioridad -> push(VerticeCosto(adyacente, obtenerDistancia(distancia, verticeActual) + costo));
     }
-}
+ }
 
 void Grafo::setearVerticesComoNoVistos() {
     for (int i = 1; i <= obtenerTamanio(); i++) {
-        obtenerNodo(i)->definirVisitado(false);
+        obtenerNodo(i) -> definirVisitado(false);
     }
 }
 
-void Grafo::setearDistanciaInfinito(vector<verticeCosto> *distancia) {
+void Grafo::setearDistanciaInfinito(vector<VerticeCosto> *distancia) {
     for (int i = 1; i <= obtenerTamanio(); ++i) {
-        distancia->push_back(verticeCosto(obtenerNodo(i), 99999999999));
+        distancia -> push_back(VerticeCosto(obtenerNodo(i), 99999));
     }
 }
 
-void Grafo::cambiarDistancia(vector<verticeCosto> *distancia, NodoGrafo *vertice, int valor) {
+void Grafo::cambiarDistancia(vector<VerticeCosto> *distancia, NodoGrafo *vertice, int valor) {
     int iterador = 0;
-    while (vertice -> obtenerNombre() != distancia -> at(iterador).first -> obtenerNombre()){
+    while (vertice -> obtenerNombre() != distancia -> at(iterador).vertice -> obtenerNombre()){
         iterador++;
     }
-    distancia -> at(iterador) = verticeCosto(vertice, valor);
+    distancia -> at(iterador) = VerticeCosto(vertice, valor);
 }
 
-int Grafo::obtenerDistancia(vector<verticeCosto> *distancia, NodoGrafo * vertice){
+int Grafo::obtenerDistancia(vector<VerticeCosto> *distancia, NodoGrafo * vertice){
     int iterador = 0;
-    while (vertice -> obtenerNombre() != distancia -> at(iterador).first -> obtenerNombre()){
+    while (vertice -> obtenerNombre() != distancia -> at(iterador).vertice -> obtenerNombre()){
         iterador++;
     }
-    return distancia -> at(iterador).second;
+    return distancia -> at(iterador).costo;
 }
+
+void Grafo::mostrarCamino(NodoGrafo *verticeActual, NodoGrafo *origen) {
+    int totalCosto = 0;
+    while (verticeActual != origen){
+        cout << verticeActual -> obtenerNombre() << " <- ";
+        cout << obtenerArista(verticeActual -> obtenerAnterior(), verticeActual).obtenerCosto() << " ";
+        totalCosto = totalCosto + obtenerArista(verticeActual -> obtenerAnterior(), verticeActual).obtenerCosto();
+        verticeActual = verticeActual -> obtenerAnterior();
+    }
+    cout << origen -> obtenerNombre() << endl;
+    cout << "TOTAL: " << totalCosto << endl;
+}
+

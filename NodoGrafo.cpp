@@ -43,3 +43,11 @@ void NodoGrafo::definirVisitado(bool estado) {
 bool NodoGrafo::obtenerVisitado() {
     return visitado;
 }
+
+void NodoGrafo::definirAnterior(NodoGrafo * padre) {
+    this -> anterior = padre;
+}
+
+NodoGrafo * NodoGrafo::obtenerAnterior() {
+    return anterior;
+}

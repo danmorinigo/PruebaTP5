@@ -20,10 +20,6 @@ private:
 
 public:
     Arista(int costo, float tiempo, NodoGrafo * destino);
-    void insertarCosto(int costo);
-    void insertarHorasVuelo(float horasVuelo);
-    void insertarVerticeApunta(NodoGrafo * vertice);
-
 
     NodoGrafo * obtenerVerticeApunta();
     int obtenerCosto();

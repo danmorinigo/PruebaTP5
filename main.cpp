@@ -62,11 +62,11 @@ int main()
     //Recibe la direccion de memoria del origen y destino (vertices) y los datos del camino
     grafo.insertarArista(grafo.obtenerVertice("TIJ"), grafo.obtenerVertice("MTY"), 800, 9.2);
     grafo.insertarArista(grafo.obtenerVertice("MTY"), grafo.obtenerVertice("BJX"), 700, 13);
-    grafo.insertarArista(grafo.obtenerVertice("BJX"), grafo.obtenerVertice("SAN"), 900, 2.2);
-    grafo.insertarArista(grafo.obtenerVertice("BJX"), grafo.obtenerVertice("TAM"), 400, 10.8);
+    grafo.insertarArista(grafo.obtenerVertice("BJX"), grafo.obtenerVertice("SAN"), 400, 2.2);
+    grafo.insertarArista(grafo.obtenerVertice("BJX"), grafo.obtenerVertice("TAM"), 9000, 10.8);
     grafo.insertarArista(grafo.obtenerVertice("BJX"), grafo.obtenerVertice("MEX"), 350, 5.5);
-    grafo.insertarArista(grafo.obtenerVertice("SAN"), grafo.obtenerVertice("MID"), 1200, 5.5);
-    grafo.insertarArista(grafo.obtenerVertice("TAM"), grafo.obtenerVertice("MID"), 450, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("SAN"), grafo.obtenerVertice("MID"), 9900, 5.5);
+    grafo.insertarArista(grafo.obtenerVertice("TAM"), grafo.obtenerVertice("MID"), 200, 5.5);
     grafo.insertarArista(grafo.obtenerVertice("MEX"), grafo.obtenerVertice("MID"), 450, 5.5);
     grafo.insertarArista(grafo.obtenerVertice("MEX"), grafo.obtenerVertice("CUN"), 650, 5.5);
     grafo.insertarArista(grafo.obtenerVertice("CUN"), grafo.obtenerVertice("GDL"), 650, 5.5);
@@ -76,15 +76,18 @@ int main()
     grafo.insertarArista(grafo.obtenerVertice("MZT"), grafo.obtenerVertice("BJX"), 300, 5.5);
     grafo.insertarArista(grafo.obtenerVertice("MZT"), grafo.obtenerVertice("TIJ"), 400, 5.5);
 
+
     //Cantidad de vertices
-    cout << grafo.obtenerTamanio() << endl;
+    //cout << grafo.obtenerTamanio() << endl;
 
     //Aca hice una prueba de obtener el costo entre 2 vertices pasandole solo los nombres de origen y destino (Deberia hacerse con Djikstra)
     //El metodo obtenerArista se encarga de recorrer el vector de aristas de el vertice ORIGEN
     //y cuando la direccion del destino que esta cargada en la arista coincide con el pasado como atributo devuelve esa arista
     //habilitando a consultar los datos (precio y horasVuelo).
 
-
-    grafo.mejorCamino(grafo.obtenerVertice("MZT"), grafo.obtenerVertice("MID"));
+    //cout << endl << grafo.mejorCamino(grafo.obtenerVertice("EZE"), grafo.obtenerVertice("MIA"));
+    //cout << endl << grafo.mejorCamino(grafo.obtenerVertice("EZE"), grafo.obtenerVertice("TXL"));
+    grafo.mejorCamino(grafo.obtenerVertice("MTY"), grafo.obtenerVertice("TAM"));
+    grafo.mejorCamino(grafo.obtenerVertice("TIJ"), grafo.obtenerVertice("MID"));
     */
 

@@ -21,9 +21,9 @@ private:
 
     string nombre;
     NodoGrafo * siguiente;
+    NodoGrafo * anterior;
     vector<Arista> aristas;
     bool visitado;
-
 
 
 public:
@@ -45,14 +45,17 @@ public:
 
     bool obtenerVisitado();
     void definirVisitado(bool estado);
+    void definirAnterior(NodoGrafo * padre);
 
     string obtenerNombre();
     // PRE : nodo creado
     // POST : Devuelve el puntero al siguiente nodo
     // Si es el último devuelve NULL
     NodoGrafo * obtenerSiguiente();
+    NodoGrafo * obtenerAnterior();
 
     vector<Arista> obtenerCaminos(); //Metodo que devuelve todos los caminos de un vertice
+
 
 };
 

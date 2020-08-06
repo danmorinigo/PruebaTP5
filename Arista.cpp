@@ -10,19 +10,6 @@ Arista::Arista(int costo, float tiempo, NodoGrafo *destino) {
     this -> adyacente = destino;
 }
 
-void Arista::insertarCosto(int costo) {
-    this -> costo = costo;
-}
-
-void Arista::insertarHorasVuelo(float horasVuelo) {
-    this -> horasVuelo = horasVuelo;
-}
-
-void Arista::insertarVerticeApunta(NodoGrafo *vertice) {
-    this -> adyacente = vertice;
-}
-
-
 NodoGrafo * Arista::obtenerVerticeApunta() {
     return adyacente;
 }
