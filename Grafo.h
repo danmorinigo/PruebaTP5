@@ -6,6 +6,7 @@
 #define GRAFO_GRAFO_H
 #include "NodoGrafo.h"
 #include "VerticeCosto.h"
+#include "BST2.h"
 
 class Grafo{
     //Atributos
@@ -14,7 +15,7 @@ private:
     NodoGrafo * primero;
     NodoGrafo * ultimo;
     int tam;
-
+    BST2<string> vertices;
 
     //Metodos
 public:
@@ -32,6 +33,8 @@ public:
 
     void agregarVertice(string nombre);
 
+    bool existeVertice(string nombre);
+
     // PRE : lista creada
     // POST : devuelve verdadero si la lista es vacia falso de lo contrario
     bool grafoVacio();
@@ -39,7 +42,6 @@ public:
     // PRE : lista creada
     // POST : agrega un dato en la posicion pos incrementa tam en 1
     void insertarVertice(string nombre, unsigned pos);
-
 
     void insertarArista(NodoGrafo *origen, NodoGrafo *destino, int precio, float horas);
 

@@ -14,6 +14,7 @@ private:
     VerificadorDatos chequear;
 public:
     manejoDeArchivos();
+    
     bool existe(string nombreArchivo);
 
     //antes verificar que existe el archivo!

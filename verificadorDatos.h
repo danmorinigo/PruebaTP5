@@ -14,6 +14,7 @@ public:
     bool esDouble(string aVerificar);
     bool esEntero(string aVerificar);
     bool esAeropuerto(string aVerificar);
+    bool esVuelo(string aVerificar);
 };
 
 #endif // VERIFICADORDATOS_H_INCLUDED

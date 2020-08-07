@@ -67,17 +67,18 @@ void manejoDeArchivos::agregarVuelo(Grafo* vuelos, string linea){
     string auxS2;
     unsigned auxU;
     double auxD;
-
     /*cadena >> auxS;
     vuelos->insertarVertice(auxS, 1);
     cadena >> auxS2;
     vuelos->insertarVertice(auxS2, 1);*/
-
     cadena >> auxS;
-    vuelos->agregarVertice(auxS);
+    if (!vuelos->existeVertice(auxS)){
+        vuelos->agregarVertice(auxS);
+    }
     cadena >> auxS2;
-    vuelos->agregarVertice(auxS2);
-    
+    if (!vuelos->existeVertice(auxS2)){
+        vuelos->agregarVertice(auxS2);
+    }
     cadena >> auxU;
     cadena >> auxD;
 
@@ -93,11 +94,15 @@ void manejoDeArchivos::cargarVuelos(Grafo* vuelos, string nombreArchivo){
         contador++;
         cout << "Linea " << contador << "-> ";
         getline(archivoConDatos, linea);
-       if(linea != ""){
+        cout <<endl<< " Se va a chequear la linea: "<< linea<<endl;
+       if(chequear.esVuelo(linea)){
             cout << " Se va a cargar la linea: "<< linea<<endl;
             agregarVuelo(vuelos, linea);
             cout << "OK" << endl;
-       }
+       } else{
+            cout << "ERROR" << endl;
+            errores++;
+        }
     }
     archivoConDatos.close();
     cout << "Fin [" << nombreArchivo << "]" << endl;

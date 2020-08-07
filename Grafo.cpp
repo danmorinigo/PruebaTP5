@@ -57,6 +57,7 @@ void Grafo::agregarVertice(string nombre){
         primero = ingresante;
         ultimo = ingresante;
         tam++;
+        this->vertices.insert(nombre);
         return;
     }
     NodoGrafo* aux = primero;
@@ -66,7 +67,13 @@ void Grafo::agregarVertice(string nombre){
     aux->asignarSiguiente(ingresante);
     ultimo = ingresante;
     tam++;
+    this->vertices.insert(nombre);
 }
+
+bool Grafo::existeVertice(string nombre){
+    return this->vertices.search(nombre);
+}
+
 /////////////////////////////////////////////////////////////////////////
 
 void Grafo::eliminarDato(unsigned pos) {

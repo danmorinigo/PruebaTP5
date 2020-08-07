@@ -96,5 +96,41 @@ bool VerificadorDatos::esAeropuerto(string aVerificar){
     }
     return true;
 }
+
+bool VerificadorDatos::esVuelo(string aVerificar){
+    istringstream cadena(aVerificar);
+    string tempStr;
+    unsigned cantDatos = 0;
+    while(!cadena.eof()){
+        cadena >> tempStr;//IATA?
+        cout<<"Se va verificar si "<<tempStr<<" es IATA."<<endl;
+        if(!esIATA(tempStr)){
+            return false;
+        }
+        cantDatos++;
+        cadena >> tempStr;
+        cout<<"Se va verificar si "<<tempStr<<" es IATA."<<endl;
+        if(!esIATA(tempStr)){
+            return false;
+        }
+        cantDatos++;
+        cadena >> tempStr;// COSTO EN DINERO
+        cout<<"Se va verificar si "<<tempStr<<" es entero."<<endl;
+        if(!esEntero(tempStr)){
+            return false;
+        }
+        cantDatos++;
+        cadena >> tempStr;// TIEMPO
+        cout<<"Se va verificar si "<<tempStr<<" es double."<<endl;
+        if(!esDouble(tempStr)){
+            return false;
+        }
+        cantDatos++;
+    }
+    if(cantDatos != 4){
+        return false;
+    }
+    return true;
+}
 VerificadorDatos::~VerificadorDatos(){
 }
