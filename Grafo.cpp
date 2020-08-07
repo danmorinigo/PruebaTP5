@@ -4,6 +4,8 @@
 
 #include "Grafo.h"
 
+const int PSEUDOINFINITO = 999999999;
+
 Grafo::Grafo() {
     primero = 0;
     ultimo = 0;
@@ -187,7 +189,7 @@ void Grafo::setearVerticesComoNoVistos() {
 
 void Grafo::setearDistanciaInfinito(vector<VerticeCosto> *distancia) {
     for (int i = 1; i <= obtenerTamanio(); ++i) {
-        distancia -> push_back(VerticeCosto(obtenerNodo(i), 99999));
+        distancia -> push_back(VerticeCosto(obtenerNodo(i), PSEUDOINFINITO));
     }
 }
 
