@@ -86,8 +86,10 @@ void Menu::hacerEleccion(){
         case '6': { this-> limpiarPantalla();
                     if (this->hayVuelosCargados()){
                     	this->opcionVuelos = '.';
-                       this->solicitarPartidaYDestino();
-                       while (this->getOpcionVuelos() != '0'){
+                        
+                        this->solicitarPartidaYDestino();
+                        //this->vuelos->mostrarVertices();
+                        while (this->getOpcionVuelos() != '0'){
                             this->mostrarMenuVuelos();
                             this->hacerEleccionMenuVuelos();
                             this->pausa();
@@ -212,10 +214,12 @@ void Menu::darDeBajaAeropuerto(){
 }
 
 void Menu::solicitarPartidaYDestino(){
-    this->limpiarPantalla();
+   // this->limpiarPantalla();
+
     cout << endl;
     enmarcar("Eleccion del Vuelo.");
-    cout << endl;
+    
+    this->vuelos->mostrarVertices();
     cout <<"A continuacion debe ingresar los aeropuertos de partida y de destino."<<endl;
     cout <<endl<< "Ingrese codigo IATA del aeropuerto de partida: ";
     cin >> this->partida;

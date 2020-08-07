@@ -6,6 +6,7 @@
 
 Grafo::Grafo() {
     primero = 0;
+    ultimo = 0;
     tam = 0;
 }
 
@@ -34,6 +35,39 @@ void Grafo::insertarVertice(string nombre, unsigned int pos) {
     tam++;
 }
 
+////////////////////////////////////////////////////////////////////////////
+
+NodoGrafo * Grafo::obtenerPrimero(){
+    return this-> primero;
+}
+void Grafo::mostrarVertices(){
+    cout << endl<<"Listado de aeropuertos en el grafo: \n"<<endl;
+            NodoGrafo* aux = this->obtenerPrimero();
+            for(int i = 0; i < this->obtenerTamanio(); i++){
+                cout << "- " << aux->obtenerNombre() << endl;
+                aux = aux->obtenerSiguiente();
+            }
+            cout<<endl;
+            cin.get();
+}
+
+void Grafo::agregarVertice(string nombre){
+    NodoGrafo* ingresante = new NodoGrafo(nombre);
+    if (!primero){
+        primero = ingresante;
+        ultimo = ingresante;
+        tam++;
+        return;
+    }
+    NodoGrafo* aux = primero;
+    while(aux->obtenerSiguiente() != 0){
+        aux = aux->obtenerSiguiente();
+    }
+    aux->asignarSiguiente(ingresante);
+    ultimo = ingresante;
+    tam++;
+}
+/////////////////////////////////////////////////////////////////////////
 
 void Grafo::eliminarDato(unsigned pos) {
     NodoGrafo * borrar = primero;

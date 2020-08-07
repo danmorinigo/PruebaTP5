@@ -12,6 +12,7 @@ class Grafo{
 
 private:
     NodoGrafo * primero;
+    NodoGrafo * ultimo;
     int tam;
 
 
@@ -24,6 +25,12 @@ public:
     // PRE : lista creada
     // POST : Libera todos los recursos de la lista
     ~Grafo();
+
+    NodoGrafo * obtenerPrimero();
+
+    void mostrarVertices();
+
+    void agregarVertice(string nombre);
 
     // PRE : lista creada
     // POST : devuelve verdadero si la lista es vacia falso de lo contrario

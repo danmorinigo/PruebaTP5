@@ -68,10 +68,15 @@ void manejoDeArchivos::agregarVuelo(Grafo* vuelos, string linea){
     unsigned auxU;
     double auxD;
 
-    cadena >> auxS;
+    /*cadena >> auxS;
     vuelos->insertarVertice(auxS, 1);
     cadena >> auxS2;
-    vuelos->insertarVertice(auxS2, 1);
+    vuelos->insertarVertice(auxS2, 1);*/
+
+    cadena >> auxS;
+    vuelos->agregarVertice(auxS);
+    cadena >> auxS2;
+    vuelos->agregarVertice(auxS2);
     
     cadena >> auxU;
     cadena >> auxD;
