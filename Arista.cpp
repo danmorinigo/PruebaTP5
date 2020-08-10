@@ -1,23 +1,34 @@
-//
-// Created by Emiliano Ruiz on 25/07/2020.
-//
+#include "arista.h"
 
-#include "Arista.h"
-
-Arista::Arista(int costo, float tiempo, NodoGrafo *destino) {
-    this -> costo = costo;
-    this -> horasVuelo = tiempo;
-    this -> adyacente = destino;
+Arista::Arista(Vertice* destino){
+    sig = 0;
+    this->destino = destino;
+    precio = -1;
+    horasVuelo = -1.0;
+    cout << "Constructor Arista" << endl;
+}
+Arista::~Arista(){
+    cout << "Destructor Arista" << endl;
+}
+void Arista::asignarSiguiente(Arista* sig){
+    this->sig = sig;
+}
+void Arista::asignarPrecio(int precio){
+    this->precio = precio;
+}
+void Arista::asignarHoras(double horasVuelo){
+    this->horasVuelo = horasVuelo;
 }
 
-NodoGrafo * Arista::obtenerVerticeApunta() {
-    return adyacente;
+Arista* Arista::consultarSiguiente(){
+    return sig;
 }
-
-int Arista::obtenerCosto() {
-    return costo;
+Vertice* Arista::ConsultarDestino(){
+    return destino;
 }
-
-float Arista:: obtenerHorasVuelo() {
+int Arista::cunsultarPrecio(){
+    return precio;
+}
+double Arista::consultarHoras(){
     return horasVuelo;
 }

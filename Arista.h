@@ -1,31 +1,30 @@
-//
-// Created by Emiliano Ruiz on 25/07/2020.
-//
-
-#ifndef GRAFO_ARISTA_H
-#define GRAFO_ARISTA_H
-
-#include "NodoGrafo.h"
-
+#ifndef ARISTA_H_INCLUDED
+#define ARISTA_H_INCLUDED
+#include <iostream>
+//#include "vertice.h"
 using namespace std;
 
-class NodoGrafo;
+class Vertice;
 
-class Arista {
-
+class Arista{
 private:
-    int costo;
-    float horasVuelo;
-    NodoGrafo * adyacente;
-
+    Arista* sig;
+    Vertice* destino;
+    int precio;
+    double horasVuelo;
 public:
-    Arista(int costo, float tiempo, NodoGrafo * destino);
+    Arista(Vertice* destino);
+    ~Arista();
+    void asignarSiguiente(Arista* sig);
+    void asignarPrecio(int precio);
+    void asignarHoras(double horasVuelo);
 
-    NodoGrafo * obtenerVerticeApunta();
-    int obtenerCosto();
-    float obtenerHorasVuelo();
+    Arista* consultarSiguiente();
+    Vertice* ConsultarDestino();
+    int cunsultarPrecio();
+    double consultarHoras();
 
 };
 
 
-#endif //GRAFO_ARISTA_H
+#endif // ARISTA_H_INCLUDED

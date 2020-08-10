@@ -1,82 +1,54 @@
-//
-// Created by Emiliano Ruiz on 25/07/2020.
-//
+#ifndef GRAFO_H_INCLUDED
+#define GRAFO_H_INCLUDED
 
-#ifndef GRAFO_GRAFO_H
-#define GRAFO_GRAFO_H
-#include "NodoGrafo.h"
-#include "VerticeCosto.h"
-#include "BST2.h"
+#include <list>
+#include <stack>
 
-class Grafo{
-    //Atributos
+#include "colaPrioridad.h"
+#include "vertice.h"
+#include "arista.h"
+#include "etiqueta.h"
 
-private:
-    NodoGrafo * primero;
-    NodoGrafo * ultimo;
-    int tam;
-    BST2<string> vertices;
+using namespace std;
 
-    //Metodos
-public:
-    // PRE : -
-    // POST : construye una lista vacia
-    Grafo();
-
-    // PRE : lista creada
-    // POST : Libera todos los recursos de la lista
-    ~Grafo();
-
-    NodoGrafo * obtenerPrimero();
-
-    void mostrarVertices();
-
-    void agregarVertice(string nombre);
-
-    bool existeVertice(string nombre);
-
-    // PRE : lista creada
-    // POST : devuelve verdadero si la lista es vacia falso de lo contrario
-    bool grafoVacio();
-
-    // PRE : lista creada
-    // POST : agrega un dato en la posicion pos incrementa tam en 1
-    void insertarVertice(string nombre, unsigned pos);
-
-    void insertarArista(NodoGrafo *origen, NodoGrafo *destino, int precio, float horas);
-
-    // PRE : - lista creada y no vacia
-    // - 0 < pos <= tam
-    // POST : libera el nodo que esta en la posición pos se toma 1 como el primero
-    void eliminarDato(unsigned pos);
-
-    // PRE : Lista creada
-    // POST : Devuelve tam ( cantidad de nodos de la lista )
-    unsigned obtenerTamanio();
-
-    // Obtiene un puntero al nodo de la posicion pos
-    // PRE : 0 < pos <= tam
-    // POST : devuelve un puntero al nodo solicitado
-    NodoGrafo * obtenerNodo (unsigned pos);
-
-    NodoGrafo * obtenerVertice (string nombre);
-
-    Arista obtenerArista(NodoGrafo *origen, NodoGrafo *destino);
-
-    void mejorCamino(NodoGrafo *origen, NodoGrafo * destino);
-
-    void mostrarCamino(NodoGrafo * verticeActual, NodoGrafo * origen);
-
-    void actualizarCosto(NodoGrafo * verticeActual,priority_queue<VerticeCosto> * colaPrioridad, NodoGrafo * adyacente, int costo, vector<VerticeCosto> * distancia);
-
-    void setearVerticesComoNoVistos();
-
-    void setearDistanciaInfinito(vector<VerticeCosto> * distancia);
-
-    void cambiarDistancia(vector<VerticeCosto> * distancia, NodoGrafo * vertice, int valor);
-
-    int obtenerDistancia(vector<VerticeCosto> * distancia, NodoGrafo * vertice);
+struct TuplaCompleta{
+    Vertice* vertice = 0;
+    int pesoAcumulado = 0;
+    double pesoDouble = 0.0;
 };
 
+class Grafo{
+private:
+    Vertice* primero;
+    Vertice* ultimo;
+    int tamanio;
+public:
+    //***********************************************************************************
+    //**********************************LO BASICO****************************************
+    //***********************************************************************************
+    Grafo();
+    void agregarVertice(string nombre);
+    bool existeVertice(string nombre);
+    int cantVertices();
+    Vertice* obtenerVertice(string nombre);
+    void agregarArista(Vertice* inicio, Vertice* destino, int precio, double horasVuelo);
+    int obtenerPeso1(Vertice* inicio, Vertice* destino);
+    double obtenerPeso2(Vertice* inicio, Vertice* destino);
 
-#endif //GRAFO_GRAFO_H
+    //------ESTO HAY QUE MODULIZAR BASTANTE Y VER TEMA NOMBRES VARIABLES------------
+    void caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuelo);
+    void mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<TuplaCompleta> caminoRecorrido, bool primeraPasada, int criterio);
+    void mostrarPila(stack<TuplaCompleta> aMostrar, int criterio);
+    //------------------------------------------------------------------------------
+
+    //--------------------NO SE SI ES TAN NECESARIO---------------------------
+    Vertice* obtenerPrimero();
+    //------------------------------------------------------------------------
+    ~Grafo();
+
+    //***********************************************************************************
+    //***********************************************************************************
+    //***********************************************************************************
+};
+
+#endif // GRAFO_H_INCLUDED

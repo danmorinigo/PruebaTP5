@@ -6,7 +6,12 @@
 #include "menu.h"
 #include "manejoDeArchivos.h"
 #include "verificadorDatos.h"
-#include "Grafo.h"
+#include "grafo.h"
+
+//******para probar*****
+#include <fstream>
+//**********************
+
 const string ARCHIVO_IATA = "Aeropuertos.txt";
 const string ARCHIVO_VUELOS = "vuelos.txt";
 
@@ -14,23 +19,105 @@ using namespace std;
 
 int main()
 {
+    //****************************************************************************
+    //*********************PARA PROBAR GRAFO**************************************
+    ifstream prueba(ARCHIVO_VUELOS);
+    string linea;
+    string vertice1, vertice2;
+    unsigned costo, cont = 1;
+    double horas;
+
+    Grafo test;
+    while(!prueba.eof()){
+        cout << "Linea: " << cont << endl;
+        getline(prueba, linea);
+        cout << linea << endl;
+        istringstream cadena(linea);
+        cadena >> vertice1;
+        cadena >> vertice2;
+        cadena >> costo;
+        cadena >> horas;
+        if(!test.existeVertice(vertice1)){
+            test.agregarVertice(vertice1);
+        }
+        if(!test.existeVertice(vertice2)){
+            test.agregarVertice(vertice2);
+        }
+        test.agregarArista(test.obtenerVertice(vertice1), test.obtenerVertice(vertice2), costo, horas);
+        cont++;
+    }
+    prueba.close();
+    cout << "Vertices en grafo:" << endl;
+    Vertice* otroAuxiliar = test.obtenerPrimero();
+    for(int i = 0; i < test.cantVertices(); i++){
+        cout << otroAuxiliar->obtenerNombreVertice() << endl;
+        otroAuxiliar = otroAuxiliar->obtenerProxVertice();
+    }
+
+    string desde, hasta;
+    bool existe1 = false, existe2 = false;
+    do{
+        do{
+            cout << "Desde ('salir' para salir menu): ";
+            cin >> desde;
+            if(test.existeVertice(desde)){
+                existe1 = true;
+            }
+        }while((desde != "salir") && !existe1);
+        while((desde != "salir") && ((hasta != "salir") && !existe2)){
+            cout << "Hasta ('salir' para salir menu): ";
+            cin >> hasta;
+            if(test.existeVertice(hasta)){
+                existe2 = true;
+            }
+        }
+        if(existe1 && existe2){
+            cout << "Consulta desde: " << desde << endl;
+            cout << "Hasta: " << hasta << endl;
+            cout << endl;
+            cout << "MEJOR PRECIO" << endl;
+            cout << "------------" << endl;
+            test.caminoMinimo(test.obtenerVertice(desde), test.obtenerVertice(hasta), 1);
+            cin.get();
+            cin.get();
+            cout << "MEJOR HORA VUELO" << endl;
+            cout << "----------------" << endl;
+            test.caminoMinimo(test.obtenerVertice(desde), test.obtenerVertice(hasta), 2);
+            cin.get();
+            //cin.get();
+        }
+        existe1 = false;
+        existe2 = false;
+
+    }while((desde != "salir") && (hasta != "salir"));
+
+    return 0;
+    //****************************************************************************
+    //****************************************************************************
 
     VerificadorDatos chequeo;
     manejoDeArchivos archivo;
     Menu menu;
     BST<Aeropuerto*>* aeropuertos = new BST<Aeropuerto*>();
-    Grafo* vuelos = new Grafo;
-
+//**********************************************
+//    Grafo* vuelos = new Grafo;
+//**********************************************
     if(archivo.existe(ARCHIVO_IATA)){
         archivo.cargarAeropuertos(aeropuertos, ARCHIVO_IATA);
     }
     menu.setAeropuertos(aeropuertos);
     if(archivo.existe(ARCHIVO_VUELOS)){
-        archivo.cargarVuelos(vuelos, ARCHIVO_VUELOS);
+        //**********************************************
+        //archivo.cargarVuelos(vuelos, ARCHIVO_VUELOS);
+        //**********************************************
     } else{
-        vuelos = NULL;
+//**********************************************
+        //vuelos = NULL;
+//**********************************************
     }
-    menu.setVuelos(vuelos);
+//**********************************************
+//    menu.setVuelos(vuelos);
+//**********************************************
     while (menu.getOpcion() != '0'){
         menu.mostrarMenuPrincipal();
         menu.hacerEleccion();
@@ -38,8 +125,9 @@ int main()
     }
 
     delete aeropuertos;
-    delete vuelos;
-
+//**********************************************
+    //delete vuelos;
+//**********************************************
     return 0;
 }
 
