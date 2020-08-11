@@ -85,7 +85,7 @@ void Grafo::agregarArista(Vertice* inicio, Vertice* destino, int precio, double 
 void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuelo){
 
     //APARENTA QUE SE PUEDE SACAR ESTA BOOL
-    bool primeraEntrada = true; //Lo uso para el caso en que la salida y la
+    //bool primeraEntrada = true; //Lo uso para el caso en que la salida y la
                                 //llegada sea la misma
 
     int modo = precioUhorasVuelo; //1 para INT, 2 para DOUble
@@ -241,7 +241,7 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
                     pesoArista = this->obtenerPeso1(verticeVisitado, auxDestino.getVertice());
                     pesoTotal = miPeso + pesoArista;
                     pesoTotalDouble = miPesoDouble + pesoAristaDouble;
-                    if(auxDestino.getAnterior().empty()){   //Si no tiene predecesor no tiene peso
+                    if(auxDestino.getAnterior().empty()){   //Si no tiene predecesor tiene peso INFINITO
                                                             //Asigno anterior a el vertice que
                                                             //estoy visitando, peso = al peso
                                                             //del vertice que estoy visitando+peso
@@ -262,8 +262,6 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
                             auxDestino.setIteracion(iteracion);
                         }else if(pesoTotal == suPeso){  //Si es igual, agrego un nuevo anterior
                                                         //y cambio iteracion
-                                                        //iteracion nada, lo saque de no se que clase
-                                                        //per no le encontre utilidad hasta ahora
                             auxDestino.setIteracion(iteracion);
                         }
                     }
