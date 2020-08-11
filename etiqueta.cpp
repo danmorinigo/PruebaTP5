@@ -3,8 +3,8 @@
 Etiqueta::Etiqueta(Vertice* actual){
     vertice = actual;
     //anterior = 0;
-    pesoAcumulado = 0;
-    pesoDouble = 0.0;
+    pesoAcumulado = ENTERO_INFINITO;
+    pesoDouble = DOUBLE_INFINITO;
     iteracion = 0;
 }
 Etiqueta::~Etiqueta(){

@@ -3,6 +3,9 @@
 #include <list>
 #include "vertice.h"
 
+const int ENTERO_INFINITO = 999999;
+const int DOUBLE_INFINITO = 999999.9;
+
 class Etiqueta{
 private:
     Vertice* vertice;

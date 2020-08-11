@@ -41,6 +41,8 @@ public:
     void mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<TuplaCompleta> caminoRecorrido, bool primeraPasada, int criterio);
     void mostrarPila(stack<TuplaCompleta> aMostrar, int criterio);
     void mostrarVertices();
+    bool marcadoComoVisitado(list<Vertice*> yaVisitados, Vertice* evaluado);
+    void verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, list<Etiqueta> &etiquetados, int modo, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola);
     //------------------------------------------------------------------------------
 
     //---------------------------------------------
