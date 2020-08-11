@@ -1,24 +1,24 @@
 #ifndef VERTICE_H_INCLUDED
 #define VERTICE_H_INCLUDED
 #include <iostream>
-#include "Arista2.h"
+#include "Arista.h"
 
 using namespace std;
 
 class Vertice{
 private:
     Vertice* siguiente;
-    Arista2* arista;
+    Arista* arista;
     string nombre;
 public:
     Vertice(string nombre);
     ~Vertice();
     void asignarProxVertice(Vertice* siguiente);
-    void agregarArista(Arista2* nuevaArista);
-    void aliminarArista(Arista2* aristaAeliminar);
+    void agregarArista(Arista* nuevaArista);
+    void aliminarArista(Arista* aristaAeliminar);
 
     Vertice* obtenerProxVertice();
-    Arista2* obtenerAristas();
+    Arista* obtenerAristas();
     string obtenerNombreVertice();
 };
 

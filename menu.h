@@ -4,7 +4,7 @@
 #include <string>
 #include "BST.h"
 #include "aeropuerto.h"
-#include "Grafo2.h"
+#include "Grafo.h"
 
 const int ANCHO_PANTALLA = 60;
 
@@ -18,7 +18,7 @@ private:
     string partida;
     string destino;
     BST<Aeropuerto*>* aeropuertos;
-    Grafo2* vuelos;
+    Grafo* vuelos;
 
 public:
     // Constructor sin par�metros de la clase Menu.
@@ -32,7 +32,7 @@ public:
 
     void setAeropuertos(BST<Aeropuerto*>*);
 
-    void setVuelos(Grafo2*);
+    void setVuelos(Grafo*);
 
     bool hayVuelosCargados();
     //PRE:  --

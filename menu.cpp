@@ -22,7 +22,7 @@ void Menu::setAeropuertos(BST<Aeropuerto*>* aeropuertos){
     this-> aeropuertos = aeropuertos;
 }
 //**********************************************
-void Menu::setVuelos(Grafo2* vuelos){
+void Menu::setVuelos(Grafo* vuelos){
     this-> vuelos = vuelos;
     cout<<endl<<"SE CARGARON LOS VUELOS"<<endl;
 }
@@ -87,7 +87,7 @@ void Menu::hacerEleccion(){
         case '6': { this-> limpiarPantalla();
                     if (this->hayVuelosCargados()){
                     	this->opcionVuelos = '.';
-                        
+
                         this->solicitarPartidaYDestino();
                         //this->vuelos->mostrarVertices();
                         while (this->getOpcionVuelos() != '0'){

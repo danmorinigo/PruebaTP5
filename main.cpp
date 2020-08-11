@@ -6,7 +6,7 @@
 #include "menu.h"
 #include "manejoDeArchivos.h"
 #include "verificadorDatos.h"
-#include "Grafo2.h"
+#include "Grafo.h"
 const string ARCHIVO_IATA = "Aeropuertos.txt";
 const string ARCHIVO_VUELOS = "vuelos.txt";
 
@@ -19,7 +19,7 @@ int main()
     manejoDeArchivos archivo;
     Menu menu;
     BST<Aeropuerto*>* aeropuertos = new BST<Aeropuerto*>();
-    Grafo2* vuelos = new Grafo2;
+    Grafo* vuelos = new Grafo;
 
     if(archivo.existe(ARCHIVO_IATA)){
         archivo.cargarAeropuertos(aeropuertos, ARCHIVO_IATA);

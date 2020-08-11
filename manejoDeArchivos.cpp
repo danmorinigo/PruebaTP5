@@ -61,7 +61,7 @@ void manejoDeArchivos::cargarAeropuertos(BST<Aeropuerto*>* arbol, string nombreA
 }
 
 
-void manejoDeArchivos::agregarVuelo(Grafo2* vuelos, string linea){
+void manejoDeArchivos::agregarVuelo(Grafo* vuelos, string linea){
     istringstream cadena(linea);
     string auxS;
     string auxS2;
@@ -84,7 +84,7 @@ void manejoDeArchivos::agregarVuelo(Grafo2* vuelos, string linea){
 
 //**********************************************
 
-void manejoDeArchivos::cargarVuelos(Grafo2* vuelos, string nombreArchivo){
+void manejoDeArchivos::cargarVuelos(Grafo* vuelos, string nombreArchivo){
     cout << "Procesando [" << nombreArchivo << "]..." << endl;
     unsigned contador = 0, errores = 0;
     ifstream archivoConDatos(nombreArchivo);
