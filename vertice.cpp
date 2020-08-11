@@ -12,13 +12,13 @@ Vertice::~Vertice(){
 void Vertice::asignarProxVertice(Vertice* siguiente){
     this->siguiente = siguiente;
 }
-void Vertice::aliminarArista(Arista* aristaAeliminar){
+void Vertice::aliminarArista(Arista2* aristaAeliminar){
     if(this->arista == aristaAeliminar){
         this->arista = aristaAeliminar->consultarSiguiente();
         delete aristaAeliminar;
     }else{
-        Arista* previa = this->arista;
-        Arista* eliminamos = previa->consultarSiguiente();
+        Arista2* previa = this->arista;
+        Arista2* eliminamos = previa->consultarSiguiente();
         while(eliminamos){
             if(eliminamos == aristaAeliminar){
                 previa->asignarSiguiente(eliminamos->consultarSiguiente());
@@ -31,8 +31,8 @@ void Vertice::aliminarArista(Arista* aristaAeliminar){
     }
 }
 
-void Vertice::agregarArista(Arista* nuevaArista){
-    Arista* aux = this->arista;
+void Vertice::agregarArista(Arista2* nuevaArista){
+    Arista2* aux = this->arista;
     if(aux == 0){
         this->arista = nuevaArista;
         return;
@@ -46,7 +46,7 @@ void Vertice::agregarArista(Arista* nuevaArista){
 Vertice* Vertice::obtenerProxVertice(){
     return siguiente;
 }
-Arista* Vertice::obtenerAristas(){
+Arista2* Vertice::obtenerAristas(){
     return arista;
 }
 string Vertice::obtenerNombreVertice(){

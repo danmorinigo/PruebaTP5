@@ -4,10 +4,7 @@
 #include <string>
 #include "BST.h"
 #include "aeropuerto.h"
-
-//**********************************************
-//#include "Grafo.h"
-//**********************************************
+#include "Grafo2.h"
 
 const int ANCHO_PANTALLA = 60;
 
@@ -21,9 +18,7 @@ private:
     string partida;
     string destino;
     BST<Aeropuerto*>* aeropuertos;
-//**********************************************
-    //Grafo* vuelos;
-//**********************************************
+    Grafo2* vuelos;
 
 public:
     // Constructor sin par�metros de la clase Menu.
@@ -36,9 +31,9 @@ public:
     char getOpcionVuelos();
 
     void setAeropuertos(BST<Aeropuerto*>*);
-//**********************************************
-//    void setVuelos(Grafo*);
-//**********************************************
+
+    void setVuelos(Grafo2*);
+
     bool hayVuelosCargados();
     //PRE:  --
     //POST: Borra lo impreso en pantalla. Cursor vuelve a posicion (1, 1).

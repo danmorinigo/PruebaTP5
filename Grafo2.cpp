@@ -1,10 +1,11 @@
-#include "grafo.h"
-Grafo::Grafo(){
+#include "Grafo2.h"
+
+Grafo2::Grafo2(){
     primero = 0;
     ultimo = 0;
     tamanio = 0;
 }
-void Grafo::agregarVertice(string nombre){
+void Grafo2::agregarVertice(string nombre){
     Vertice* ingresante = new Vertice(nombre);
     if (!primero){
         primero = ingresante;
@@ -20,12 +21,12 @@ void Grafo::agregarVertice(string nombre){
     ultimo = ingresante;
     tamanio++;
 }
-int Grafo::obtenerPeso1(Vertice* inicio, Vertice* destino){
+int Grafo2::obtenerPeso1(Vertice* inicio, Vertice* destino){
     if(!inicio || !destino){
         cout << "Error salida / llegada\n";
         return 0;
     }
-    Arista* aux1 = inicio->obtenerAristas();
+    Arista2* aux1 = inicio->obtenerAristas();
     while(aux1){
         if(aux1->ConsultarDestino() == destino){
             return aux1->cunsultarPrecio();
@@ -34,12 +35,12 @@ int Grafo::obtenerPeso1(Vertice* inicio, Vertice* destino){
     }
     return -1;
 }
-double Grafo::obtenerPeso2(Vertice* inicio, Vertice* destino){
+double Grafo2::obtenerPeso2(Vertice* inicio, Vertice* destino){
     if(!inicio || !destino){
         cout << "Error salida / llegada\n";
         return 0;
     }
-    Arista* aux1 = inicio->obtenerAristas();
+    Arista2* aux1 = inicio->obtenerAristas();
     while(aux1){
         if(aux1->ConsultarDestino() == destino){
             return aux1->consultarHoras();
@@ -49,13 +50,13 @@ double Grafo::obtenerPeso2(Vertice* inicio, Vertice* destino){
     return -1;
 }
 
-Vertice* Grafo::obtenerPrimero(){
+Vertice* Grafo2::obtenerPrimero(){
     return this->primero;
 }
-bool Grafo::existeVertice(string nombre){
+bool Grafo2::existeVertice(string nombre){
     return (obtenerVertice(nombre) != 0);
 }
-Vertice* Grafo::obtenerVertice(string nombre){
+Vertice* Grafo2::obtenerVertice(string nombre){
     Vertice* aux = primero;
     for(int i = 0; i < tamanio; i++){
         if(aux->obtenerNombreVertice() == nombre){
@@ -65,15 +66,15 @@ Vertice* Grafo::obtenerVertice(string nombre){
     }
     return 0;
 }
-int Grafo::cantVertices(){
+int Grafo2::cantVertices(){
     return this->tamanio;
 }
-void Grafo::agregarArista(Vertice* inicio, Vertice* destino, int precio, double horasVuelo){
+void Grafo2::agregarArista(Vertice* inicio, Vertice* destino, int precio, double horasVuelo){
     if(!inicio || !destino){
         cout << "Error salida / llegada\n";
         return;
     }
-    Arista* nuevaArista = new Arista(destino);
+    Arista2* nuevaArista = new Arista2(destino);
     nuevaArista->asignarPrecio(precio);
     nuevaArista->asignarHoras(horasVuelo);
     inicio->agregarArista(nuevaArista);
@@ -81,13 +82,11 @@ void Grafo::agregarArista(Vertice* inicio, Vertice* destino, int precio, double 
 
 //deben estar verificadas las existencias de ambos vertices
 //precioUhorasVuelo -> 1-precio, 2-horas
-void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuelo){
+void Grafo2::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuelo){
 
     bool primeraEntrada = true; //Lo uso para el caso en que la salida y la
                                 //llegada sea la misma
-
     int modo = precioUhorasVuelo; //1 para INT, 2 para DOUble
-
     int iteracion = 1;
 
     ColaPrioridad cola(modo);
@@ -132,7 +131,7 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
         }
         //-------------------------------------------------------------------
 
-        Arista* auxAristas;
+        Arista2* auxAristas;
         if(!fueVisitadoAntes){
             auxAristas = verticeVisitado->obtenerAristas();
             while(auxAristas){
@@ -313,7 +312,7 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
     //------------------------------------------------------
     //HACER METODO APARTE
     //Solo muestro el orden en que fueron recorridos los vertices
-    Vertice* auxilio;
+    /*Vertice* auxilio;
     cout << "----------------------------" << endl;
     cout << "VERTICES MARCADOS (EN ORDEN)" << endl;
     cout << "----------------------------" << endl;
@@ -321,7 +320,7 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
     for(i = vistos.begin(); i != vistos.end(); i++){
         auxilio = *i;
         cout << auxilio->obtenerNombreVertice() << endl;
-    }
+    }*/
     //------------------------------------------------------
     //-------------------------------------------------
     //metodo aparte HAY CAMINO??
@@ -342,12 +341,12 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
     }
     //------------------------------------------------
     if(hayCamino){
-        cout << "------------------" << endl;
+      /*  cout << "------------------" << endl;
         cout << "Se encontro camino\n";
-        cout << "------------------" << endl;
+        cout << "------------------" << endl;*/
         //-----------------------------------------------------------------
         //Solo muestro etiquetas finales
-        cout << "----------------" << endl;
+       /* cout << "----------------" << endl;
         cout << "ETIQUETADO FINAL" << endl;
         cout << "----------------" << endl;
         for(itEtiq = etiquetados.begin(); itEtiq != etiquetados.end(); itEtiq++){
@@ -366,22 +365,17 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
             cout << " Acumulado: " << (*itEtiq).getPesoAcumulado();
             cout << " Double: " << (*itEtiq).getPesoDouble();
             cout << " It: " << (*itEtiq).getIteracion() << endl;
-        }
-        //-----------------------------------------------------------------
-
-        //-----------------------------------------------------
+        }*/
         Vertice* inicioRecorrido = destino; //comienza desde el final
         stack<TuplaCompleta> pilaTuplas;
         bool primerLlamado = true;
         mostrarVer3(etiquetados, inicioRecorrido, salida, pilaTuplas, primerLlamado, modo);
-        //-----------------------------------------------------
-        cout << "-------------------------------------------------\n";
     }else{
         cout << "No hay conexion\n";
     }
 }
 
-void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<TuplaCompleta> caminoRecorrido, bool primeraPasada, int criterio){
+void Grafo2::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<TuplaCompleta> caminoRecorrido, bool primeraPasada, int criterio){
     stack<TuplaCompleta> PilaLocal = caminoRecorrido;//entra vacio
 
     TuplaCompleta tuplaLocal;
@@ -404,8 +398,9 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
         if((recorriendoDesde == destino) && !primeraPasada){
             PilaLocal.push(tuplaLocal);
             cout << "+-------------------------+" << endl;
-            cout << "|MOSTRAR TODO EL RECORRIDO|" << endl;
+            cout << "|MOSTRANDO EL RECORRIDO|" << endl;
             cout << "+-------------------------+" << endl;
+            cout << endl;
             mostrarPila(PilaLocal, criterio);
             return;
         }else{
@@ -485,7 +480,7 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
     }
 }
 
-void Grafo::mostrarPila(stack<TuplaCompleta> aMostrar, int criterio){
+void Grafo2::mostrarPila(stack<TuplaCompleta> aMostrar, int criterio){
     TuplaCompleta mostrando;
     int pesoTotal = 0, pesoAnterior = 0, pesoArista = 0;
     double pesoTotalDouble = 0, pesoAnteriorDouble = 0, pesoAristaDouble = 0;
@@ -504,24 +499,39 @@ void Grafo::mostrarPila(stack<TuplaCompleta> aMostrar, int criterio){
             }else if(criterio == 2){
                 pesoTotalDouble = mostrando.pesoDouble;
                 pesoAristaDouble = pesoTotalDouble - pesoAnteriorDouble;
-                cout << "-(+" << pesoAristaDouble << ")->" << (mostrando.vertice)->obtenerNombreVertice();
+                cout <<"-(+" << pesoAristaDouble << ")->" << (mostrando.vertice)->obtenerNombreVertice();
                 pesoAnteriorDouble = pesoTotalDouble;
             }
         }
         aMostrar.pop();
     }
     if (criterio == 1){
-        cout << "[" << pesoTotal << "]" << endl;
+        cout <<endl<<endl<< "Costo total en pesos: $" << pesoTotal << ",00" << endl;
     }else if(criterio == 2){
-        cout << "[" << pesoTotalDouble << "]" << endl;
+        cout <<endl<<endl<< "Costo total en horas: " << pesoTotalDouble << " hs." << endl;
     }
 
 }
 
-Grafo::~Grafo(){
+unsigned Grafo2::obtenerTamanio() {
+    return tamanio;
+}
+
+void Grafo2::mostrarVertices(){
+    cout << endl<<"Listado de aeropuertos en el grafo: \n"<<endl;
+            Vertice* aux = this->obtenerPrimero();
+            for(int i = 0; i < this->obtenerTamanio(); i++){
+                cout << "- " << aux->obtenerNombreVertice() << endl;
+                aux = aux->obtenerProxVertice();
+            }
+            cout<<endl;
+            cin.get();
+}
+
+Grafo2::~Grafo2(){
     Vertice* aux = primero, *prev;
-    Arista* auxArista;
-    Arista* auxAristaBorrar;
+    Arista2* auxArista;
+    Arista2* auxAristaBorrar;
     while(tamanio){
         auxArista = aux->obtenerAristas();
         while(auxArista){

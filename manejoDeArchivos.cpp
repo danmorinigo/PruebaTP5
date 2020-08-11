@@ -60,20 +60,14 @@ void manejoDeArchivos::cargarAeropuertos(BST<Aeropuerto*>* arbol, string nombreA
     cout << errores << " con errores.\n";
 }
 
-/*
-void manejoDeArchivos::agregarVuelo(Grafo* vuelos, string linea){
+
+void manejoDeArchivos::agregarVuelo(Grafo2* vuelos, string linea){
     istringstream cadena(linea);
-    //Grafo* auxVuelo = new Grafo;
     string auxS;
     string auxS2;
     unsigned auxU;
     double auxD;
-    //**********************************************
-    /*cadena >> auxS;
-    vuelos->insertarVertice(auxS, 1);
-    cadena >> auxS2;
-    vuelos->insertarVertice(auxS2, 1);
-    //**********************************************
+
     cadena >> auxS;
     if (!vuelos->existeVertice(auxS)){
         vuelos->agregarVertice(auxS);
@@ -85,12 +79,12 @@ void manejoDeArchivos::agregarVuelo(Grafo* vuelos, string linea){
     cadena >> auxU;
     cadena >> auxD;
 
-    vuelos->insertarArista(vuelos->obtenerVertice(auxS),vuelos->obtenerVertice(auxS2),auxU,auxD);
+    vuelos->agregarArista(vuelos->obtenerVertice(auxS),vuelos->obtenerVertice(auxS2),auxU,auxD);
 }
-*/
+
 //**********************************************
-/*
-void manejoDeArchivos::cargarVuelos(Grafo* vuelos, string nombreArchivo){
+
+void manejoDeArchivos::cargarVuelos(Grafo2* vuelos, string nombreArchivo){
     cout << "Procesando [" << nombreArchivo << "]..." << endl;
     unsigned contador = 0, errores = 0;
     ifstream archivoConDatos(nombreArchivo);
@@ -114,7 +108,6 @@ void manejoDeArchivos::cargarVuelos(Grafo* vuelos, string nombreArchivo){
     cout << contador << " lineas leidas.\n";
     cout << errores << " con errores.\n";
 }
-*/
 //**********************************************
 bool manejoDeArchivos::existe(string nombreArchivo){
     ifstream auxiliar(nombreArchivo);

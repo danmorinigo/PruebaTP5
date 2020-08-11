@@ -6,9 +6,8 @@ Menu::Menu(){
    this-> partida = "";
    this-> destino = "";
    this-> aeropuertos = NULL;
-//**********************************************
-//   this-> vuelos = NULL;
-//**********************************************
+   this-> vuelos = NULL;
+
 }
 
 char Menu::getOpcion(){
@@ -22,10 +21,8 @@ char Menu::getOpcionVuelos(){
 void Menu::setAeropuertos(BST<Aeropuerto*>* aeropuertos){
     this-> aeropuertos = aeropuertos;
 }
-
-/*
 //**********************************************
-void Menu::setVuelos(Grafo* vuelos){
+void Menu::setVuelos(Grafo2* vuelos){
     this-> vuelos = vuelos;
     cout<<endl<<"SE CARGARON LOS VUELOS"<<endl;
 }
@@ -34,7 +31,6 @@ bool Menu::hayVuelosCargados(){
     return (this-> vuelos != NULL);
 }
 //**********************************************
-*/
 void Menu::limpiarPantalla(){
     #ifdef _WIN32
         system ("cls");
@@ -89,12 +85,9 @@ void Menu::hacerEleccion(){
                     this->pausa();
                 }break;
         case '6': { this-> limpiarPantalla();
-                    //**********************************************
-                    /*
-
                     if (this->hayVuelosCargados()){
                     	this->opcionVuelos = '.';
-
+                        
                         this->solicitarPartidaYDestino();
                         //this->vuelos->mostrarVertices();
                         while (this->getOpcionVuelos() != '0'){
@@ -110,8 +103,6 @@ void Menu::hacerEleccion(){
                     //this->aeropuertos->imprime_acostado();
                 }
                 //**********************************************
-                */
-                }
                 break;
         case '0': { this-> limpiarPantalla();
                     this-> despedida();
@@ -231,9 +222,9 @@ void Menu::solicitarPartidaYDestino(){
     cout << endl;
     enmarcar("Eleccion del Vuelo.");
 
-//**********************************************
-//    this->vuelos->mostrarVertices();
-//**********************************************
+
+    this->vuelos->mostrarVertices();
+
     cout <<"A continuacion debe ingresar los aeropuertos de partida y de destino."<<endl;
     cout <<endl<< "Ingrese codigo IATA del aeropuerto de partida: ";
     cin >> this->partida;
@@ -258,23 +249,20 @@ void Menu::mostrarMenuVuelos(){
 }
 
 void Menu::hacerEleccionMenuVuelos(){
-   // char opcion2;
     switch (this->opcionVuelos){
         case '1': { this-> limpiarPantalla();
                     cout << "La ruta con menor costo es: "<<endl;
-//**********************************************
-//                    this->vuelos->mejorCamino(this->vuelos->obtenerVertice(this->partida), this->vuelos->obtenerVertice(this->destino));
-//**********************************************
+                    this->vuelos->caminoMinimo(this->vuelos->obtenerVertice(this->partida), this->vuelos->obtenerVertice(this->destino),1);
                     cout<<endl;
                     this->pausa();
                 }break;
         case '2': { this-> limpiarPantalla();
                     cout << "La ruta mas rapida es: "<<endl;
+                    this->vuelos->caminoMinimo(this->vuelos->obtenerVertice(this->partida), this->vuelos->obtenerVertice(this->destino),2);
                     cout<<endl;
                     this->pausa();
                 }break;
         case '0': { this-> limpiarPantalla();
-                   // this-> despedida();
                     this->pausa();
                 }break;
     }

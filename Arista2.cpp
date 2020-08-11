@@ -1,34 +1,34 @@
-#include "arista.h"
+#include "Arista2.h"
 
-Arista::Arista(Vertice* destino){
+Arista2::Arista2(Vertice* destino){
     sig = 0;
     this->destino = destino;
     precio = -1;
     horasVuelo = -1.0;
     cout << "Constructor Arista" << endl;
 }
-Arista::~Arista(){
+Arista2::~Arista2(){
     cout << "Destructor Arista" << endl;
 }
-void Arista::asignarSiguiente(Arista* sig){
+void Arista2::asignarSiguiente(Arista2* sig){
     this->sig = sig;
 }
-void Arista::asignarPrecio(int precio){
+void Arista2::asignarPrecio(int precio){
     this->precio = precio;
 }
-void Arista::asignarHoras(double horasVuelo){
+void Arista2::asignarHoras(double horasVuelo){
     this->horasVuelo = horasVuelo;
 }
 
-Arista* Arista::consultarSiguiente(){
+Arista2* Arista2::consultarSiguiente(){
     return sig;
 }
-Vertice* Arista::ConsultarDestino(){
+Vertice* Arista2::ConsultarDestino(){
     return destino;
 }
-int Arista::cunsultarPrecio(){
+int Arista2::cunsultarPrecio(){
     return precio;
 }
-double Arista::consultarHoras(){
+double Arista2::consultarHoras(){
     return horasVuelo;
 }
