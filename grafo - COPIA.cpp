@@ -21,8 +21,11 @@ void Grafo::agregarVertice(string nombre){
     ultimo = ingresante;
     tamanio++;
 }
-//vERIFICAR ANTES QUE EXISTAN VERTICES!
 int Grafo::obtenerPeso1(Vertice* inicio, Vertice* destino){
+    if(!inicio || !destino){
+        cout << "Error salida / llegada\n";
+        return 0;
+    }
     Arista* aux1 = inicio->obtenerAristas();
     while(aux1){
         if(aux1->ConsultarDestino() == destino){
@@ -32,8 +35,11 @@ int Grafo::obtenerPeso1(Vertice* inicio, Vertice* destino){
     }
     return -1;
 }
-//vERIFICAR ANTES QUE EXISTAN VERTICES!
 double Grafo::obtenerPeso2(Vertice* inicio, Vertice* destino){
+    if(!inicio || !destino){
+        cout << "Error salida / llegada\n";
+        return 0;
+    }
     Arista* aux1 = inicio->obtenerAristas();
     while(aux1){
         if(aux1->ConsultarDestino() == destino){
@@ -63,66 +69,24 @@ Vertice* Grafo::obtenerVertice(string nombre){
 int Grafo::cantVertices(){
     return this->tamanio;
 }
-//vERIFICAR ANTES QUE EXISTAN VERTICES!
 void Grafo::agregarArista(Vertice* inicio, Vertice* destino, int precio, double horasVuelo){
+    if(!inicio || !destino){
+        cout << "Error salida / llegada\n";
+        return;
+    }
     Arista* nuevaArista = new Arista(destino);
     nuevaArista->asignarPrecio(precio);
     nuevaArista->asignarHoras(horasVuelo);
     inicio->agregarArista(nuevaArista);
 }
 
-bool Grafo::existeCamino(list<Etiqueta> etiquetados, Vertice* destino){
-    list<Etiqueta>::iterator itEtiq;
-    itEtiq = etiquetados.begin();
-    bool hayCamino = false;
-    bool encontreDestino = false;
-    list<Vertice*> comienzoDelCamino;
-    while(!encontreDestino && itEtiq != etiquetados.end()){
-        if((*itEtiq).getVertice() == destino){
-            if (!(*itEtiq).getAnterior().empty()){
-                hayCamino = true;
-            }
-            encontreDestino = true;
-        }
-        itEtiq++;
-    }
-    return hayCamino;
-}
-void Grafo::mostarEtiquetas(list<Etiqueta> etiquetados){
-    list<Etiqueta>::iterator itEtiq;
-    //itEtiq = etiquetados.begin();
-    for(itEtiq = etiquetados.begin(); itEtiq != etiquetados.end(); itEtiq++){
-        cout << "Estacion: "<< (*itEtiq).getVertice()->obtenerNombreVertice();
-        cout << " Anterior(es): ";
-
-        if(!(*itEtiq).getAnterior().empty()){
-            list<Vertice*> auxVerticesAnteriores = (*itEtiq).getAnterior();
-            list<Vertice*>::iterator i;
-            for(i = auxVerticesAnteriores.begin(); i != auxVerticesAnteriores.end(); i++){
-                cout << (*i)->obtenerNombreVertice() << "-";
-            }
-        }else{
-            cout << "NO";
-        }
-        cout << " Acumulado: " << (*itEtiq).getPesoAcumulado();
-        cout << " Double: " << (*itEtiq).getPesoDouble();
-        cout << " It: " << (*itEtiq).getIteracion() << endl;
-    }
-}
-void Grafo::mostrarVerticesMarcados(list<Vertice*> vistos){
-    Vertice* auxilio;
-    cout << "----------------------------" << endl;
-    cout << "VERTICES MARCADOS (EN ORDEN)" << endl;
-    cout << "----------------------------" << endl;
-    list<Vertice*>::iterator i;
-    for(i = vistos.begin(); i != vistos.end(); i++){
-        auxilio = *i;
-        cout << auxilio->obtenerNombreVertice() << endl;
-    }
-}
 //deben estar verificadas las existencias de ambos vertices
 //precioUhorasVuelo -> 1-precio, 2-horas
 void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuelo){
+
+    //APARENTA QUE SE PUEDE SACAR ESTA BOOL
+    //bool primeraEntrada = true; //Lo uso para el caso en que la salida y la
+                                //llegada sea la misma
 
     int modo = precioUhorasVuelo; //1 para INT, 2 para DOUble
     int iteracion = 1;
@@ -142,21 +106,102 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
         Etiqueta ingresante(verticeEnGrafo);
         etiquetados.push_back(ingresante);
         verticeEnGrafo = verticeEnGrafo->obtenerProxVertice();
-    }//------------------------------------------------------
+    }
+    //------------------------------------------------------
 
     Vertice* verticeVisitado;
     //Unico vertice en la cola, al entrar, es el vertice de partida
     while(!cola.vacia()){
         verticeVisitado = cola.topAndPop();
+        //bool fueVisitadoAntes = false;
+        //**************
         bool fueVisitadoAntes = marcadoComoVisitado(vistos, verticeVisitado);
+        //*************
+        /*
+        //SE PUEDE SACAR APARENTEMENTE--
+        list<Vertice*>::iterator i;
+        i = vistos.begin();
+        //Si el vertice que quiero visitar ya fue marcado como visitado
+        //no lo evalua
+        while(i != vistos.end() && !fueVisitadoAntes){
+            if(*i == verticeVisitado){
+                fueVisitadoAntes = true;
+            }
+            i++;
+        }
+        */
+        //-------------------------------------------------------------------
+
         Arista* auxAristas;
         if(!fueVisitadoAntes){
             auxAristas = verticeVisitado->obtenerAristas();
             while(auxAristas){
+
+                //-------------------------------------------------------------------
+                //Verifico que los destinos de cada arista del vertice evaluado
+                //no estan marcados como visitados
+                //fueVisitadoAntes = false;
+                //**********************
                 bool fueVisitadoAntes = marcadoComoVisitado(vistos, auxAristas->ConsultarDestino());
+                //**********************
+
+                /* LO LLEVO AL FINAL DEL IF
+                list<Vertice*>::iterator i;
+                i = vistos.begin();
+                while(i != vistos.end() && !fueVisitadoAntes){
+                    if(*i == auxAristas->ConsultarDestino()){
+                        int pesoYaEvaluado = 0;
+                        double pesoYaEvaluadoDouble = 0.0;
+
+                        int pesoArista = 0;
+                        double pesoAristaDouble = 0.0;
+                        pesoArista = this->obtenerPeso1(verticeVisitado, auxAristas->ConsultarDestino());
+                        pesoAristaDouble = this->obtenerPeso2(verticeVisitado, auxAristas->ConsultarDestino());
+
+                        int pesoQueCarga = 0;
+                        double pesoQueCargaDouble = 0.0;
+
+                        itEtiq = etiquetados.begin();
+                        int encontrado = 0;
+                        while((encontrado != 2) && (itEtiq != etiquetados.end())){
+                            if((*itEtiq).getVertice() == verticeVisitado){//seria "el anterior"
+                                pesoQueCarga = (*itEtiq).getPesoAcumulado();
+                                pesoQueCargaDouble = (*itEtiq).getPesoDouble();
+                                encontrado++;
+                            }
+                            if((*itEtiq).getVertice() == auxAristas->ConsultarDestino()){//seria "donde va la arista"
+                                pesoYaEvaluado = (*itEtiq).getPesoAcumulado();
+                                pesoYaEvaluadoDouble = (*itEtiq).getPesoDouble();
+                                encontrado++;
+                            }
+                            itEtiq++;
+                        }
+                        if(((modo == 1) && (pesoQueCarga + pesoArista < pesoYaEvaluado)) || ((modo == 2) && (pesoQueCargaDouble + pesoAristaDouble < pesoYaEvaluadoDouble))){
+                            itEtiq = etiquetados.begin();
+                            bool encontrado = false;
+                            while((!encontrado) && itEtiq != etiquetados.end()){
+                                if((*itEtiq).getVertice() == auxAristas->ConsultarDestino()){
+                                    (*itEtiq).setPesoAcumulado(pesoQueCarga + pesoArista);
+                                    (*itEtiq).setPesoDouble(pesoQueCargaDouble + pesoAristaDouble);
+                                    (*itEtiq).setIteracion(iteracion);
+                                    vistos.remove(auxAristas->ConsultarDestino());
+                                    cola.push(auxAristas->ConsultarDestino(), pesoQueCarga + pesoArista, pesoQueCarga + pesoArista, iteracion);
+                                    encontrado = true;
+                                }
+                                itEtiq++;
+                            }
+                        }
+                        fueVisitadoAntes = true;
+                    }
+                    i++;
+                }
+                */
+                //-------------------------------------------------------------------
+                //Si fue visitado saltea este if, y continua con la siguiente arista
                 if(!fueVisitadoAntes){
                     int pesoEntero = this->obtenerPeso1(verticeVisitado, auxAristas->ConsultarDestino());
                     double pesoDouble = this->obtenerPeso2(verticeVisitado, auxAristas->ConsultarDestino());
+                    //int pesoDouble = this->obtenerPeso2(verticeVisitado, auxAristas->ConsultarDestino());
                     cola.push(auxAristas->ConsultarDestino(), pesoEntero, pesoDouble, iteracion);
 
                     //Dos etiquetas auxiliares, uno apuntando al vertice visitado
@@ -182,12 +227,17 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
                     double miPesoDouble, pesoAristaDouble, pesoTotalDouble;
                     //******************************
                     if(!auxActual.getAnterior().empty()){
+                        //cout << "SIN PAPA" << endl;
                         miPeso = auxActual.getPesoAcumulado();
                         miPesoDouble = auxActual.getPesoDouble();
                     }else{
                         miPeso = 0;
                         miPesoDouble = 0.0;
                     }
+                    //miPeso = auxActual.getPesoAcumulado();
+                    //miPesoDouble = auxActual.getPesoDouble();
+                    //******************************
+
                     pesoAristaDouble = this->obtenerPeso2(verticeVisitado, auxDestino.getVertice());
                     pesoArista = this->obtenerPeso1(verticeVisitado, auxDestino.getVertice());
                     pesoTotal = miPeso + pesoArista;
@@ -230,8 +280,61 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
                     //----------------------------
                 }else{//Ya fue visitado, tengo que verificar si puedo cambiar su peso acumulado.
                     verificarPesoVerticeMarcado(verticeVisitado, auxAristas->ConsultarDestino(), etiquetados, modo, iteracion, vistos, cola);
+                    /*
+                    list<Vertice*>::iterator i;
+                    i = vistos.begin();
+                    while(i != vistos.end() && !fueVisitadoAntes){
+                        if(*i == auxAristas->ConsultarDestino()){
+
+                            //verificarPesoVerticeVisitado
+                            int pesoYaEvaluado = 0;
+                            double pesoYaEvaluadoDouble = 0.0;
+
+                            int pesoArista = 0;
+                            double pesoAristaDouble = 0.0;
+                            pesoArista = this->obtenerPeso1(verticeVisitado, auxAristas->ConsultarDestino());
+                            pesoAristaDouble = this->obtenerPeso2(verticeVisitado, auxAristas->ConsultarDestino());
+
+                            int pesoQueCarga = 0;
+                            double pesoQueCargaDouble = 0.0;
+
+                            itEtiq = etiquetados.begin();
+                            int encontrado = 0;
+                            while((encontrado != 2) && (itEtiq != etiquetados.end())){
+                                if((*itEtiq).getVertice() == verticeVisitado){//seria "el anterior"
+                                    pesoQueCarga = (*itEtiq).getPesoAcumulado();
+                                    pesoQueCargaDouble = (*itEtiq).getPesoDouble();
+                                    encontrado++;
+                                }
+                                if((*itEtiq).getVertice() == auxAristas->ConsultarDestino()){//seria "donde va la arista"
+                                    pesoYaEvaluado = (*itEtiq).getPesoAcumulado();
+                                    pesoYaEvaluadoDouble = (*itEtiq).getPesoDouble();
+                                    encontrado++;
+                                }
+                                itEtiq++;
+                            }
+                            if(((modo == 1) && (pesoQueCarga + pesoArista < pesoYaEvaluado)) || ((modo == 2) && (pesoQueCargaDouble + pesoAristaDouble < pesoYaEvaluadoDouble))){
+                                itEtiq = etiquetados.begin();
+                                bool encontrado = false;
+                                while((!encontrado) && itEtiq != etiquetados.end()){
+                                    if((*itEtiq).getVertice() == auxAristas->ConsultarDestino()){
+                                        (*itEtiq).setPesoAcumulado(pesoQueCarga + pesoArista);
+                                        (*itEtiq).setPesoDouble(pesoQueCargaDouble + pesoAristaDouble);
+                                        (*itEtiq).setIteracion(iteracion);
+                                        vistos.remove(auxAristas->ConsultarDestino());
+                                        cola.push(auxAristas->ConsultarDestino(), pesoQueCarga + pesoArista, pesoQueCarga + pesoArista, iteracion);
+                                        encontrado = true;
+                                    }
+                                    itEtiq++;
+                                }
+                            }
+                            fueVisitadoAntes = true;
+                        }
+                        i++;
+                    }
+                */
                 }
-                //Aca se agrega un antecesor hayan o no sido cambiado datos de su etiqueta
+
                 itEtiq = etiquetados.begin();
                 bool agregado = false;
                 while(!agregado && itEtiq != etiquetados.end()){
@@ -247,23 +350,109 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
                 }
                 auxAristas = auxAristas->consultarSiguiente();
             }
+
+            //Este condicional lo puse para el caso de que inicio y fin del viaje sea el mismo
+            //De esta forma no marco el vertice de salida como visitado si es la primera iteracion
+            //
+
+
+            //*****************************
+            /* PROBANDO COLOCANDO INICIO D ETIQUETAS EN INFINITO...
+            //APARENTA QUE YA PODEMOS QUITAR ESTOS CONDICIONALES
+            if(salida == destino){
+                if(primeraEntrada){
+                    primeraEntrada = false;
+                }else{
+                    //-----creo se puede sacar este if------------
+                    if(verticeVisitado != destino){
+                    //-----creo se puede sacar este if------------
+                        vistos.push_back(verticeVisitado);
+                    }
+                }
+            }else{
+                //-----creo se puede sacar este if------------
+                if(verticeVisitado != destino){
+                //-----creo se puede sacar este if------------
+                    vistos.push_back(verticeVisitado);
+                }
+            }
+            */
+            //****************************************************************
             vistos.push_back(verticeVisitado);
+            //****************************************************************
             iteracion++;
         }
     }
+    //------------------------------------------------------
+    //HACER METODO APARTE
     //Solo muestro el orden en que fueron recorridos los vertices
-    //mostrarVerticesMarcados(vistos);
-    bool hayCamino = existeCamino(etiquetados, destino);
+    /*
+    Vertice* auxilio;
+    cout << "----------------------------" << endl;
+    cout << "VERTICES MARCADOS (EN ORDEN)" << endl;
+    cout << "----------------------------" << endl;
+    list<Vertice*>::iterator i;
+    for(i = vistos.begin(); i != vistos.end(); i++){
+        auxilio = *i;
+        cout << auxilio->obtenerNombreVertice() << endl;
+    }
+    */
+    //------------------------------------------------------
+    //-------------------------------------------------
+    //metodo aparte HAY CAMINO??
+    //busca la etiqueta del vertide destino
+    //si hay camino.....
+    //comienzo del camino tiene la lista de ancestros de destino
+    itEtiq = etiquetados.begin();
+    bool hayCamino = false;
+    list<Vertice*> comienzoDelCamino;
+    while(!hayCamino && itEtiq != etiquetados.end()){
+        if((*itEtiq).getVertice() == destino){
+            if (!(*itEtiq).getAnterior().empty()){
+                comienzoDelCamino = (*itEtiq).getAnterior();
+                hayCamino = true;
+            }
+        }
+        itEtiq++;
+    }
+    //------------------------------------------------
     if(hayCamino){
+      /*  cout << "------------------" << endl;
+        cout << "Se encontro camino\n";
+        cout << "------------------" << endl;*/
+        //-----------------------------------------------------------------
+        //Solo muestro etiquetas finales
         /*
         cout << "----------------" << endl;
         cout << "ETIQUETADO FINAL" << endl;
         cout << "----------------" << endl;
-        mostarEtiquetas(etiquetados);
+        for(itEtiq = etiquetados.begin(); itEtiq != etiquetados.end(); itEtiq++){
+            cout << "Estacion: "<< (*itEtiq).getVertice()->obtenerNombreVertice();
+            cout << " Anterior(es): ";
+
+            if(!(*itEtiq).getAnterior().empty()){
+                list<Vertice*> auxVerticesAnteriores = (*itEtiq).getAnterior();
+                list<Vertice*>::iterator i;
+                for(i = auxVerticesAnteriores.begin(); i != auxVerticesAnteriores.end(); i++){
+                    cout << (*i)->obtenerNombreVertice() << "-";
+                }
+            }else{
+                cout << "NO";
+            }
+            cout << " Acumulado: " << (*itEtiq).getPesoAcumulado();
+            cout << " Double: " << (*itEtiq).getPesoDouble();
+            cout << " It: " << (*itEtiq).getIteracion() << endl;
+        }
         */
         Vertice* inicioRecorrido = destino; //comienza desde el final
         stack<TuplaCompleta> pilaTuplas;
         bool primerLlamado = true;
+        /*
+        cout << "Por llamar a mostrar3"  << endl;
+        cout << "Modo: " << modo << endl;
+        cin.get();
+        cin.get();
+        */
         mostrarVer3(etiquetados, inicioRecorrido, salida, pilaTuplas, primerLlamado, modo);
     }else{
         cout << "No hay conexion\n";
@@ -277,6 +466,7 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
     Vertice* aux;
 
     if(recorriendoDesde){
+        //cout << "Recorriendo desde: " << recorriendoDesde->obtenerNombreVertice() << endl;
         tuplaLocal.vertice = recorriendoDesde;
         aux = recorriendoDesde;
         list<Etiqueta>::iterator i;
@@ -290,6 +480,13 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
             }
             i++;
         }
+        /*
+        cout << "\t" << tuplaLocal.pesoAcumulado << endl;
+        cout << "\t" << tuplaLocal.pesoDouble << endl;
+        cout << "Destino: " << destino->obtenerNombreVertice() << endl;
+        cin.get();
+        cin.get();
+        */
 
         if((recorriendoDesde == destino) && !primeraPasada){
             PilaLocal.push(tuplaLocal);
@@ -300,6 +497,13 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
             mostrarPila(PilaLocal, criterio);
             return;
         }else{
+            /*
+            cout << "RECORRIENDO DESDE != DESTINO" << endl;
+            cout << "o RECORRIENDO DESDE == DESTINO" << endl;
+            cout << "y PRIMERA PASADA" << endl;
+            cin.get();
+            cin.get();
+            */
             PilaLocal.push(tuplaLocal);
             list<Vertice*> antecesores;
             i = etiquetados.begin();
@@ -313,10 +517,22 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
             }
             Vertice* recorriendoDesdeLocal;
             if(antecesores.size() > 1){
+                /*
+                cout << "MAS DE UN ANTECESOR" << endl;
+                cin.get();
+                cin.get();
+                */
                 while(!antecesores.empty()){
                     recorriendoDesdeLocal = antecesores.front();
                     antecesores.pop_front();
                     if(recorriendoDesdeLocal == destino){
+                        /*
+                        cout << "ANTECESOR ES EL DESTINO FINAL!!" << endl;
+                        cin.get();
+                        cin.get();
+                        //int pesoEntero = 0;
+                        //double pesoDouble = 0.0;
+                        */
                         int pesoEntero = this->obtenerPeso1(recorriendoDesdeLocal, recorriendoDesde);
                         double pesoDouble = this->obtenerPeso2(recorriendoDesdeLocal, recorriendoDesde);
                         int pesoQueTraiaElOtro = tuplaLocal.pesoAcumulado;
@@ -334,12 +550,37 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
                             mostrarVer3(etiquetados, recorriendoDesdeLocal, destino, PilaLocal, primerRecorrido, criterio);
                         }
                     }else{
+                        /*
+                        cout << "TODAVIA FALTA!! ANALIZO " << recorriendoDesdeLocal->obtenerNombreVertice() << endl;
+                        cin.get();
+                        cin.get();
+                        //int pesoEntero = 0;
+                        //double pesoDouble = 0.0;
+                        */
                         int pesoEntero = this->obtenerPeso1(recorriendoDesdeLocal, recorriendoDesde);
                         double pesoDouble = this->obtenerPeso2(recorriendoDesdeLocal, recorriendoDesde);
+                        /*
+                        cout << "Peso arista entero: " << pesoEntero << endl;
+                        cout << "Peso arista double: " << pesoDouble << endl;
+                        cin.get();
+                        cin.get();
+                        */
                         int pesoQueTraiaElOtro = tuplaLocal.pesoAcumulado;
                         double pesoQueTraiaDouble = tuplaLocal.pesoDouble;
+                        /*
+                        cout << "Peso 'partida acumula': " << pesoQueTraiaElOtro << endl;
+                        cout << "Peso 'partida acumula' double: " << pesoQueTraiaDouble << endl;
+                        cin.get();
+                        cin.get();
+                        */
                         int anteriorDebeAcumular = pesoQueTraiaElOtro - pesoEntero;
                         double anteriorDebeDouble = pesoQueTraiaDouble - pesoDouble;
+                        /*
+                        cout << "Peso 'debe acumular': " << anteriorDebeAcumular << endl;
+                        cout << "Peso 'partida acumular' double: " << anteriorDebeDouble << endl;
+                        cin.get();
+                        cin.get();
+                        */
                         int anteriorAcumula = 0;
                         double anteriorAcumulaDouble = 0.0;
                         list<Etiqueta>::iterator i;
@@ -353,18 +594,47 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
                             }
                             i++;
                         }
+                        /*
+                        cout << "Peso 'realmente': " << anteriorAcumula << endl;
+                        cout << "Peso 'realmente' double: " << anteriorAcumulaDouble << endl;
+                        cout << "Con criterio: " << criterio << endl;
+                        cout << anteriorAcumulaDouble << " vs " << anteriorDebeDouble << endl;
+                        cout << (anteriorAcumulaDouble == anteriorDebeDouble) << endl;
+                        cout << (anteriorAcumulaDouble > anteriorDebeDouble) << endl;
+                        cout << (anteriorAcumulaDouble < anteriorDebeDouble) << endl;
+                        cout << anteriorAcumulaDouble << " - " << anteriorDebeDouble << " = " << anteriorAcumulaDouble - anteriorDebeDouble << endl;
+                        cin.get();
+                        cin.get();
+                        */
+
                         double tolerancia = 0.00001;
                         bool conTolerancia = (((anteriorAcumulaDouble - anteriorDebeDouble) > -tolerancia) && ((anteriorAcumulaDouble - anteriorDebeDouble) < tolerancia));
                         if(((criterio == 1) && (anteriorAcumula == anteriorDebeAcumular)) || ((criterio == 2) && conTolerancia)){
                         //if(((criterio == 1) && (anteriorAcumula == anteriorDebeAcumular)) || ((criterio == 2) && (anteriorAcumulaDouble == anteriorDebeDouble))){
+                            /*
+                            cout << "CUMPLE!!"  << recorriendoDesdeLocal->obtenerNombreVertice() << endl;
+                            cin.get();
+                            cin.get();
+                            */
                             bool primerRecorrido = false;
                             mostrarVer3(etiquetados, recorriendoDesdeLocal, destino, PilaLocal, primerRecorrido, criterio);
+                        }else{
+                            /*
+                            cout << "NO CUMPLE!!"  << recorriendoDesdeLocal->obtenerNombreVertice() << endl;
+                            cin.get();
+                            cin.get();
+                            */
                         }
                     }
                 }
                 return;
             }else{
                 recorriendoDesdeLocal = antecesores.front();
+                /*
+                cout << "UN SOLO ANTECESOR ANTECESOR: "  << recorriendoDesdeLocal->obtenerNombreVertice() << endl;
+                cin.get();
+                cin.get();
+                */
                 bool primerRecorrido = false;
                 mostrarVer3(etiquetados, recorriendoDesdeLocal, destino, PilaLocal, primerRecorrido, criterio);
                 return;
@@ -468,6 +738,14 @@ void Grafo::verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, lis
         itEtiq++;
     }
     if(((modo == 1) && (pesoQueCarga + pesoArista < pesoYaEvaluado)) || ((modo == 2) && (pesoQueCargaDouble + pesoAristaDouble < pesoYaEvaluadoDouble))){
+        /*
+        cout << "En: " << destino->obtenerNombreVertice() << endl;
+        cout << "Hacemos cambios.." << endl;
+        cout << "Peso entero de ya evaluado: " << pesoYaEvaluado << endl;
+        cout << "Se cambia por: " << pesoQueCarga + pesoArista << endl;
+        cout << "Peso double de ya evaluado: " << pesoYaEvaluadoDouble << endl;
+        cout << "Se cambia por: " << pesoQueCargaDouble + pesoAristaDouble  << endl;
+        */
         itEtiq = etiquetados.begin();
         bool encontrado = false;
         while((!encontrado) && itEtiq != etiquetados.end()){

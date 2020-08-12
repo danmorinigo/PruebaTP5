@@ -43,6 +43,9 @@ public:
     void mostrarVertices();
     bool marcadoComoVisitado(list<Vertice*> yaVisitados, Vertice* evaluado);
     void verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, list<Etiqueta> &etiquetados, int modo, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola);
+    void mostrarVerticesMarcados(list<Vertice*> vistos);
+    bool existeCamino(list<Etiqueta> etiquetados, Vertice* destino);
+    void mostarEtiquetas(list<Etiqueta> etiquetados);
     //------------------------------------------------------------------------------
 
     //---------------------------------------------
