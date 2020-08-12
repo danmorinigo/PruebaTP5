@@ -12,9 +12,9 @@
 using namespace std;
 
 struct TuplaCompleta{
-    Vertice* vertice = 0;
-    int pesoAcumulado = 0;
-    double pesoDouble = 0.0;
+    Vertice* vertice;
+    int pesoAcumulado;
+    double pesoDouble;
 };
 
 class Grafo{

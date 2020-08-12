@@ -6,7 +6,7 @@ Grafo::Grafo(){
     tamanio = 0;
 }
 void Grafo::agregarVertice(string nombre){
-    Vertice* ingresante = new Vertice(nombre);
+    Vertice * ingresante = new Vertice(nombre);
     if (!primero){
         primero = ingresante;
         ultimo = ingresante;
@@ -14,38 +14,38 @@ void Grafo::agregarVertice(string nombre){
         return;
     }
     Vertice* aux = primero;
-    while(aux->obtenerProxVertice() != 0){
-        aux = aux->obtenerProxVertice();
+    while(aux -> obtenerProxVertice() != 0){
+        aux = aux -> obtenerProxVertice();
     }
-    aux->asignarProxVertice(ingresante);
+    aux -> asignarProxVertice(ingresante);
     ultimo = ingresante;
     tamanio++;
 }
 //vERIFICAR ANTES QUE EXISTAN VERTICES!
 int Grafo::obtenerPeso1(Vertice* inicio, Vertice* destino){
-    Arista* aux1 = inicio->obtenerAristas();
+    Arista* aux1 = inicio -> obtenerAristas();
     while(aux1){
-        if(aux1->ConsultarDestino() == destino){
-            return aux1->cunsultarPrecio();
+        if(aux1 -> ConsultarDestino() == destino){
+            return aux1 -> cunsultarPrecio();
         }
-        aux1 = aux1->consultarSiguiente();
+        aux1 = aux1 -> consultarSiguiente();
     }
     return -1;
 }
 //vERIFICAR ANTES QUE EXISTAN VERTICES!
 double Grafo::obtenerPeso2(Vertice* inicio, Vertice* destino){
-    Arista* aux1 = inicio->obtenerAristas();
+    Arista* aux1 = inicio -> obtenerAristas();
     while(aux1){
-        if(aux1->ConsultarDestino() == destino){
-            return aux1->consultarHoras();
+        if(aux1 -> ConsultarDestino() == destino){
+            return aux1 -> consultarHoras();
         }
-        aux1 = aux1->consultarSiguiente();
+        aux1 = aux1 -> consultarSiguiente();
     }
     return -1;
 }
 
 Vertice* Grafo::obtenerPrimero(){
-    return this->primero;
+    return this -> primero;
 }
 bool Grafo::existeVertice(string nombre){
     return (obtenerVertice(nombre) != 0);
@@ -53,22 +53,22 @@ bool Grafo::existeVertice(string nombre){
 Vertice* Grafo::obtenerVertice(string nombre){
     Vertice* aux = primero;
     for(int i = 0; i < tamanio; i++){
-        if(aux->obtenerNombreVertice() == nombre){
+        if(aux -> obtenerNombreVertice() == nombre){
             return aux;
         }
-        aux = aux->obtenerProxVertice();
+        aux = aux -> obtenerProxVertice();
     }
     return 0;
 }
 int Grafo::cantVertices(){
-    return this->tamanio;
+    return this -> tamanio;
 }
 //vERIFICAR ANTES QUE EXISTAN VERTICES!
 void Grafo::agregarArista(Vertice* inicio, Vertice* destino, int precio, double horasVuelo){
     Arista* nuevaArista = new Arista(destino);
-    nuevaArista->asignarPrecio(precio);
-    nuevaArista->asignarHoras(horasVuelo);
-    inicio->agregarArista(nuevaArista);
+    nuevaArista -> asignarPrecio(precio);
+    nuevaArista -> asignarHoras(horasVuelo);
+    inicio -> agregarArista(nuevaArista);
 }
 
 bool Grafo::existeCamino(list<Etiqueta> etiquetados, Vertice* destino){
@@ -78,7 +78,7 @@ bool Grafo::existeCamino(list<Etiqueta> etiquetados, Vertice* destino){
     bool encontreDestino = false;
     list<Vertice*> comienzoDelCamino;
     while(!encontreDestino && itEtiq != etiquetados.end()){
-        if((*itEtiq).getVertice() == destino){
+        if((*itEtiq).getVertice() == destino ){
             if (!(*itEtiq).getAnterior().empty()){
                 hayCamino = true;
             }
@@ -151,17 +151,17 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
         bool fueVisitadoAntes = marcadoComoVisitado(vistos, verticeVisitado);
         Arista* auxAristas;
         if(!fueVisitadoAntes){
-            auxAristas = verticeVisitado->obtenerAristas();
+            auxAristas = verticeVisitado -> obtenerAristas();
             while(auxAristas){
                 bool fueVisitadoAntes = marcadoComoVisitado(vistos, auxAristas->ConsultarDestino());
                 if(!fueVisitadoAntes){
-                    int pesoEntero = this->obtenerPeso1(verticeVisitado, auxAristas->ConsultarDestino());
-                    double pesoDouble = this->obtenerPeso2(verticeVisitado, auxAristas->ConsultarDestino());
+                    int pesoEntero = this -> obtenerPeso1(verticeVisitado, auxAristas->ConsultarDestino());
+                    double pesoDouble = this -> obtenerPeso2(verticeVisitado, auxAristas->ConsultarDestino());
                     cola.push(auxAristas->ConsultarDestino(), pesoEntero, pesoDouble, iteracion);
 
                     //Dos etiquetas auxiliares, uno apuntando al vertice visitado
                     //el otro apuntando al vertice destino de la arista
-                    Etiqueta auxActual(verticeVisitado), auxDestino(auxAristas->ConsultarDestino());
+                    Etiqueta auxActual(verticeVisitado), auxDestino(auxAristas -> ConsultarDestino());
                     //Busco etiquetas correspondientes y copio sus datos
                     itEtiq = etiquetados.begin();
                     int losDos = 0;
@@ -170,7 +170,7 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
                             auxActual = *itEtiq;
                             losDos++;
                         }
-                        if((*itEtiq).getVertice() == auxAristas->ConsultarDestino()){
+                        if((*itEtiq).getVertice() == auxAristas -> ConsultarDestino()){
                             auxDestino = *itEtiq;
                             losDos++;
                         }
@@ -178,18 +178,15 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
                     }
                     //CAMBIO O NO ETIQUETA DE VERTICES DESTINO DE LA ACTUAL ARISTA???
                     //---------------------------------------------------------------
-                    int miPeso, pesoArista, pesoTotal;
-                    double miPesoDouble, pesoAristaDouble, pesoTotalDouble;
+                    int miPeso = 0, pesoArista, pesoTotal;
+                    double miPesoDouble = 0, pesoAristaDouble, pesoTotalDouble;
                     //******************************
                     if(!auxActual.getAnterior().empty()){
                         miPeso = auxActual.getPesoAcumulado();
                         miPesoDouble = auxActual.getPesoDouble();
-                    }else{
-                        miPeso = 0;
-                        miPesoDouble = 0.0;
                     }
-                    pesoAristaDouble = this->obtenerPeso2(verticeVisitado, auxDestino.getVertice());
-                    pesoArista = this->obtenerPeso1(verticeVisitado, auxDestino.getVertice());
+                    pesoAristaDouble = this -> obtenerPeso2(verticeVisitado, auxDestino.getVertice());
+                    pesoArista = this -> obtenerPeso1(verticeVisitado, auxDestino.getVertice());
                     pesoTotal = miPeso + pesoArista;
                     pesoTotalDouble = miPesoDouble + pesoAristaDouble;
                     if(auxDestino.getAnterior().empty()){   //Si no tiene predecesor tiene peso INFINITO
