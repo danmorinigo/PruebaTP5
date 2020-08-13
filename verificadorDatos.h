@@ -9,7 +9,6 @@ private:
 public:
     VerificadorDatos();
     ~VerificadorDatos();
-    bool esCadena(string aVerificar);
     bool esIATA(string aVerificar);
     bool esDouble(string aVerificar);
     bool esEntero(string aVerificar);

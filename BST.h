@@ -34,10 +34,7 @@ private:
     T aeropuertoReemplazante(BSTNode<T>* node, T aeroAborrar);
     T buscarMenorPorIATA(BSTNode<T>* node, T aeroAborrar);
 
-    //BSTNode<T>* sucesorDirecto(BSTNode<T>* node);
-    //BSTNode<T>* find_minDIRECTO(BSTNode<T>* node);
-    // BSTNode<T>* eliminar(BSTNode<T>* node, string IATA);
-    //T sucesor(BSTNode<T>* node);
+
 public:
     //methods
 
@@ -66,16 +63,6 @@ public:
     // Prints all the data stored in the BST, sorted from the
     // smallest value to the greatest value.
     void print_in_order();
-
-    // Finds a given value in the BST. If the key exists it returns
-    // TRUE, otherwise it returns FALSE.
-    bool search(T data);
-
-    // Finds the minimum value that exist in the BST.
-    T find_min();
-
-    // Finds the maximum value that exist in the BST.
-    T find_max();
 
     // Finds the successor of a given data value.
     T successor(T data);
@@ -389,13 +376,6 @@ BSTNode<T>* BST<T>::search(BSTNode<T>* node, T data)//aca hay que cambiar que bu
     return search(node->get_left(), data);
 }
 
-template <class T>
-bool BST<T>::search(T data)
-{
-    BSTNode<T>* result = search(this->root, data);
-
-    return result != NULL;
-}
 
 template <class T>
 T BST<T>::find_min(BSTNode<T>* node)
@@ -408,11 +388,6 @@ T BST<T>::find_min(BSTNode<T>* node)
         return find_min(node->get_left());
 }
 
-template <class T>
-T BST<T>::find_min()
-{
-    return find_min(this->root);
-}
 
 template <class T>
 T BST<T>::find_max(BSTNode<T>* node)
@@ -423,12 +398,6 @@ T BST<T>::find_max(BSTNode<T>* node)
         return node->get_data();
     else
         return find_max(node->get_right());
-}
-
-template <class T>
-T BST<T>::find_max()
-{
-    return find_max(this->root);
 }
 
 template <class T>
@@ -451,15 +420,6 @@ T BST<T>::successor(BSTNode<T>* node)
     return successor->get_data();
 }
 
-template <class T>
-T BST<T>::successor(T data)
-{
-    BSTNode<T>* data_node = this->search(this->root, data);
-    // Return the key. If the key is not found or successor is not found, return -1
-    if(data_node == NULL)
-        return -1;
-    else return successor(data_node);
-}
 
 template <class T>
 T BST<T>::predecessor(BSTNode<T> * node)
@@ -480,16 +440,6 @@ T BST<T>::predecessor(BSTNode<T> * node)
             ancestor = ancestor->get_left();
     }
     return successor->get_data();
-}
-
-template <class T>
-T BST<T>::predecessor(T data)
-{
-    BSTNode<T> * data_node = this->search(this->root, data);
-
-    if(data_node == NULL)
-        return -1;
-    else return predecessor(data_node);
 }
 
 template <class T>

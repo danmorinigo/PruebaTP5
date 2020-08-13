@@ -12,14 +12,7 @@ bool VerificadorDatos::esEntero(string aVerificar){
     }
     return true;
 }
-bool VerificadorDatos::esCadena(string aVerificar){
-    for(unsigned i = 0; i < aVerificar.length(); i++){
-        if(aVerificar[i] != ' '){ // si un solo carecter es diferente de 'espacio' devuelve true
-            return true;
-        }
-    }
-    return false;
-}
+
 bool VerificadorDatos::esDouble(string aVerificar){
     bool esEntero, esUnPunto, esUnaComa;
     unsigned signoPuntuacion = 0;

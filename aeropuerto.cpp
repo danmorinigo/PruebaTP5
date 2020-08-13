@@ -15,61 +15,61 @@ Aeropuerto::~Aeropuerto(){
     if(MUESTRAMEM) cout << "\nDestructor AEROPUERTO (" << this << ")\n";
 }
 void Aeropuerto::asignarCodigo(string codigo){
-    this->IATA = codigo;
+    this -> IATA = codigo;
 }
 void Aeropuerto::asignarNombre(string nombre){
-    this->nombre = nombre;
+    this -> nombre = nombre;
 }
 void Aeropuerto::asignarCiudad(string ciudad){
-    this->ciudad = ciudad;
+    this -> ciudad = ciudad;
 }
 void Aeropuerto::asignarPais(string pais){
-    this->pais = pais;
+    this -> pais = pais;
 }
 void Aeropuerto::asignarSup(double sup){
-    this->superficie = sup;
+    this -> superficie = sup;
 }
 void Aeropuerto::asignarTerminales(unsigned terminales){
-    this->terminales = terminales;
+    this -> terminales = terminales;
 }
 void Aeropuerto::asignarDestNac(unsigned nacionales){
-    this->destinosNacionales = nacionales;
+    this -> destinosNacionales = nacionales;
 }
 void Aeropuerto::asignarDestInternac(unsigned internacionales){
-    this->destinosInternacionales = internacionales;
+    this -> destinosInternacionales = internacionales;
 }
 string Aeropuerto::obtenerCodigo(){
-    return this->IATA;
+    return this -> IATA;
 }
 string Aeropuerto::obtenerNombre(){
-    return this->nombre;
+    return this -> nombre;
 }
 string Aeropuerto::obtenerCiudad(){
-    return this->ciudad;
+    return this -> ciudad;
 }
 string Aeropuerto::obtenerPais(){
-    return this->pais;
+    return this -> pais;
 }
 double Aeropuerto::obtenerSup(){
-    return this->superficie;
+    return this -> superficie;
 }
 unsigned Aeropuerto::obtenerTerminales(){
-    return this->terminales;
+    return this -> terminales;
 }
 unsigned Aeropuerto::obtenerDestNac(){
-    return this->destinosNacionales;
+    return this -> destinosNacionales;
 }
 unsigned Aeropuerto::obtenerDestInternac(){
-    return this->destinosInternacionales;
+    return this -> destinosInternacionales;
 }
 void Aeropuerto::mostrarInformacion(){
      cout<<endl<< " INFORMACION DEL AEROPUERO: "<<endl;
-     cout<< "Codigo IATA: "<<this-> IATA<<endl;
-     cout<< "Nombre: "<< this-> nombre <<endl;
-     cout<< "Ciudad: "<< this-> ciudad <<endl;
-     cout<< "Pais: "<< this-> pais <<endl;
-     cout<< "Superficie: "<< this-> superficie <<endl;
-     cout<< "Cantidad de terminales: "<< this-> terminales <<endl;
-     cout<< "Cant. Destinos nacionales: "<< this-> destinosNacionales <<endl;
-     cout<< "Cant. Destinos internacionales: "<< this-> destinosInternacionales <<endl;
+     cout<< "Codigo IATA: " << this -> IATA<<endl;
+     cout<< "Nombre: " << this -> nombre <<endl;
+     cout<< "Ciudad: " << this -> ciudad <<endl;
+     cout<< "Pais: " << this -> pais <<endl;
+     cout<< "Superficie: " << this -> superficie <<endl;
+     cout<< "Cantidad de terminales: " << this -> terminales <<endl;
+     cout<< "Cant. Destinos nacionales: " << this -> destinosNacionales <<endl;
+     cout<< "Cant. Destinos internacionales: " << this -> destinosInternacionales <<endl;
 }

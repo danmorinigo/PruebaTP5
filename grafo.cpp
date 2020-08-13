@@ -122,6 +122,7 @@ void Grafo::mostrarVerticesMarcados(list<Vertice*> vistos){
 }
 //deben estar verificadas las existencias de ambos vertices
 //precioUhorasVuelo -> 1-precio, 2-horas
+
 void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuelo){
 
     int modo = precioUhorasVuelo; //1 para INT, 2 para DOUble
@@ -268,8 +269,8 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
 }
 
 void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<TuplaCompleta> caminoRecorrido, bool primeraPasada, int criterio){
-    stack<TuplaCompleta> PilaLocal = caminoRecorrido;//entra vacio
 
+    stack<TuplaCompleta> PilaLocal = caminoRecorrido;//entra vacio
     TuplaCompleta tuplaLocal;
     Vertice* aux;
 
@@ -371,6 +372,7 @@ bool Grafo::enTolerancia(double valor1, double valor2){
     return false;
 }
 void Grafo::mostrarPila(stack<TuplaCompleta> aMostrar, int criterio){
+
     TuplaCompleta mostrando;
     int pesoTotal = 0, pesoAnterior = 0, pesoArista = 0;
     double pesoTotalDouble = 0, pesoAnteriorDouble = 0, pesoAristaDouble = 0;
@@ -381,16 +383,19 @@ void Grafo::mostrarPila(stack<TuplaCompleta> aMostrar, int criterio){
             cout << (mostrando.vertice)->obtenerNombreVertice();
             primerVertice = false;
         }else{
-            if (criterio == 1){
-                pesoTotal = mostrando.pesoAcumulado;
-                pesoArista = pesoTotal - pesoAnterior;
-                cout << "-(+" << pesoArista << ")->" << (mostrando.vertice)->obtenerNombreVertice();
-                pesoAnterior = pesoTotal;
-            }else if(criterio == 2){
-                pesoTotalDouble = mostrando.pesoDouble;
-                pesoAristaDouble = pesoTotalDouble - pesoAnteriorDouble;
-                cout <<"-(+" << pesoAristaDouble << ")->" << (mostrando.vertice)->obtenerNombreVertice();
-                pesoAnteriorDouble = pesoTotalDouble;
+            switch (criterio) {
+                case 1:
+                    pesoTotal = mostrando.pesoAcumulado;
+                    pesoArista = pesoTotal - pesoAnterior;
+                    cout << "-(+" << pesoArista << ")->" << (mostrando.vertice)->obtenerNombreVertice();
+                    pesoAnterior = pesoTotal;
+                    break;
+                case 2:
+                    pesoTotalDouble = mostrando.pesoDouble;
+                    pesoAristaDouble = pesoTotalDouble - pesoAnteriorDouble;
+                    cout <<"-(+" << pesoAristaDouble << ")->" << (mostrando.vertice)->obtenerNombreVertice();
+                    pesoAnteriorDouble = pesoTotalDouble;
+                    break;
             }
         }
         aMostrar.pop();
