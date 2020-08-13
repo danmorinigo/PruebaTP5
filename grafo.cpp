@@ -287,12 +287,11 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
             }
             i++;
         }
-
         if((recorriendoDesde == destino) && !primeraPasada){
             PilaLocal.push(tuplaLocal);
-            cout << "+-------------------------+" << endl;
+            cout << "+----------------------+" << endl;
             cout << "|MOSTRANDO EL RECORRIDO|" << endl;
-            cout << "+-------------------------+" << endl;
+            cout << "+----------------------+" << endl;
             cout << endl;
             mostrarPila(PilaLocal, criterio);
             return;
@@ -313,47 +312,36 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
                 while(!antecesores.empty()){
                     recorriendoDesdeLocal = antecesores.front();
                     antecesores.pop_front();
+                    int pesoAristaCosto = this->obtenerPeso1(recorriendoDesdeLocal, recorriendoDesde);
+                    double pesoAristaHoras = this->obtenerPeso2(recorriendoDesdeLocal, recorriendoDesde);
+                    int costoVerticeActual = tuplaLocal.pesoAcumulado;
+                    double horasVerticeActual = tuplaLocal.pesoDouble;
+                    int costoBuscado = costoVerticeActual - pesoAristaCosto;
+                    double horasBuscadas = horasVerticeActual - pesoAristaHoras;
+                    int costoVertEvaluado = 0;
+                    double horasVertEvaluado = 0.0;
                     if(recorriendoDesdeLocal == destino){
-                        int pesoEntero = this->obtenerPeso1(recorriendoDesdeLocal, recorriendoDesde);
-                        double pesoDouble = this->obtenerPeso2(recorriendoDesdeLocal, recorriendoDesde);
-                        int pesoQueTraiaElOtro = tuplaLocal.pesoAcumulado;
-                        double pesoQueTraiaDouble = tuplaLocal.pesoDouble;
-                        int anteriorDebeAcumular = pesoQueTraiaElOtro - pesoEntero;
-                        double anteriorDebeDouble = pesoQueTraiaDouble - pesoDouble;
-                        int anteriorAcumula = 0;
-                        double anteriorAcumulaDouble = 0;
-
-                        double tolerancia = 0.00001;
-                        bool conTolerancia = (((anteriorAcumulaDouble - anteriorDebeDouble) > -tolerancia) && ((anteriorAcumulaDouble - anteriorDebeDouble) < tolerancia));
-                        if(((criterio == 1) && (anteriorAcumula == anteriorDebeAcumular)) || ((criterio == 2) && conTolerancia)){
-                        //if(((criterio == 1) && (anteriorAcumula == anteriorDebeAcumular)) || ((criterio == 2) && (anteriorAcumulaDouble == anteriorDebeDouble))){
+                        bool conTolerancia = enTolerancia(horasVertEvaluado, horasBuscadas);
+                        if(((criterio == 1) && (costoVertEvaluado == costoBuscado)) || ((criterio == 2) && conTolerancia)){
+                        //if(((criterio == 1) && (costoVertEvaluado == costoBuscado)) || ((criterio == 2) && (horasVertEvaluado == horasBuscadas))){
                             bool primerRecorrido = false;
                             mostrarVer3(etiquetados, recorriendoDesdeLocal, destino, PilaLocal, primerRecorrido, criterio);
                         }
                     }else{
-                        int pesoEntero = this->obtenerPeso1(recorriendoDesdeLocal, recorriendoDesde);
-                        double pesoDouble = this->obtenerPeso2(recorriendoDesdeLocal, recorriendoDesde);
-                        int pesoQueTraiaElOtro = tuplaLocal.pesoAcumulado;
-                        double pesoQueTraiaDouble = tuplaLocal.pesoDouble;
-                        int anteriorDebeAcumular = pesoQueTraiaElOtro - pesoEntero;
-                        double anteriorDebeDouble = pesoQueTraiaDouble - pesoDouble;
-                        int anteriorAcumula = 0;
-                        double anteriorAcumulaDouble = 0.0;
                         list<Etiqueta>::iterator i;
                         i = etiquetados.begin();
                         bool hecho = false;
                         while(!hecho && i != etiquetados.end()){
                             if((*i).getVertice() == recorriendoDesdeLocal){
-                                anteriorAcumula = (*i).getPesoAcumulado();
-                                anteriorAcumulaDouble = (double)(*i).getPesoDouble();
+                                costoVertEvaluado = (*i).getPesoAcumulado();
+                                horasVertEvaluado = (double)(*i).getPesoDouble();
                                 hecho = true;
                             }
                             i++;
                         }
-                        double tolerancia = 0.00001;
-                        bool conTolerancia = (((anteriorAcumulaDouble - anteriorDebeDouble) > -tolerancia) && ((anteriorAcumulaDouble - anteriorDebeDouble) < tolerancia));
-                        if(((criterio == 1) && (anteriorAcumula == anteriorDebeAcumular)) || ((criterio == 2) && conTolerancia)){
-                        //if(((criterio == 1) && (anteriorAcumula == anteriorDebeAcumular)) || ((criterio == 2) && (anteriorAcumulaDouble == anteriorDebeDouble))){
+                        bool conTolerancia = enTolerancia(horasVertEvaluado, horasBuscadas);
+                        if(((criterio == 1) && (costoVertEvaluado == costoBuscado)) || ((criterio == 2) && conTolerancia)){
+                        //if(((criterio == 1) && (costoVertEvaluado == costoBuscado)) || ((criterio == 2) && (horasVertEvaluado == horasBuscadas))){
                             bool primerRecorrido = false;
                             mostrarVer3(etiquetados, recorriendoDesdeLocal, destino, PilaLocal, primerRecorrido, criterio);
                         }
@@ -376,6 +364,12 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
     }
 }
 
+bool Grafo::enTolerancia(double valor1, double valor2){
+    if(((valor1 - valor2) > -TOLERANCIA) && ((valor1 - valor2) < TOLERANCIA)){
+        return true;
+    }
+    return false;
+}
 void Grafo::mostrarPila(stack<TuplaCompleta> aMostrar, int criterio){
     TuplaCompleta mostrando;
     int pesoTotal = 0, pesoAnterior = 0, pesoArista = 0;
@@ -437,43 +431,43 @@ bool Grafo::marcadoComoVisitado(list<Vertice*> yaVisitados, Vertice* evaluado){
 }
 
 void Grafo::verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, list<Etiqueta> &etiquetados, int modo, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola){
-    int pesoYaEvaluado = 0;
-    double pesoYaEvaluadoDouble = 0.0;
-
-    int pesoArista = 0;
-    double pesoAristaDouble = 0.0;
-    pesoArista = this->obtenerPeso1(visitado, destino);
-    pesoAristaDouble = this->obtenerPeso2(visitado, destino);
-
-    int pesoQueCarga = 0;
-    double pesoQueCargaDouble = 0.0;
-
+    int costoVertMarcado = 0, costoVertPrevio = 0;
+    double horasVertMarcado = 0.0, horasVertPrevio = 0.0;
+    int costoArista = this->obtenerPeso1(visitado, destino);
+    double horasArista = this->obtenerPeso2(visitado, destino);
     list<Etiqueta>::iterator itEtiq;
     itEtiq = etiquetados.begin();
     int encontrado = 0;
     while((encontrado != 2) && (itEtiq != etiquetados.end())){
         if((*itEtiq).getVertice() == visitado){//seria "el anterior"
-            pesoQueCarga = (*itEtiq).getPesoAcumulado();
-            pesoQueCargaDouble = (*itEtiq).getPesoDouble();
+            costoVertPrevio = (*itEtiq).getPesoAcumulado();
+            horasVertPrevio = (*itEtiq).getPesoDouble();
             encontrado++;
         }
-        if((*itEtiq).getVertice() == destino){//seria "donde va la arista"
-            pesoYaEvaluado = (*itEtiq).getPesoAcumulado();
-            pesoYaEvaluadoDouble = (*itEtiq).getPesoDouble();
+        if((*itEtiq).getVertice() == destino){//seria "a donde va la arista"
+            costoVertMarcado = (*itEtiq).getPesoAcumulado();
+            horasVertMarcado = (*itEtiq).getPesoDouble();
             encontrado++;
         }
         itEtiq++;
     }
-    if(((modo == 1) && (pesoQueCarga + pesoArista < pesoYaEvaluado)) || ((modo == 2) && (pesoQueCargaDouble + pesoAristaDouble < pesoYaEvaluadoDouble))){
+
+    bool evaluandoCosto = (modo == 1);
+    bool evaluandoHoras = (modo == 2);
+    bool costoMenorEncontrado = (costoVertPrevio + costoArista < costoVertMarcado);
+    bool menosHorasEncontradas = (horasVertPrevio + horasArista < horasVertMarcado);
+
+    if((evaluandoCosto && costoMenorEncontrado) || (evaluandoHoras && menosHorasEncontradas)){
+    //if(((modo == 1) && (costoVertPrevio + costoArista < costoVertMarcado)) || ((modo == 2) && (horasVertPrevio + horasArista < horasVertMarcado))){
         itEtiq = etiquetados.begin();
         bool encontrado = false;
         while((!encontrado) && itEtiq != etiquetados.end()){
             if((*itEtiq).getVertice() == destino){
-                (*itEtiq).setPesoAcumulado(pesoQueCarga + pesoArista);
-                (*itEtiq).setPesoDouble(pesoQueCargaDouble + pesoAristaDouble);
+                (*itEtiq).setPesoAcumulado(costoVertPrevio + costoArista);
+                (*itEtiq).setPesoDouble(horasVertPrevio + horasArista);
                 (*itEtiq).setIteracion(iteracion);
                 vistos.remove(destino);
-                cola.push(destino, pesoQueCarga + pesoArista, pesoQueCargaDouble + pesoAristaDouble, iteracion);
+                cola.push(destino, costoVertPrevio + costoArista, horasVertPrevio + horasArista, iteracion);
                 encontrado = true;
             }
             itEtiq++;

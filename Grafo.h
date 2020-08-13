@@ -11,6 +11,8 @@
 
 using namespace std;
 
+const double TOLERANCIA = 0.000001;
+
 struct TuplaCompleta{
     Vertice* vertice;
     int pesoAcumulado;
@@ -46,6 +48,7 @@ public:
     void mostrarVerticesMarcados(list<Vertice*> vistos);
     bool existeCamino(list<Etiqueta> etiquetados, Vertice* destino);
     void mostarEtiquetas(list<Etiqueta> etiquetados);
+    bool enTolerancia(double valor1, double valor2);
     //------------------------------------------------------------------------------
 
     //---------------------------------------------
