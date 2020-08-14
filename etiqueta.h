@@ -1,6 +1,7 @@
 #ifndef ETIQUETA_H_INCLUDED
 #define ETIQUETA_H_INCLUDED
 #include <list>
+#include<iostream>
 #include "vertice.h"
 
 const int ENTERO_INFINITO = 99999;

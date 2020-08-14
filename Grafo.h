@@ -40,15 +40,16 @@ public:
 
     //------ESTO HAY QUE MODULIZAR BASTANTE Y VER TEMA NOMBRES VARIABLES------------
     void caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuelo);
-    void mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<TuplaCompleta> caminoRecorrido, bool primeraPasada, int criterio);
+    void mostrarVer3(list<Etiqueta*> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<TuplaCompleta> caminoRecorrido, bool primeraPasada, int criterio);
     void mostrarPila(stack<TuplaCompleta> aMostrar, int criterio);
     void mostrarVertices();
     bool marcadoComoVisitado(list<Vertice*> yaVisitados, Vertice* evaluado);
-    void verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, list<Etiqueta> &etiquetados, int modo, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola);
+    void verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, list<Etiqueta*> etiquetados, int modo, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola);
     void mostrarVerticesMarcados(list<Vertice*> vistos);
-    bool existeCamino(list<Etiqueta> etiquetados, Vertice* destino);
+    bool existeCamino(list<Etiqueta*> etiquetados, Vertice* destino);
     void mostarEtiquetas(list<Etiqueta> etiquetados);
     bool enTolerancia(double valor1, double valor2);
+    void liberarEtiquetas(list<Etiqueta*> etiquetados);
     //------------------------------------------------------------------------------
 
     //---------------------------------------------

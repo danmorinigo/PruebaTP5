@@ -71,15 +71,15 @@ void Grafo::agregarArista(Vertice* inicio, Vertice* destino, int precio, double 
     inicio -> agregarArista(nuevaArista);
 }
 
-bool Grafo::existeCamino(list<Etiqueta> etiquetados, Vertice* destino){
-    list<Etiqueta>::iterator itEtiq;
+bool Grafo::existeCamino(list<Etiqueta*> etiquetados, Vertice* destino){
+    list<Etiqueta*>::iterator itEtiq;
     itEtiq = etiquetados.begin();
     bool hayCamino = false;
     bool encontreDestino = false;
     list<Vertice*> comienzoDelCamino;
     while(!encontreDestino && itEtiq != etiquetados.end()){
-        if((*itEtiq).getVertice() == destino ){
-            if (!(*itEtiq).getAnterior().empty()){
+        if((*itEtiq)->getVertice() == destino ){
+            if (!(*itEtiq)->getAnterior().empty()){
                 hayCamino = true;
             }
             encontreDestino = true;
@@ -123,6 +123,14 @@ void Grafo::mostrarVerticesMarcados(list<Vertice*> vistos){
 //deben estar verificadas las existencias de ambos vertices
 //precioUhorasVuelo -> 1-precio, 2-horas
 
+void Grafo::liberarEtiquetas(list<Etiqueta*> etiquetados){
+    Etiqueta* aux;
+    while(!etiquetados.empty()){
+        aux = etiquetados.front();
+        etiquetados.pop_front();
+        delete aux;
+    }
+}
 void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuelo){
 
     int modo = precioUhorasVuelo; //1 para INT, 2 para DOUble
@@ -133,18 +141,19 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
 
     list<Vertice*> vistos;  //Aca van los vertices ya visitados (marcados)
 
-    list<Etiqueta> etiquetados;
-    list<Etiqueta>::iterator itEtiq;    //Iterador lo uso en todo lo que sigue
+    list<Etiqueta*> etiquetados;
+    list<Etiqueta*>::iterator itEtiq;    //Iterador lo uso en todo lo que sigue
+
 
     //------------------------------------------------------
     //VA EN METODO CREAR_ETIQUETADOS
     Vertice* verticeEnGrafo = this->primero;
+    Etiqueta* auxIngreso;
     while(verticeEnGrafo){
-        Etiqueta ingresante(verticeEnGrafo);
-        etiquetados.push_back(ingresante);
+        auxIngreso = new Etiqueta(verticeEnGrafo);
+        etiquetados.push_back(auxIngreso);
         verticeEnGrafo = verticeEnGrafo->obtenerProxVertice();
-    }//------------------------------------------------------
-
+    }
     Vertice* verticeVisitado;
     //Unico vertice en la cola, al entrar, es el vertice de partida
     while(!cola.vacia()){
@@ -162,16 +171,17 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
 
                     //Dos etiquetas auxiliares, uno apuntando al vertice visitado
                     //el otro apuntando al vertice destino de la arista
-                    Etiqueta auxActual(verticeVisitado), auxDestino(auxAristas -> ConsultarDestino());
+                    Etiqueta *auxActual, *auxDestino;
+                    //Etiqueta auxActual(verticeVisitado), auxDestino(auxAristas -> ConsultarDestino());
                     //Busco etiquetas correspondientes y copio sus datos
                     itEtiq = etiquetados.begin();
                     int losDos = 0;
                     while(losDos != 2){
-                        if((*itEtiq).getVertice() == verticeVisitado){
+                        if((*itEtiq)->getVertice() == verticeVisitado){
                             auxActual = *itEtiq;
                             losDos++;
                         }
-                        if((*itEtiq).getVertice() == auxAristas -> ConsultarDestino()){
+                        if((*itEtiq)->getVertice() == auxAristas -> ConsultarDestino()){
                             auxDestino = *itEtiq;
                             losDos++;
                         }
@@ -182,36 +192,36 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
                     int miPeso = 0, pesoArista, pesoTotal;
                     double miPesoDouble = 0, pesoAristaDouble, pesoTotalDouble;
                     //******************************
-                    if(!auxActual.getAnterior().empty()){
-                        miPeso = auxActual.getPesoAcumulado();
-                        miPesoDouble = auxActual.getPesoDouble();
+                    if(!auxActual->getAnterior().empty()){
+                        miPeso = auxActual->getPesoAcumulado();
+                        miPesoDouble = auxActual->getPesoDouble();
                     }
-                    pesoAristaDouble = this -> obtenerPeso2(verticeVisitado, auxDestino.getVertice());
-                    pesoArista = this -> obtenerPeso1(verticeVisitado, auxDestino.getVertice());
+                    pesoAristaDouble = this -> obtenerPeso2(verticeVisitado, auxDestino->getVertice());
+                    pesoArista = this -> obtenerPeso1(verticeVisitado, auxDestino->getVertice());
                     pesoTotal = miPeso + pesoArista;
                     pesoTotalDouble = miPesoDouble + pesoAristaDouble;
-                    if(auxDestino.getAnterior().empty()){   //Si no tiene predecesor tiene peso INFINITO
+                    if(auxDestino->getAnterior().empty()){   //Si no tiene predecesor tiene peso INFINITO
                                                             //Asigno anterior a el vertice que
                                                             //estoy visitando, peso = al peso
                                                             //del vertice que estoy visitando+peso
                                                             //de la arista
-                        auxDestino.setPesoAcumulado(pesoTotal);
-                        auxDestino.setPesoDouble(pesoTotalDouble);
-                        auxDestino.setIteracion(iteracion);
+                        auxDestino->setPesoAcumulado(pesoTotal);
+                        auxDestino->setPesoDouble(pesoTotalDouble);
+                        auxDestino->setIteracion(iteracion);
                     }else{  //tiene peso acumulado
                         int suPeso;
                         double suPesoDouble;
-                        suPeso = auxDestino.getPesoAcumulado();
-                        suPesoDouble = auxDestino.getPesoDouble();
+                        suPeso = auxDestino->getPesoAcumulado();
+                        suPesoDouble = auxDestino->getPesoDouble();
                         //Si peso total (acumulado del vertice visitado + arista) menor
                         //al peso acumulado del vertice destino de la arista
                         if(((modo == 1) && (pesoTotal < suPeso)) || ((modo == 2) && (pesoTotalDouble < suPesoDouble))){
-                            auxDestino.setPesoAcumulado(pesoTotal);
-                            auxDestino.setPesoDouble(pesoTotalDouble);
-                            auxDestino.setIteracion(iteracion);
+                            auxDestino->setPesoAcumulado(pesoTotal);
+                            auxDestino->setPesoDouble(pesoTotalDouble);
+                            auxDestino->setIteracion(iteracion);
                         }else if(((modo == 1) && (pesoTotal == suPeso)) || ((modo == 2) && (pesoTotalDouble == suPesoDouble))){  //Si es igual, agrego un nuevo anterior
                                                         //y cambio iteracion
-                            auxDestino.setIteracion(iteracion);
+                            auxDestino->setIteracion(iteracion);
                         }
                     }
                     //----------------------------
@@ -219,7 +229,7 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
                     itEtiq = etiquetados.begin();
                     bool hecho = false;
                     while(!hecho){
-                        if((*itEtiq).getVertice() == auxDestino.getVertice()){
+                        if((*itEtiq)->getVertice() == auxDestino->getVertice()){
                             *itEtiq = auxDestino;
                             hecho = true;
                         }
@@ -233,8 +243,8 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
                 itEtiq = etiquetados.begin();
                 bool agregado = false;
                 while(!agregado && itEtiq != etiquetados.end()){
-                    if((*itEtiq).getVertice() == auxAristas->ConsultarDestino()){
-                        (*itEtiq).sumoAnterior(verticeVisitado);
+                    if((*itEtiq)->getVertice() == auxAristas->ConsultarDestino()){
+                        (*itEtiq)->sumoAnterior(verticeVisitado);
                         agregado = true;
                     }
                     itEtiq++;
@@ -266,9 +276,11 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino, int precioUhorasVuel
     }else{
         cout << "No hay conexion\n";
     }
+    //AQUI LIBERO LISTA ETIQUETAS
+    liberarEtiquetas(etiquetados);
 }
 
-void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<TuplaCompleta> caminoRecorrido, bool primeraPasada, int criterio){
+void Grafo::mostrarVer3(list<Etiqueta*> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<TuplaCompleta> caminoRecorrido, bool primeraPasada, int criterio){
 
     stack<TuplaCompleta> PilaLocal = caminoRecorrido;//entra vacio
     TuplaCompleta tuplaLocal;
@@ -277,13 +289,13 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
     if(recorriendoDesde){
         tuplaLocal.vertice = recorriendoDesde;
         aux = recorriendoDesde;
-        list<Etiqueta>::iterator i;
+        list<Etiqueta*>::iterator i;
         i = etiquetados.begin();
         bool encontrado = false;
         while(!encontrado && i != etiquetados.end()){
-            if((*i).getVertice() == aux){
-                tuplaLocal.pesoAcumulado = (*i).getPesoAcumulado();
-                tuplaLocal.pesoDouble = (*i).getPesoDouble();
+            if((*i)->getVertice() == aux){
+                tuplaLocal.pesoAcumulado = (*i)->getPesoAcumulado();
+                tuplaLocal.pesoDouble = (*i)->getPesoDouble();
                 encontrado = true;
             }
             i++;
@@ -302,8 +314,8 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
             i = etiquetados.begin();
             bool encontrado = false;
             while(!encontrado && i != etiquetados.end()){
-                if((*i).getVertice() == recorriendoDesde){
-                    antecesores = (*i).getAnterior();
+                if((*i)->getVertice() == recorriendoDesde){
+                    antecesores = (*i)->getAnterior();
                     encontrado = true;
                 }
                 i++;
@@ -319,23 +331,24 @@ void Grafo::mostrarVer3(list<Etiqueta> etiquetados, Vertice* recorriendoDesde, V
                     double horasVerticeActual = tuplaLocal.pesoDouble;
                     int costoBuscado = costoVerticeActual - pesoAristaCosto;
                     double horasBuscadas = horasVerticeActual - pesoAristaHoras;
-                    int costoVertEvaluado = 0;
-                    double horasVertEvaluado = 0.0;
                     if(recorriendoDesdeLocal == destino){
-                        bool conTolerancia = enTolerancia(horasVertEvaluado, horasBuscadas);
-                        if(((criterio == 1) && (costoVertEvaluado == costoBuscado)) || ((criterio == 2) && conTolerancia)){
-                        //if(((criterio == 1) && (costoVertEvaluado == costoBuscado)) || ((criterio == 2) && (horasVertEvaluado == horasBuscadas))){
+                        //bool conTolerancia = enTolerancia(0.0, horasBuscadas);
+                        //if(((criterio == 1) && (costoBuscado == 0)) || ((criterio == 2) && conTolerancia)){
+                        //Aca parece que no necesita "tolerancia", sino comentar la linea de abajo y usar las 2 de arriba
+                        if(((criterio == 1) && (costoBuscado == 0)) || ((criterio == 2) && (horasBuscadas == 0.0))){
                             bool primerRecorrido = false;
                             mostrarVer3(etiquetados, recorriendoDesdeLocal, destino, PilaLocal, primerRecorrido, criterio);
                         }
                     }else{
-                        list<Etiqueta>::iterator i;
+                        int costoVertEvaluado = 0;
+                        double horasVertEvaluado = 0.0;
+                        list<Etiqueta*>::iterator i;
                         i = etiquetados.begin();
                         bool hecho = false;
                         while(!hecho && i != etiquetados.end()){
-                            if((*i).getVertice() == recorriendoDesdeLocal){
-                                costoVertEvaluado = (*i).getPesoAcumulado();
-                                horasVertEvaluado = (double)(*i).getPesoDouble();
+                            if((*i)->getVertice() == recorriendoDesdeLocal){
+                                costoVertEvaluado = (*i)->getPesoAcumulado();
+                                horasVertEvaluado = (*i)->getPesoDouble();
                                 hecho = true;
                             }
                             i++;
@@ -435,23 +448,23 @@ bool Grafo::marcadoComoVisitado(list<Vertice*> yaVisitados, Vertice* evaluado){
     return false;
 }
 
-void Grafo::verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, list<Etiqueta> &etiquetados, int modo, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola){
+void Grafo::verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, list<Etiqueta*> etiquetados, int modo, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola){
     int costoVertMarcado = 0, costoVertPrevio = 0;
     double horasVertMarcado = 0.0, horasVertPrevio = 0.0;
     int costoArista = this->obtenerPeso1(visitado, destino);
     double horasArista = this->obtenerPeso2(visitado, destino);
-    list<Etiqueta>::iterator itEtiq;
+    list<Etiqueta*>::iterator itEtiq;
     itEtiq = etiquetados.begin();
     int encontrado = 0;
     while((encontrado != 2) && (itEtiq != etiquetados.end())){
-        if((*itEtiq).getVertice() == visitado){//seria "el anterior"
-            costoVertPrevio = (*itEtiq).getPesoAcumulado();
-            horasVertPrevio = (*itEtiq).getPesoDouble();
+        if((*itEtiq)->getVertice() == visitado){//seria "el anterior"
+            costoVertPrevio = (*itEtiq)->getPesoAcumulado();
+            horasVertPrevio = (*itEtiq)->getPesoDouble();
             encontrado++;
         }
-        if((*itEtiq).getVertice() == destino){//seria "a donde va la arista"
-            costoVertMarcado = (*itEtiq).getPesoAcumulado();
-            horasVertMarcado = (*itEtiq).getPesoDouble();
+        if((*itEtiq)->getVertice() == destino){//seria "a donde va la arista"
+            costoVertMarcado = (*itEtiq)->getPesoAcumulado();
+            horasVertMarcado = (*itEtiq)->getPesoDouble();
             encontrado++;
         }
         itEtiq++;
@@ -467,10 +480,10 @@ void Grafo::verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, lis
         itEtiq = etiquetados.begin();
         bool encontrado = false;
         while((!encontrado) && itEtiq != etiquetados.end()){
-            if((*itEtiq).getVertice() == destino){
-                (*itEtiq).setPesoAcumulado(costoVertPrevio + costoArista);
-                (*itEtiq).setPesoDouble(horasVertPrevio + horasArista);
-                (*itEtiq).setIteracion(iteracion);
+            if((*itEtiq)->getVertice() == destino){
+                (*itEtiq)->setPesoAcumulado(costoVertPrevio + costoArista);
+                (*itEtiq)->setPesoDouble(horasVertPrevio + horasArista);
+                (*itEtiq)->setIteracion(iteracion);
                 vistos.remove(destino);
                 cola.push(destino, costoVertPrevio + costoArista, horasVertPrevio + horasArista, iteracion);
                 encontrado = true;
