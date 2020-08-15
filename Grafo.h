@@ -43,13 +43,17 @@ public:
     void mostrarVer3(list<Etiqueta*> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<TuplaCompleta> caminoRecorrido, bool primeraPasada, int criterio);
     void mostrarPila(stack<TuplaCompleta> aMostrar, int criterio);
     void mostrarVertices();
-    bool marcadoComoVisitado(list<Vertice*> yaVisitados, Vertice* evaluado);
+    //bool marcadoComoVisitado(list<Vertice*> yaVisitados, Vertice* evaluado);
+    bool fueVisitado(list<Vertice*> yaVisitados, Vertice* evaluado);
     void verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, list<Etiqueta*> etiquetados, int modo, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola);
     void mostrarVerticesMarcados(list<Vertice*> vistos);
     bool existeCamino(list<Etiqueta*> etiquetados, Vertice* destino);
-    void mostarEtiquetas(list<Etiqueta> etiquetados);
+    void mostarEtiquetas(list<Etiqueta*> etiquetados);
     bool enTolerancia(double valor1, double valor2);
     void liberarEtiquetas(list<Etiqueta*> etiquetados);
+    void etiquetarVertices(list<Etiqueta*> &etiquetados);
+    Etiqueta* obtenerEtiqueta(Vertice* buscado, list<Etiqueta*> etiquetados);
+    void evaluarVerticeDestino(Etiqueta* partida, Etiqueta* destino, int iteracion, int modo);
     //------------------------------------------------------------------------------
 
     //---------------------------------------------

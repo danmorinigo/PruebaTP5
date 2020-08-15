@@ -5,7 +5,7 @@
 #include "vertice.h"
 
 const int ENTERO_INFINITO = 99999;
-const int DOUBLE_INFINITO = 99999;
+const double DOUBLE_INFINITO = 99999.9;
 
 class Etiqueta{
 private:
