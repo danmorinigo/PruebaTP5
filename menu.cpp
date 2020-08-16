@@ -252,13 +252,15 @@ void Menu::hacerEleccionMenuVuelos(){
     switch (this->opcionVuelos){
         case '1': { this-> limpiarPantalla();
                     cout << "La ruta con menor costo es: "<<endl;
-                    this->vuelos->caminoMinimo(this->vuelos->obtenerVertice(this->partida), this->vuelos->obtenerVertice(this->destino),1);
+                    this->vuelos->setCriterioBusqueda(1);
+                    this->vuelos->caminoMinimo(this->vuelos->obtenerVertice(this->partida), this->vuelos->obtenerVertice(this->destino));
                     cout<<endl;
                     this->pausa();
                 }break;
         case '2': { this-> limpiarPantalla();
                     cout << "La ruta mas rapida es: "<<endl;
-                    this->vuelos->caminoMinimo(this->vuelos->obtenerVertice(this->partida), this->vuelos->obtenerVertice(this->destino),2);
+                    this->vuelos->setCriterioBusqueda(2);
+                    this->vuelos->caminoMinimo(this->vuelos->obtenerVertice(this->partida), this->vuelos->obtenerVertice(this->destino));
                     cout<<endl;
                     this->pausa();
                 }break;
