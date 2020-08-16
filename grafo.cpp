@@ -253,6 +253,8 @@ void Grafo::mostrarVer3(list<Etiqueta*> etiquetados, Vertice* recorriendoDesde, 
     stack<TuplaCompleta> PilaLocal = caminoRecorrido;//entra vacio
     TuplaCompleta tuplaLocal;
     Vertice* aux;
+    bool optimizaPorPrecio = criterio == 1;
+    bool optimizaPorTiempoDeVuelo = criterio == 2;
 
     if(recorriendoDesde){
         tuplaLocal.vertice = recorriendoDesde;
@@ -303,7 +305,7 @@ void Grafo::mostrarVer3(list<Etiqueta*> etiquetados, Vertice* recorriendoDesde, 
                         //bool conTolerancia = enTolerancia(0.0, horasBuscadas);
                         //if(((criterio == 1) && (costoBuscado == 0)) || ((criterio == 2) && conTolerancia)){
                         //Aca parece que no necesita "tolerancia", sino comentar la linea de abajo y usar las 2 de arriba
-                        if(((criterio == 1) && (costoBuscado == 0)) || ((criterio == 2) && (horasBuscadas == 0.0))){
+                        if(((optimizaPorPrecio) && (costoBuscado == 0)) || ((optimizaPorTiempoDeVuelo) && (horasBuscadas == 0.0))){
                             bool primerRecorrido = false;
                             mostrarVer3(etiquetados, recorriendoDesdeLocal, destino, PilaLocal, primerRecorrido, criterio);
                         }
@@ -322,7 +324,7 @@ void Grafo::mostrarVer3(list<Etiqueta*> etiquetados, Vertice* recorriendoDesde, 
                             i++;
                         }
                         bool conTolerancia = enTolerancia(horasVertEvaluado, horasBuscadas);
-                        if(((criterio == 1) && (costoVertEvaluado == costoBuscado)) || ((criterio == 2) && conTolerancia)){
+                        if(((optimizaPorPrecio) && (costoVertEvaluado == costoBuscado)) || ((optimizaPorTiempoDeVuelo) && conTolerancia)){
                         //if(((criterio == 1) && (costoVertEvaluado == costoBuscado)) || ((criterio == 2) && (horasVertEvaluado == horasBuscadas))){
                             bool primerRecorrido = false;
                             mostrarVer3(etiquetados, recorriendoDesdeLocal, destino, PilaLocal, primerRecorrido, criterio);
