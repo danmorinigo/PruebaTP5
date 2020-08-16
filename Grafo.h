@@ -23,6 +23,7 @@ class Grafo{
 private:
     Vertice* primero;
     Vertice* ultimo;
+    list<Etiqueta*> etiquetados;
     int criterioBusqueda;
     int tamanio;
 public:
@@ -48,30 +49,42 @@ public:
     //------------------------------------------------------
 
     //ESTOS SON LOS METODOS QUE LOS REEMPLAZAN
-    void mostrarCaminos(list<Etiqueta*> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<Vertice*> caminoRecorrido, bool primeraPasada);
-    void presentarPila(stack<Vertice*> aMostrar, list<Etiqueta*> etiquetados);
+    void mostrarCaminos(Vertice* recorriendoDesde, Vertice* destino, stack<Vertice*> caminoRecorrido, bool primeraPasada);
+    //void mostrarCaminos(list<Etiqueta*> etiquetados, Vertice* recorriendoDesde, Vertice* destino, stack<Vertice*> caminoRecorrido, bool primeraPasada);
+    void presentarPila(stack<Vertice*> aMostrar);
+    //void presentarPila(stack<Vertice*> aMostrar, list<Etiqueta*> etiquetados);
     //--------------------
 
     //METODOS QUE HICE ESTA MAÑANA
     void setCriterioBusqueda(int criterio);
     bool caminoPorPrecio();
     bool caminoPorHoras();
-    list<Vertice*> antecesoresDe(Vertice* consultado, list<Etiqueta*> etiquetados);
-    int costoAcumulado(Vertice* consultado, list<Etiqueta*> etiquetados);
-    double horasAcumuladas(Vertice* consultado, list<Etiqueta*> etiquetados);
+    list<Vertice*> antecesoresDe(Vertice* consultado);
+    //list<Vertice*> antecesoresDe(Vertice* consultado, list<Etiqueta*> etiquetados);
+    int costoAcumulado(Vertice* consultado);
+    double horasAcumuladas(Vertice* consultado);
+    //int costoAcumulado(Vertice* consultado, list<Etiqueta*> etiquetados);
+    //double horasAcumuladas(Vertice* consultado, list<Etiqueta*> etiquetados);
     //-----------------------------
+    //bool marcadoComoVisitado(list<Vertice*> yaVisitados, Vertice* evaluado);
+
 
     void mostrarVertices();
-    //bool marcadoComoVisitado(list<Vertice*> yaVisitados, Vertice* evaluado);
     bool fueVisitado(list<Vertice*> yaVisitados, Vertice* evaluado);
-    void verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, list<Etiqueta*> etiquetados, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola);
+    void verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola);
+    //void verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, list<Etiqueta*> etiquetados, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola);
     void mostrarVerticesMarcados(list<Vertice*> vistos);
-    bool existeCamino(list<Etiqueta*> etiquetados, Vertice* destino);
-    void mostarEtiquetas(list<Etiqueta*> etiquetados);
+    bool existeCamino(Vertice* destino);
+    //bool existeCamino(list<Etiqueta*> etiquetados, Vertice* destino);
+    void mostarEtiquetas();
+    //void mostarEtiquetas(list<Etiqueta*> etiquetados);
     bool enTolerancia(double valor1, double valor2);
-    void liberarEtiquetas(list<Etiqueta*> etiquetados);
-    void etiquetarVertices(list<Etiqueta*> &etiquetados);
-    Etiqueta* obtenerEtiqueta(Vertice* buscado, list<Etiqueta*> etiquetados);
+    void liberarEtiquetas();
+    //void liberarEtiquetas(list<Etiqueta*> etiquetados);
+    void etiquetarVertices();
+    //void etiquetarVertices(list<Etiqueta*> &etiquetados);
+    Etiqueta* obtenerEtiqueta(Vertice* buscado);
+    //Etiqueta* obtenerEtiqueta(Vertice* buscado, list<Etiqueta*> etiquetados);
     void evaluarVerticeDestino(Etiqueta* partida, Etiqueta* destino, int iteracion);
 
     //------------------------------------------------------------------------------
