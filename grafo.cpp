@@ -239,13 +239,13 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino){
     }
     //mostrarVerticesMarcados(vistos);
     if(existeCamino(destino)){
-        cout << "ETIQUETADO FINAL" << endl;
-        mostarEtiquetas();
+        //cout << "ETIQUETADO FINAL" << endl;
+       // mostarEtiquetas();
         stack<Vertice*> pilaVertices;
         bool primerLlamado = true;
         mostrarCaminos(destino, salida, pilaVertices, primerLlamado);
     }else{
-        cout << "No hay conexion\n";
+        cout << "No hay conexion\n"; 
     }
     liberarEtiquetas();
 }
@@ -355,7 +355,7 @@ void Grafo::presentarPila(stack<Vertice*> aMostrar){
     if (caminoPorPrecio()){
         cout <<endl<<endl<< "Costo total en pesos: $" << pesoTotal << ",00" << endl;
     }else if(caminoPorHoras()){
-        cout <<endl<<endl<< "Costo total en horas: " << pesoTotalDouble << " hs." << endl;
+        cout <<endl<<endl<< "Tiempo de vuelo total en horas: " << pesoTotalDouble << " hs." << endl;
     }
 
 }
