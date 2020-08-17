@@ -9,20 +9,21 @@ private:
     NodoColaPrioridad* ultimo;
     int criterioOrden;//1-> pesoEntero / 2-> pesoDouble
 public:
-
     ColaPrioridad(int criterioOrden);
     bool vacia();
     Vertice* topAndPop();
     Vertice* topVertice();
     int topPrioridad();
-    int topEntero();
-    double topDouble();
+    int topPrecio();
+    double topHoras();
     void pop();
-    void push(Vertice* evaluado, int pesoEntero, double pesoDouble, int iteracion);
+    void push(Vertice* evaluado, int precio, double horas, int iteracion);
     ~ColaPrioridad();
 private:
     void insertarAlFinal(NodoColaPrioridad* aInsertar);
-    //void insertarAlFinal(NodoColaPrioridad* aInsertar);
+    void insertarNuevoEnPrioridad(NodoColaPrioridad* aInsertar);
+    void insertarOrdenado(NodoColaPrioridad* aInsertar);
+    void actualizarPrioridad(NodoColaPrioridad* aInsertar);
 };
 
 
