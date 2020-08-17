@@ -6,6 +6,7 @@ Etiqueta::Etiqueta(Vertice* actual){
     pesoDouble = DOUBLE_INFINITO;
     iteracion = 0;
 }
+
 Etiqueta::~Etiqueta(){
 }
 
@@ -23,9 +24,11 @@ void Etiqueta::sumoAnterior(Vertice* anterior){
         this->anterior.push_front(anterior);//aca agrega un nodo a la lista
     }
 }
+
 void Etiqueta::setPesoAcumulado(int peso){
     this->pesoAcumulado = peso;
 }
+
 void Etiqueta::setPesoDouble(double pesoDouble){
     this->pesoDouble = pesoDouble;
 }
@@ -37,15 +40,19 @@ void Etiqueta::setIteracion(int iteracion){
 Vertice* Etiqueta::getVertice(){
     return vertice;
 }
+
 list<Vertice*> Etiqueta::getAnterior(){
     return anterior;
 }
+
 int Etiqueta::getPesoAcumulado(){
     return pesoAcumulado;
 }
+
 double Etiqueta::getPesoDouble(){
     return pesoDouble;
 }
+
 int Etiqueta::getIteracion(){
     return iteracion;
 }

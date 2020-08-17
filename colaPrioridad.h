@@ -1,6 +1,7 @@
 #ifndef COLAPRIORIDAD_H_INCLUDED
 #define COLAPRIORIDAD_H_INCLUDED
 #include "nodoColaPrioridad.h"
+
 class ColaPrioridad{
 private:
 
@@ -28,6 +29,5 @@ private:
     bool ordenPorHoras();
     void insertarElemento(NodoColaPrioridad* aInsertar);
 };
-
 
 #endif // COLAPRIORIDAD_H_INCLUDED

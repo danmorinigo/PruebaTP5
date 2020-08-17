@@ -1,4 +1,5 @@
 #include "colaPrioridad.h"
+
 ColaPrioridad::ColaPrioridad(int criterioOrden){
     primero = 0;
     primeroSegunPrioridad = 0;
@@ -6,6 +7,7 @@ ColaPrioridad::ColaPrioridad(int criterioOrden){
     this->criterioOrden = criterioOrden;
     if(MEMORIA) std::cout << "Constructor ColaPrioridad (" << this << ")\n";
 }
+
 void ColaPrioridad::push(Vertice* evaluado, int precio, double horas, int iteracion){
     if(!primero){//cola vacia
         primero = new NodoColaPrioridad(evaluado, iteracion, precio, horas);
@@ -16,6 +18,7 @@ void ColaPrioridad::push(Vertice* evaluado, int precio, double horas, int iterac
         insertarElemento(aux);
     }
 }
+
 void ColaPrioridad::insertarElemento(NodoColaPrioridad* aInsertar){
     int prioridadActual = primeroSegunPrioridad->getPrioridad();
     int iteracion = aInsertar->getPrioridad();
@@ -50,21 +53,27 @@ void ColaPrioridad::insertarElemento(NodoColaPrioridad* aInsertar){
         cin.get();
     }
 }
+
 bool ColaPrioridad::vacia(){
     return (primero == 0);
 }
+
 int ColaPrioridad::topPrioridad(){
     return this->primero->getPrioridad();
 }
+
 int ColaPrioridad::topPrecio(){
     return this->primero->getEntero();
 }
+
 double ColaPrioridad::topHoras(){
     return this->primero->getDouble();
 }
+
 Vertice* ColaPrioridad::topVertice(){
     return this->primero->obtenerVertice();
 }
+
 void ColaPrioridad::pop(){
     NodoColaPrioridad* auxNodo = primero;
     this->primero = auxNodo->getSiguiente();
@@ -76,13 +85,16 @@ void ColaPrioridad::pop(){
     }
     delete auxNodo;
 }
+
 void ColaPrioridad::insertarAlFinal(NodoColaPrioridad* aInsertar){
     this->ultimo->setSiguiente(aInsertar);
     this->ultimo = aInsertar;
 }
+
 void ColaPrioridad::actualizarPrioridad(NodoColaPrioridad* aInsertar){
     this->primeroSegunPrioridad = aInsertar;
 }
+
 void ColaPrioridad::insertarNuevoEnPrioridad(NodoColaPrioridad* aInsertar){
     NodoColaPrioridad* auxPrimero = primero;
     while(auxPrimero->getSiguiente() != this->primeroSegunPrioridad){
@@ -91,6 +103,7 @@ void ColaPrioridad::insertarNuevoEnPrioridad(NodoColaPrioridad* aInsertar){
     aInsertar->setSiguiente(primeroSegunPrioridad);
     auxPrimero->setSiguiente(aInsertar);
 }
+
 void ColaPrioridad::insertarOrdenado(NodoColaPrioridad* aInsertar){
     NodoColaPrioridad* auxPrioridadActual = primeroSegunPrioridad;
     bool hecho = false;
@@ -110,14 +123,17 @@ void ColaPrioridad::insertarOrdenado(NodoColaPrioridad* aInsertar){
 bool ColaPrioridad::ordenPorPrecio(){
     return (this->criterioOrden == 1);
 }
+
 bool ColaPrioridad::ordenPorHoras(){
     return (this->criterioOrden == 2);
 }
+
 Vertice* ColaPrioridad::topAndPop(){
     Vertice* aux = primero->obtenerVertice();
     this->pop();
     return aux;
 }
+
 ColaPrioridad::~ColaPrioridad(){
     while(!vacia()){
         this->pop();

@@ -202,15 +202,12 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino){
             iteracion++;
         }
     }
-    //mostrarVerticesMarcados(vistos);
     if(existeCamino(destino)){
-        //cout << "ETIQUETADO FINAL" << endl;
-       // mostarEtiquetas();
         stack<Vertice*> pilaVertices;
         bool primerLlamado = true;
         mostrarCaminos(destino, salida, pilaVertices, primerLlamado);
     }else{
-        cout << "No hay conexion\n"; 
+        cout <<endl<< "No existen vuelos entre el origen y el destino ingresados. \n"; 
     }
     liberarEtiquetas();
 }

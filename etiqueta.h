@@ -30,5 +30,4 @@ public:
     int getIteracion();
 };
 
-
 #endif // ETIQUETA_H_INCLUDED

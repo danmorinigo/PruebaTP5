@@ -52,6 +52,7 @@ BSTNode<T>::BSTNode(T data, string codigoIATA)
 template <class T>
 BSTNode<T>::~BSTNode(){
 }
+
 template <class T>
 string BSTNode<T>::get_IATA()
 {
@@ -96,7 +97,6 @@ template <class T>
 void BSTNode<T>::set_data(T data) {
     this->data = data;
 }
-
 
 template <class T>
 void BSTNode<T>::set_left(BSTNode<T>* left){

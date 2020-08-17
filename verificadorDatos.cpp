@@ -40,7 +40,7 @@ bool VerificadorDatos::esIATA(string aVerificar){
             esValido = true;
             bool esMayuscula = (aVerificar[i] > 64 && aVerificar[i] < 91); //es una mayuscula
             bool esMinuscula = (aVerificar[i] > 96 && aVerificar[i] < 123);//es una minuscula
-            if(!esMayuscula && !esMinuscula){//si ambas son falsas no pasa verificacion
+            if(!esMayuscula /*&& !esMinuscula*/){//si ambas son falsas no pasa verificacion
                 return false;
             }
         }
@@ -95,13 +95,13 @@ bool VerificadorDatos::esVuelo(string aVerificar){
     string tempStr;
     unsigned cantDatos = 0;
     while(!cadena.eof()){
-        cadena >> tempStr;//IATA?
+        cadena >> tempStr;// partida
         cout<<"Se va verificar si "<<tempStr<<" es IATA."<<endl;
         if(!esIATA(tempStr)){
             return false;
         }
         cantDatos++;
-        cadena >> tempStr;
+        cadena >> tempStr;// destino
         cout<<"Se va verificar si "<<tempStr<<" es IATA."<<endl;
         if(!esIATA(tempStr)){
             return false;
