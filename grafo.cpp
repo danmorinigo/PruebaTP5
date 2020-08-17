@@ -265,7 +265,6 @@ void Grafo::trabajoAdyacente(Arista* auxAristas, list<Vertice*> vistos, Vertice 
     auxDestino -> sumoAnterior(verticeVisitado);
 }
 
-
 int Grafo::costoAcumulado(Vertice* consultado){
     return obtenerEtiqueta(consultado)->getPesoAcumulado();
 }
