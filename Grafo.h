@@ -36,8 +36,8 @@ public:
     int cantVertices();
     Vertice* obtenerVertice(string nombre);
     void agregarArista(Vertice* inicio, Vertice* destino, int precio, double horasVuelo);
-    int obtenerPeso1(Vertice* inicio, Vertice* destino);
-    double obtenerPeso2(Vertice* inicio, Vertice* destino);
+    int obtenerPrecio(Vertice* inicio, Vertice* destino);
+    double obtenerTiempoDeVuelo(Vertice* inicio, Vertice* destino);
     unsigned obtenerTamanio();
 
     //------ESTO HAY QUE MODULIZAR BASTANTE Y VER TEMA NOMBRES VARIABLES------------
@@ -53,9 +53,7 @@ public:
     void mostrarVertices();
     bool fueVisitado(list<Vertice*> yaVisitados, Vertice* evaluado);
     void verificarPesoVerticeMarcado(Vertice* visitado, Vertice* destino, int iteracion, list<Vertice*> &vistos, ColaPrioridad &cola);
-    void mostrarVerticesMarcados(list<Vertice*> vistos);
     bool existeCamino(Vertice* destino);
-    void mostarEtiquetas();
     bool enTolerancia(double valor1, double valor2);
     void liberarEtiquetas();
     void etiquetarVertices();
@@ -65,8 +63,9 @@ public:
     void trabajoAdyacente(Arista* auxAristas,  list<Vertice*> vistos, Vertice * visitado, ColaPrioridad * cola, Etiqueta * auxActual, int iteracion);
     //------------------------------------------------------------------------
     ~Grafo();
-
     //***********************************************************************************
+    //void mostrarVerticesMarcados(list<Vertice*> vistos);
+    //void mostarEtiquetas();
     //***********************************************************************************
     //***********************************************************************************
 };
