@@ -122,11 +122,21 @@ void Menu::consultarAeropuerto(){
     }
 }
 
+string Menu::ingresarNombre(){
+    char ingreso[100];
+    string nombre;
+    cin.get();
+    cin.getline(ingreso, 100);
+    nombre = ingreso;
+    return nombre;
+}
+
 void Menu::agregarAeropuerto(){
     Aeropuerto* nuevoAeropuerto = new Aeropuerto;
     string palabra;
     unsigned entero;
     double real;
+    char ingreso[100];
 
     cout<<endl<<"INGRESAR NUEVO AEROPUERTO: "<<endl;
     cout<<"Ingrese codigo IATA: ";
@@ -134,19 +144,18 @@ void Menu::agregarAeropuerto(){
     nuevoAeropuerto->asignarCodigo(palabra);
     cout<<endl;
     cout<<"Ingrese el nombre: ";
-    cin >> palabra;
+    palabra = ingresarNombre();
     nuevoAeropuerto->asignarNombre(palabra);
     cout<<endl;
     cout<<"Ingrese el ciudad: ";
-    cin >> palabra;
+    palabra = ingresarNombre();
     nuevoAeropuerto->asignarCiudad(palabra);
     cout<<endl;
     cout<<"Ingrese el pais: ";
-    cin >> palabra;
+    palabra = ingresarNombre();
     nuevoAeropuerto->asignarPais(palabra);
     cout<<endl;
     cout<<"Ingrese el superficie: ";
-    cin >> real;
     nuevoAeropuerto->asignarSup(real);
     cout<<endl;
     cout<<"Ingrese cantindad de terminales: ";

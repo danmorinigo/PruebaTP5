@@ -89,6 +89,10 @@ public:
     //POST: Se muestra el resultado de la busqueda segun la eleccion del usuario. 
     void hacerEleccionMenuVuelos();
 
+    //PRE: Tiene que estar creado el objeto de clase Menu.
+    //POST: Recibe lo que el usuario ingresa por teclado, incluyendo espacios, y lo devuelve como un string con el contenido.
+    string ingresarNombre();
+
     //PRE:  --
     //POST: Muestra cartel de despedida.
     void despedida();
