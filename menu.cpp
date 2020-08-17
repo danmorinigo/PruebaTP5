@@ -226,12 +226,17 @@ void Menu::solicitarPartidaYDestino(){
     this->vuelos->mostrarVertices();
 
     cout <<"A continuacion debe ingresar los aeropuertos de partida y de destino."<<endl;
-    cout <<endl<< "Ingrese codigo IATA del aeropuerto de partida: ";
-    cin >> this->partida;
-    cout<<endl;
-    cout << "Ingrese codigo IATA del aeropuerto de destino: ";
-    cin >> this->destino;
-    cout<<endl;
+    do {
+        cout <<endl<< "Ingrese codigo IATA del aeropuerto de partida: ";
+        cin >> this->partida;
+        cout<<endl;
+      
+        } while(!this-> vuelos->existeVertice(this->partida));
+    do {
+          cout << "Ingrese codigo IATA del aeropuerto de destino: ";
+          cin >> this->destino;
+          cout<<endl;
+    } while(!this-> vuelos->existeVertice(this->destino));
 }
 
 void Menu::mostrarMenuVuelos(){
