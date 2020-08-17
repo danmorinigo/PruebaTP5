@@ -24,6 +24,9 @@ private:
     void insertarNuevoEnPrioridad(NodoColaPrioridad* aInsertar);
     void insertarOrdenado(NodoColaPrioridad* aInsertar);
     void actualizarPrioridad(NodoColaPrioridad* aInsertar);
+    bool ordenPorPrecio();
+    bool ordenPorHoras();
+    void insertarElemento(NodoColaPrioridad* aInsertar);
 };
 
 

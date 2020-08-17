@@ -11,38 +11,43 @@ void ColaPrioridad::push(Vertice* evaluado, int precio, double horas, int iterac
         primero = new NodoColaPrioridad(evaluado, iteracion, precio, horas);
         primeroSegunPrioridad = primero;
         ultimo = primero;
-    }else{//habia elementos en la cola
-        int prioridadActual = primeroSegunPrioridad->getPrioridad();
+    }else{//hay elementos en la cola
         NodoColaPrioridad* aux = new NodoColaPrioridad(evaluado, iteracion, precio, horas);
-        if(iteracion > prioridadActual){//nueva iteracion - inserta al final
-            insertarAlFinal(aux);
-            actualizarPrioridad(aux);
-        }else if(iteracion == prioridadActual){//hay que ordenar...
-            //mayor que el ultimo, inserta al final de cola
-            if(((criterioOrden == 1) && (precio >= ultimo->getEntero())) || ((criterioOrden == 2) && (horas >= ultimo->getDouble()))){
-                insertarAlFinal(aux);
-            }else{
-                //menor que el primero en esta prioridad
-                if(((criterioOrden == 1) && (precio < primeroSegunPrioridad->getEntero())) || ((criterioOrden == 2) && (horas < primeroSegunPrioridad->getDouble()))){
-                    //primero en cola y primero segun prioridad apuntando al mismo lugar
-                    if(primero == primeroSegunPrioridad){
-                        aux->setSiguiente(primero);
-                        this->primero = aux;
-                        actualizarPrioridad(aux);
-                    }else{
-                        //primero segun prioridad no apunta a PRIMERO
-                        insertarNuevoEnPrioridad(aux);
-                        actualizarPrioridad(aux);
-                    }
-                }else{//esta en medio de esta prioridad, pero no al final ni al principio
-                    insertarOrdenado(aux);
-                }
-            }
+        insertarElemento(aux);
+    }
+}
+void ColaPrioridad::insertarElemento(NodoColaPrioridad* aInsertar){
+    int prioridadActual = primeroSegunPrioridad->getPrioridad();
+    int iteracion = aInsertar->getPrioridad();
+    int precio = aInsertar->getEntero();
+    double horas = aInsertar->getDouble();
+    if(iteracion > prioridadActual){//nueva iteracion - inserta al final
+        insertarAlFinal(aInsertar);
+        actualizarPrioridad(aInsertar);
+    }else if(iteracion == prioridadActual){//hay que ordenar...
+        //mayor que el ultimo, inserta al final de cola
+        if((ordenPorPrecio() && (precio >= ultimo->getEntero())) || (ordenPorHoras() && (horas >= ultimo->getDouble()))){
+            insertarAlFinal(aInsertar);
         }else{
-            cout << "ERROR - Iteracion no permitida" << endl;
-            cin.get();
+            //menor que el primero en esta prioridad
+            if((ordenPorPrecio() && (precio < primeroSegunPrioridad->getEntero())) || (ordenPorHoras() && (horas < primeroSegunPrioridad->getDouble()))){
+                //primero en cola y primero segun prioridad apuntando al mismo lugar
+                if(primero == primeroSegunPrioridad){
+                    aInsertar->setSiguiente(primero);
+                    this->primero = aInsertar;
+                    actualizarPrioridad(aInsertar);
+                }else{
+                    //primero segun prioridad no apunta a PRIMERO
+                    insertarNuevoEnPrioridad(aInsertar);
+                    actualizarPrioridad(aInsertar);
+                }
+            }else{//esta en medio de esta prioridad, pero no al final ni al principio
+                insertarOrdenado(aInsertar);
+            }
         }
-
+    }else{
+        cout << "ERROR - Iteracion no permitida" << endl;
+        cin.get();
     }
 }
 bool ColaPrioridad::vacia(){
@@ -90,7 +95,7 @@ void ColaPrioridad::insertarOrdenado(NodoColaPrioridad* aInsertar){
     NodoColaPrioridad* auxPrioridadActual = primeroSegunPrioridad;
     bool hecho = false;
     while(!hecho && auxPrioridadActual->getSiguiente()){
-        if(((criterioOrden == 1) && (aInsertar->getEntero() <= auxPrioridadActual->getSiguiente()->getEntero())) || ((criterioOrden == 2) && (aInsertar->getDouble() <= auxPrioridadActual->getSiguiente()->getDouble()))){
+        if((ordenPorPrecio() && (aInsertar->getEntero() <= auxPrioridadActual->getSiguiente()->getEntero())) || (ordenPorHoras() && (aInsertar->getDouble() <= auxPrioridadActual->getSiguiente()->getDouble()))){
             aInsertar->setSiguiente(auxPrioridadActual->getSiguiente());
             auxPrioridadActual->setSiguiente(aInsertar);
             hecho= true;
@@ -102,17 +107,15 @@ void ColaPrioridad::insertarOrdenado(NodoColaPrioridad* aInsertar){
         cin.get();
     }
 }
+bool ColaPrioridad::ordenPorPrecio(){
+    return (this->criterioOrden == 1);
+}
+bool ColaPrioridad::ordenPorHoras(){
+    return (this->criterioOrden == 2);
+}
 Vertice* ColaPrioridad::topAndPop(){
-    NodoColaPrioridad* auxNodo = primero;
     Vertice* aux = primero->obtenerVertice();
-    this->primero = auxNodo->getSiguiente();
-    if (primeroSegunPrioridad == auxNodo){
-        primeroSegunPrioridad = primero;
-    }
-    if(!primero){
-        ultimo = 0;
-    }
-    delete auxNodo;
+    this->pop();
     return aux;
 }
 ColaPrioridad::~ColaPrioridad(){
