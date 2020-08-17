@@ -21,7 +21,7 @@ char Menu::getOpcionVuelos(){
 void Menu::setAeropuertos(BST<Aeropuerto*>* aeropuertos){
     this-> aeropuertos = aeropuertos;
 }
-//**********************************************
+
 void Menu::setVuelos(Grafo* vuelos){
     this-> vuelos = vuelos;
     cout<<endl<<"SE CARGARON LOS VUELOS"<<endl;
@@ -30,7 +30,7 @@ void Menu::setVuelos(Grafo* vuelos){
 bool Menu::hayVuelosCargados(){
     return (this-> vuelos != NULL);
 }
-//**********************************************
+
 void Menu::limpiarPantalla(){
     #ifdef _WIN32
         system ("cls");
@@ -81,15 +81,12 @@ void Menu::hacerEleccion(){
         case '5': { this-> limpiarPantalla();
                     this->aeropuertos->imprime_en_ancho();
                     cout<<endl;
-                    //this->aeropuertos->imprime_acostado();
                     this->pausa();
                 }break;
         case '6': { this-> limpiarPantalla();
                     if (this->hayVuelosCargados()){
                     	this->opcionVuelos = '.';
-
                         this->solicitarPartidaYDestino();
-                        //this->vuelos->mostrarVertices();
                         while (this->getOpcionVuelos() != '0'){
                             this->mostrarMenuVuelos();
                             this->hacerEleccionMenuVuelos();
@@ -100,9 +97,7 @@ void Menu::hacerEleccion(){
                         cout << "NO HAY VUELOS CARGADOS."<<endl;
                         this->pausa();
                     }
-                    //this->aeropuertos->imprime_acostado();
                 }
-                //**********************************************
                 break;
         case '0': { this-> limpiarPantalla();
                     this-> despedida();
@@ -209,34 +204,34 @@ void Menu::eliminarAeropuerto(string codigo){
 void Menu::darDeBajaAeropuerto(){
     string codigo;
     cout<<"DAR DE BAJA UN AEROPUERTO."<<endl;
-    //----------------------------------------------------------------------
     cout<< "Ingrese el codigo IATA del aeropuerto que desea dar de baja: ";
     cin >> codigo;
     eliminarAeropuerto(codigo);
-    //----------------------------------------------------------------------
 }
 
 void Menu::solicitarPartidaYDestino(){
-   // this->limpiarPantalla();
-
     cout << endl;
     enmarcar("Eleccion del Vuelo.");
-
-
     this->vuelos->mostrarVertices();
-
     cout <<"A continuacion debe ingresar los aeropuertos de partida y de destino."<<endl;
-    do {
-        cout <<endl<< "Ingrese codigo IATA del aeropuerto de partida: ";
-        cin >> this->partida;
-        cout<<endl;
-      
+    cout <<endl<< "Ingrese codigo IATA del aeropuerto de partida: ";
+    cin >> this->partida;
+    if (!this-> vuelos->existeVertice(this->partida)){
+        do {
+          cout <<endl<< "VALOR INCORRECTO. Ingrese PARTIDA nuevamente: ";
+          cin >> this->partida;
         } while(!this-> vuelos->existeVertice(this->partida));
-    do {
-          cout << "Ingrese codigo IATA del aeropuerto de destino: ";
+    cout<<endl;
+    }
+    cout <<endl<< "Ingrese codigo IATA del aeropuerto de destino: ";
+    cin >> this->destino;
+    if (!this-> vuelos->existeVertice(this->destino)){
+        do {
+          cout <<endl<< "VALOR INCORRECTO. Ingrese DESTINO nuevamente: ";
           cin >> this->destino;
-          cout<<endl;
-    } while(!this-> vuelos->existeVertice(this->destino));
+        } while(!this-> vuelos->existeVertice(this->destino));
+    cout<<endl;
+    }
 }
 
 void Menu::mostrarMenuVuelos(){
