@@ -222,7 +222,7 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino){
     int iteracion = 1;
     list<Vertice*> vistos;  //Aca van los vertices ya visitados (marcados)
     etiquetarVertices();
-    ColaPrioridad cola(this->criterioBusqueda);
+    ColaPrioridad cola(this -> criterioBusqueda);
     cola.push(salida, 0, 0.0, 0);
     while(!cola.vacia()){
         Vertice * verticeVisitado = cola.topAndPop();
@@ -230,18 +230,7 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino){
             Arista* auxAristas = verticeVisitado -> obtenerAristas();
             Etiqueta* auxActual = obtenerEtiqueta(verticeVisitado);
             while(auxAristas){
-                Etiqueta* auxDestino = obtenerEtiqueta(auxAristas -> ConsultarDestino());
-                if(!fueVisitado(vistos, auxAristas->ConsultarDestino())){
-                    int aristaCosto = this->obtenerPeso1(verticeVisitado, auxAristas->ConsultarDestino());
-                    double aristaHoras = this->obtenerPeso2(verticeVisitado, auxAristas->ConsultarDestino());
-                    cola.push(auxAristas->ConsultarDestino(), aristaCosto, aristaHoras, iteracion);
-                    //CAMBIO O NO ETIQUETA DE VERTICE DESTINO DE LA ACTUAL ARISTA???
-                    evaluarVerticeDestino(auxActual, auxDestino, iteracion);
-                }else{//Ya fue visitado, tengo que verificar si puedo cambiar su peso acumulado.
-                    verificarPesoVerticeMarcado(verticeVisitado, auxAristas -> ConsultarDestino(), iteracion, vistos, cola);
-                }
-                //Agrego antecesor, hayan o no sido cambiado datos de su etiqueta
-                auxDestino->sumoAnterior(verticeVisitado);
+                trabajoAdyacente(auxAristas, vistos, verticeVisitado, &cola, auxActual, iteracion);
                 auxAristas = auxAristas->consultarSiguiente();
             }
             vistos.push_back(verticeVisitado);
@@ -260,6 +249,22 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino){
     }
     liberarEtiquetas();
 }
+
+void Grafo::trabajoAdyacente(Arista* auxAristas, list<Vertice*> vistos, Vertice * verticeVisitado, ColaPrioridad *cola, Etiqueta * auxActual, int iteracion) {
+    Etiqueta* auxDestino = obtenerEtiqueta(auxAristas -> ConsultarDestino());
+    if(!fueVisitado(vistos, auxAristas->ConsultarDestino())){
+        int aristaCosto = this->obtenerPeso1(verticeVisitado, auxAristas->ConsultarDestino());
+        double aristaHoras = this->obtenerPeso2(verticeVisitado, auxAristas->ConsultarDestino());
+        cola -> push(auxAristas->ConsultarDestino(), aristaCosto, aristaHoras, iteracion);
+        //CAMBIO O NO ETIQUETA DE VERTICE DESTINO DE LA ACTUAL ARISTA???
+        evaluarVerticeDestino(auxActual, auxDestino, iteracion);
+    }else{//Ya fue visitado, tengo que verificar si puedo cambiar su peso acumulado.
+        verificarPesoVerticeMarcado(verticeVisitado, auxAristas -> ConsultarDestino(), iteracion, vistos, *cola);
+    }
+    //Agrego antecesor, hayan o no sido cambiado datos de su etiqueta
+    auxDestino -> sumoAnterior(verticeVisitado);
+}
+
 
 int Grafo::costoAcumulado(Vertice* consultado){
     return obtenerEtiqueta(consultado)->getPesoAcumulado();
@@ -332,20 +337,7 @@ void Grafo::presentarPila(stack<Vertice*> aMostrar){
     aMostrar.pop();
     while(!aMostrar.empty()){
         mostrando = aMostrar.top();
-        /*
-        if (caminoPorPrecio()){
-            pesoTotal = costoAcumulado(mostrando);
-            pesoArista = pesoTotal - pesoAnterior;
-            cout << "-(+" << pesoArista << ")->" << mostrando->obtenerNombreVertice();
-            pesoAnterior = pesoTotal;
-        }else if(caminoPorHoras()){
-            pesoTotalDouble = horasAcumuladas(mostrando);
-            pesoAristaDouble = pesoTotalDouble - pesoAnteriorDouble;
-            cout <<"-(+" << pesoAristaDouble << ")->" << mostrando->obtenerNombreVertice();
-            pesoAnteriorDouble = pesoTotalDouble;
-        }
-        */
-        switch (this->criterioBusqueda) {
+        switch (this -> criterioBusqueda) {
             case 1:
                 pesoTotal = costoAcumulado(mostrando);
                 pesoArista = pesoTotal - pesoAnterior;

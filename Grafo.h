@@ -62,6 +62,7 @@ public:
     Etiqueta* obtenerEtiqueta(Vertice* buscado);
     void evaluarVerticeDestino(Etiqueta* partida, Etiqueta* destino, int iteracion);
     Vertice* obtenerPrimero();
+    void trabajoAdyacente(Arista* auxAristas,  list<Vertice*> vistos, Vertice * visitado, ColaPrioridad * cola, Etiqueta * auxActual, int iteracion);
     //------------------------------------------------------------------------
     ~Grafo();
 
