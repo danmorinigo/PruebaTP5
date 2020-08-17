@@ -5,10 +5,8 @@ Arista::Arista(Vertice* destino){
     this -> destino = destino;
     precio = -1;
     horasVuelo = -1.0;
-    cout << "Constructor Arista" << endl;
 }
 Arista::~Arista(){
-    cout << "Destructor Arista" << endl;
 }
 void Arista::asignarSiguiente(Arista* sig){
     this -> sig = sig;

@@ -1,13 +1,11 @@
 #include "vertice.h"
 
 Vertice::Vertice(string nombre){
-    cout << "Constructor Vertice " << nombre << endl;
     siguiente = 0;
     arista = 0;
     this->nombre = nombre;
 }
 Vertice::~Vertice(){
-    cout << "Destructor Vertice " << nombre << endl;
 }
 void Vertice::asignarProxVertice(Vertice* siguiente){
     this->siguiente = siguiente;

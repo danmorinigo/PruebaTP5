@@ -1,8 +1,6 @@
 #ifndef COLAPRIORIDAD_H_INCLUDED
 #define COLAPRIORIDAD_H_INCLUDED
 #include "nodoColaPrioridad.h"
-//#include "etiqueta.h"
-
 class ColaPrioridad{
 private:
 
@@ -21,12 +19,10 @@ public:
     double topDouble();
     void pop();
     void push(Vertice* evaluado, int pesoEntero, double pesoDouble, int iteracion);
-    /*
-    void insertar(BSTNode<Aeropuerto*>* aIngresar);
-    */
     ~ColaPrioridad();
 private:
-    //NodoCola* anterior(int posicion);
+    void insertarAlFinal(NodoColaPrioridad* aInsertar);
+    //void insertarAlFinal(NodoColaPrioridad* aInsertar);
 };
 
 

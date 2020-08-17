@@ -42,7 +42,6 @@ public:
 template <class T>
 BSTNode<T>::BSTNode(T data, string codigoIATA)
 {
-    cout << "Constructor BSTNODE de " << codigoIATA << endl;
     this->data = data;
     this->codIATA = codigoIATA;
     this->left = NULL;
@@ -52,7 +51,6 @@ BSTNode<T>::BSTNode(T data, string codigoIATA)
 
 template <class T>
 BSTNode<T>::~BSTNode(){
-    cout << "Destructor BSTNODE de " << codIATA << endl;
 }
 template <class T>
 string BSTNode<T>::get_IATA()

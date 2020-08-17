@@ -1,21 +1,14 @@
 #include "etiqueta.h"
 
 Etiqueta::Etiqueta(Vertice* actual){
-    cout << "Constructor Etiqueta para " << actual->obtenerNombreVertice() << endl;
     vertice = actual;
     pesoAcumulado = ENTERO_INFINITO;
     pesoDouble = DOUBLE_INFINITO;
     iteracion = 0;
 }
 Etiqueta::~Etiqueta(){
-    cout << "Destructor Etiqueta para " << this->vertice->obtenerNombreVertice() << endl;
 }
-void Etiqueta::setAnterior(Vertice* anterior){
-    while(!this->anterior.empty()){// aca lo reemplaza
-        (this->anterior).pop_front();//Digamos que reemplaza a el o los anteriores
-    }
-    (this->anterior).push_front(anterior);//inserta este peso
-}
+
 void Etiqueta::sumoAnterior(Vertice* anterior){
     bool eraPadre = false;
     list<Vertice*>::iterator i;

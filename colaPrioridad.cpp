@@ -15,9 +15,7 @@ void ColaPrioridad::push(Vertice* evaluado, int pesoEntero, double pesoDouble, i
         int prioridadActual = primeroSegunPrioridad->getPrioridad();
         if(iteracion > prioridadActual){//nueva iteracion - inserta al final
             NodoColaPrioridad* aux = new NodoColaPrioridad(evaluado, iteracion, pesoEntero, pesoDouble);
-            ultimo->setSiguiente(aux);
-            ultimo = aux;
-            primeroSegunPrioridad = aux;
+            insertarAlFinal(aux);
         }else if(iteracion == prioridadActual){//hay que ordenar...
             NodoColaPrioridad* aux = new NodoColaPrioridad(evaluado, iteracion, pesoEntero, pesoDouble);
             //mayor que el ultimo, inserta al final de cola
@@ -91,6 +89,11 @@ void ColaPrioridad::pop(){
         ultimo = 0;
     }
     delete auxNodo;
+}
+void ColaPrioridad::insertarAlFinal(NodoColaPrioridad* aInsertar){
+    this->ultimo->setSiguiente(aInsertar);
+    this->ultimo = aInsertar;
+    this->primeroSegunPrioridad = aInsertar;
 }
 Vertice* ColaPrioridad::topAndPop(){
     NodoColaPrioridad* auxNodo = primero;

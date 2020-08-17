@@ -10,7 +10,6 @@ const double DOUBLE_INFINITO = 99999.9;
 class Etiqueta{
 private:
     Vertice* vertice;
-    //Vertice* anterior;
     list<Vertice*> anterior;
     int pesoAcumulado;
     double pesoDouble;
@@ -19,7 +18,6 @@ public:
     Etiqueta(Vertice* actual);
     ~Etiqueta();
 
-    void setAnterior(Vertice* anterior);//no va mas
     void sumoAnterior(Vertice* anterior);
     void setPesoAcumulado(int peso);
     void setPesoDouble(double pesoDouble);
