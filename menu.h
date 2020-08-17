@@ -21,52 +21,72 @@ private:
     Grafo* vuelos;
 
 public:
-    // Constructor sin par�metros de la clase Menu.
+    // Constructor sin parametros de la clase Menu.
     //PRE: Ninguna
     //POST: Se crea un objeto de Clase Menu.
     Menu();
 
+    //PRE: Tiene que estar creado el objeto de clase Menu.
+    //POST: Se obtiene el valor char del atributo opcion.
     char getOpcion();
-
+    
+    //PRE: Tiene que estar creado el objeto de clase Menu.
+    //POST:Se obtiene el valor char del atributo opcionVuelos.
     char getOpcionVuelos();
-
+    
+    //PRE: Tiene que estar creado el objeto de clase Menu.
+    //POST: Se asigna el valor del atributo aeropuertos ingresado por parametro. Recibe un puntero a un ABB de punteros a objetos Aeropuerto.
     void setAeropuertos(BST<Aeropuerto*>*);
-
+    
+    //PRE: Tiene que estar creado el objeto de clase Menu.
+    //POST: Se asigna el valor del atributo vuelos ingresado por parametro. Recibe un puntero a un objeto de clase Grafo.
     void setVuelos(Grafo*);
-
+    
+    //PRE: Tiene que estar creado el objeto de clase Menu.
+    //POST: Devuelve Verdadero si existe al menos un vuelo cargado y Falso en caso contrario.
     bool hayVuelosCargados();
+
     //PRE:  --
     //POST: Borra lo impreso en pantalla. Cursor vuelve a posicion (1, 1).
     void limpiarPantalla();
-    //PRE:  --
+
+    //PRE: Tiene que estar creado el objeto de clase Menu.
     //POST: Muestra opciones del programa.
     void mostrarMenuPrincipal();
-
+    
+    //PRE: Se tiene que haber ingresado una opcion valida desde el Menu principal del programa.
+    //POST: Hace lo correspondiente a la eleccion ingresada por el usuario en el Menu principal. 
     void hacerEleccion();
-
+    
+    //PRE: Tiene que estar creado el objeto de clase Menu y tiene que tener cargado el atributo aeropuertos.
+    //     Recibe el codigo IATA en letras mayusculas o el nombre correcto del aeropuerto.
+    //POST: Se muestra por pantalla toda la informacion del aeropuerto solicitado.
     void consultarAeropuerto();
-
+    
+    //PRE: Tiene que estar creado el objeto de clase Menu.
+    //POST: Se realiza el ingreso de un aeropuerto nuevo solicitando cada uno de los datos necesarios. El valor del codigo IATA, del nombre
+    //     ,de la ciudad y del pais se ingresan como cadena de caracteres. La superficie debe ser ingresada como un flotante, y la cantidad
+    //     de terminales, los destinos nacionales e internacionales deben ser ingresadas como valores enteros.
     void agregarAeropuerto();
 
-    /*Uso para buscar el menor de los dos hijos*/
-    BSTNode<Aeropuerto*>* buscarMenor(BSTNode<Aeropuerto*> *aeropuerto);
-
-    /*Uso para reemplazar un nodo por otro*/
-    void reemplazar(BSTNode<Aeropuerto*>* antiguo, BSTNode<Aeropuerto*>* nuevo);
-
-    /*Uso para destruir un nodo*/
-    void destruir(BSTNode<Aeropuerto*>* aeropuerto);
-
-    /*Cree este metodo porque necesitaba volver a llamarlo recursivamente, pero si usaba el metodo darDeBaja otra vez
-     tenia que pasar por el cin del codigo, entonces la funcion darDeBaja, llama a esta, con el codigo que introduce el usuario.*/
+    //PRE: Debe estar cargado el atributo aeropuertos. Este metodo es usado por el metodo darDeBajaAeropuerto().
+    //POST: Se elimina del arbol del atributo aeropuertos, el aeropuerto ingresado por parametro.
     void eliminarAeropuerto(string codigo);
-
+    
+    //PRE: Debe estar cargado el atributo aeropuertos.
+    //POST: Se da debaja el aeropuerto ingresado por el usuario.
     void darDeBajaAeropuerto();
-
+    
+    //PRE: Debe estar cargado el atributo vuelos (puntero a clase Grafo).
+    //POST: Solicita al usuario el aeropuerto de partida y de destino del vuelo a buscar.
     void solicitarPartidaYDestino();
-
+    
+    //PRE: Tiene que estar creado el objeto de clase Menu.
+    //POST: Se muestra por pantalla la posibilidad para buscar el vuelo con mejor precio o el mas rapido.
     void mostrarMenuVuelos();
-
+    
+    //PRE: Se tiene que haber ejecutado el metodo mostrarMenuVuelos().
+    //POST: Se muestra el resultado de la busqueda segun la eleccion del usuario. 
     void hacerEleccionMenuVuelos();
 
     //PRE:  --
@@ -91,3 +111,18 @@ public:
     ~Menu();
 };
 #endif // MENU_H_INCLUDED
+
+ /*Uso para buscar el menor de los dos hijos*/
+    //PRE:--
+    //POST: 
+   // BSTNode<Aeropuerto*>* buscarMenor(BSTNode<Aeropuerto*> *aeropuerto);
+
+    /*Uso para reemplazar un nodo por otro*/
+    //PRE:--
+    //POST: 
+  //  void reemplazar(BSTNode<Aeropuerto*>* antiguo, BSTNode<Aeropuerto*>* nuevo);
+
+    /*Uso para destruir un nodo*/
+    //PRE:--
+    //POST: 
+  //  void destruir(BSTNode<Aeropuerto*>* aeropuerto);

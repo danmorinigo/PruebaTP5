@@ -165,36 +165,6 @@ void Menu::agregarAeropuerto(){
     this->aeropuertos->insert(nuevoAeropuerto, nuevoAeropuerto->obtenerCodigo());
 }
 
-BSTNode<Aeropuerto*>* Menu::buscarMenor(BSTNode<Aeropuerto*> *aeropuerto){
-    if(aeropuerto == NULL){
-        return NULL;
-    }
-    if(aeropuerto->get_left()){
-        return buscarMenor(aeropuerto->get_left());
-    }
-    return aeropuerto;
-}
-
-void Menu::reemplazar(BSTNode<Aeropuerto*>* antiguo, BSTNode<Aeropuerto*>* nuevo){
-    if(antiguo->get_parent()){
-        if(antiguo->get_data() == antiguo->get_parent()->get_left()->get_data()){
-            antiguo->get_parent()->set_left(nuevo);
-        }
-        else if(antiguo->get_data() == antiguo->get_parent()->get_right()->get_data()){
-            antiguo->get_parent()->set_right(nuevo);
-        }
-    }
-    if(nuevo){
-        nuevo->set_parent(antiguo->get_parent());
-    }
-}
-
-void Menu::destruir(BSTNode<Aeropuerto*>* aeropuerto){
-    aeropuerto->set_left(NULL);
-    aeropuerto->set_right(NULL);
-    delete aeropuerto;
-}
-
 void Menu::eliminarAeropuerto(string codigo){
     this->limpiarPantalla();
     BSTNode<Aeropuerto*>* aux;
@@ -302,3 +272,33 @@ void Menu::salir(){
 
 Menu::~Menu(){
 }
+
+/*BSTNode<Aeropuerto*>* Menu::buscarMenor(BSTNode<Aeropuerto*> *aeropuerto){
+    if(aeropuerto == NULL){
+        return NULL;
+    }
+    if(aeropuerto->get_left()){
+        return buscarMenor(aeropuerto->get_left());
+    }
+    return aeropuerto;
+}
+
+void Menu::reemplazar(BSTNode<Aeropuerto*>* antiguo, BSTNode<Aeropuerto*>* nuevo){
+    if(antiguo->get_parent()){
+        if(antiguo->get_data() == antiguo->get_parent()->get_left()->get_data()){
+            antiguo->get_parent()->set_left(nuevo);
+        }
+        else if(antiguo->get_data() == antiguo->get_parent()->get_right()->get_data()){
+            antiguo->get_parent()->set_right(nuevo);
+        }
+    }
+    if(nuevo){
+        nuevo->set_parent(antiguo->get_parent());
+    }
+}
+
+void Menu::destruir(BSTNode<Aeropuerto*>* aeropuerto){
+    aeropuerto->set_left(NULL);
+    aeropuerto->set_right(NULL);
+    delete aeropuerto;
+}*/
