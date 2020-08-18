@@ -195,7 +195,7 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino){
             Arista* auxAristas = verticeVisitado -> obtenerAristas();
             Etiqueta* auxActual = obtenerEtiqueta(verticeVisitado);
             while(auxAristas){
-                trabajoAdyacente(auxAristas, vistos, verticeVisitado, &cola, auxActual, iteracion);
+                trabajoAdyacente(auxAristas, &vistos, verticeVisitado, &cola, auxActual, iteracion);
                 auxAristas = auxAristas->consultarSiguiente();
             }
             vistos.push_back(verticeVisitado);
@@ -212,16 +212,16 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino){
     liberarEtiquetas();
 }
 
-void Grafo::trabajoAdyacente(Arista* auxAristas, list<Vertice*> vistos, Vertice * verticeVisitado, ColaPrioridad *cola, Etiqueta * auxActual, int iteracion) {
+void Grafo::trabajoAdyacente(Arista* auxAristas, list<Vertice*> * vistos, Vertice * verticeVisitado, ColaPrioridad *cola, Etiqueta * auxActual, int iteracion) {
     Etiqueta* auxDestino = obtenerEtiqueta(auxAristas -> ConsultarDestino());
-    if(!fueVisitado(vistos, auxAristas->ConsultarDestino())){
+    if(!fueVisitado(*vistos, auxAristas->ConsultarDestino())){
         int aristaCosto = this->obtenerPrecio(verticeVisitado, auxAristas->ConsultarDestino());
         double aristaHoras = this->obtenerTiempoDeVuelo(verticeVisitado, auxAristas->ConsultarDestino());
         cola -> push(auxAristas->ConsultarDestino(), aristaCosto, aristaHoras, iteracion);
         //CAMBIO O NO ETIQUETA DE VERTICE DESTINO DE LA ACTUAL ARISTA???
         evaluarVerticeDestino(auxActual, auxDestino, iteracion);
     }else{//Ya fue visitado, tengo que verificar si puedo cambiar su peso acumulado.
-        verificarPesoVerticeMarcado(verticeVisitado, auxAristas -> ConsultarDestino(), iteracion, vistos, *cola);
+        verificarPesoVerticeMarcado(verticeVisitado, auxAristas -> ConsultarDestino(), iteracion, *vistos, *cola);
     }
     //Agrego antecesor, hayan o no sido cambiado datos de su etiqueta
     auxDestino -> sumoAnterior(verticeVisitado);
