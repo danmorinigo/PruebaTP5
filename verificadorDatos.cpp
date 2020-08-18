@@ -2,6 +2,7 @@
 
 VerificadorDatos::VerificadorDatos(){
 }
+
 bool VerificadorDatos::esEntero(string aVerificar){
     bool esEntero;
     for(unsigned i = 0; i < aVerificar.length(); i++){
