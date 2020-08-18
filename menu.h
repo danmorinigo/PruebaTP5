@@ -64,9 +64,10 @@ public:
     void consultarAeropuerto();
     
     //PRE: Tiene que estar creado el objeto de clase Menu.
-    //POST: Se realiza el ingreso de un aeropuerto nuevo solicitando cada uno de los datos necesarios. El valor del codigo IATA, del nombre
-    //     ,de la ciudad y del pais se ingresan como cadena de caracteres. La superficie debe ser ingresada como un flotante, y la cantidad
-    //     de terminales, los destinos nacionales e internacionales deben ser ingresadas como valores enteros.
+    //POST: Se realiza el ingreso de un aeropuerto nuevo solicitando cada uno de los datos necesarios. El valor del codigo IATA (debe ser
+    //      ingresado en mayuscula para su correcta carga), del nombre, de la ciudad y del pais se ingresan como cadena de caracteres. 
+    //      La superficie debe ser ingresada como un flotante, y la cantidad
+    //      de terminales, los destinos nacionales e internacionales deben ser ingresadas como valores enteros.
     void agregarAeropuerto();
 
     //PRE: Debe estar cargado el atributo aeropuertos. Este metodo es usado por el metodo darDeBajaAeropuerto().
@@ -92,6 +93,10 @@ public:
     //PRE: Tiene que estar creado el objeto de clase Menu.
     //POST: Recibe lo que el usuario ingresa por teclado, incluyendo espacios, y lo devuelve como un string con el contenido.
     string ingresarNombre();
+
+    //PRE: Tiene que estar creado el objeto de clase Menu.
+    //POST: Recibe lo que el usuario ingresa por teclado. Si el codigo ingresado ya existe solicita un nuevo ingreso.
+    string ingresarIATA();
 
     //PRE:  --
     //POST: Muestra cartel de despedida.

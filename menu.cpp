@@ -122,6 +122,21 @@ void Menu::consultarAeropuerto(){
     }
 }
 
+string Menu::ingresarIATA(){
+    char ingreso[100];
+    string IATA;
+    cin.get();
+    cin.getline(ingreso, 100);
+    IATA = ingreso;
+    if (aeropuertos->buscarIATA(aeropuertos->get_root(),IATA)){
+        do {
+          cout <<endl<< "ERROR. EL codigo ingresado ya existe. Ingrese nuevamente codigo IATA: ";
+          cin >> IATA;
+        } while(aeropuertos->buscarIATA(aeropuertos->get_root(),IATA));
+    }
+    return IATA;
+}
+
 string Menu::ingresarNombre(){
     char ingreso[100];
     string nombre;
@@ -140,10 +155,10 @@ void Menu::agregarAeropuerto(){
 
     cout<<endl<<"INGRESAR NUEVO AEROPUERTO: "<<endl;
     cout<<"Ingrese codigo IATA: ";
-    cin >> palabra;
+    palabra = ingresarIATA();
     nuevoAeropuerto->asignarCodigo(palabra);
     cout<<endl;
-    cout<<"Ingrese el nombre: ";
+    cout<<"Ingrese el nombre del aeropuerto: ";
     palabra = ingresarNombre();
     nuevoAeropuerto->asignarNombre(palabra);
     cout<<endl;
