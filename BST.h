@@ -19,20 +19,41 @@ private:
     int obtenerAltura(BSTNode<T>* node);
     void mostrarNivel(BSTNode<T> * node, int nivel);
     void print_in_order(BSTNode<T> * node);
+
+    //PRE:  --
+    //POST: Muestra por pantalla el arbol con forma, inclinado 90 en direccion antihoraria.
     void imprime_acostado(BSTNode<T> * node, int cont);
     void imprime_en_ancho(BSTNode<T> * node);
     BSTNode<T>* search(BSTNode<T>* node, T data);
+
+    //PRE:  --
+    //POST: Busca dentro del arbol por el aeropuerto basandose en el nombre del aeropuerto.
+    //      Si no lo entuentra devuelve null.
     BSTNode<T>* buscarNombre(BSTNode<T>* node, string IATA);
     T find_min(BSTNode<T>* node);
     T find_max(BSTNode<T>* node);
     T successor(BSTNode<T>* node);
     T predecessor(BSTNode<T>* node);
     BSTNode<T>* remove(BSTNode<T>* node, T data);
-    void delete_all(BSTNode<T>* node);
-    BSTNode<T>* quitar(BSTNode<T>* node, string IATA);
-    T aeropuertoReemplazante(BSTNode<T>* node, T aeroAborrar);
-    T buscarMenorPorIATA(BSTNode<T>* node, T aeroAborrar);
 
+    //PRE:  --
+    //POST: Libera recursos utilizados.
+    void delete_all(BSTNode<T>* node);
+
+    //PRE:  --
+    //POST: Elimina nodo cuyo nombre es identificado por el codigo IATA.
+    //      Reacomoda el arbol de manera que otro aeropuerto toma su lugar.
+    BSTNode<T>* quitar(BSTNode<T>* node, string IATA);
+
+    //PRE:  --
+    //POST: Devuelve aeropuerto candidato a ser el reemplazo del aeropuerto que sera eliminado.
+    T aeropuertoReemplazante(BSTNode<T>* node, T aeroAborrar);
+
+    //PRE:  --
+    //POST: Utilizado al eliminar un aeropuerto.
+    //      Si el aeropuerto a ser eliminado tiene hijos a la derecha busca el menor de esos hijos, basandose
+    //      en el codigo IATA.
+    T buscarMenorPorIATA(BSTNode<T>* node, T aeroAborrar);
 
 public:
     //methods
@@ -40,14 +61,26 @@ public:
     // Creates an empty tree
     BST();
 
+    //PRE:  --
+    //POST: Devuelve el nodo, lo busca tanto por codigo IATA o por nombre del aeropuerto.
+    //      Si no lo encuentra devuelve null.
     BSTNode<T>* buscar(string& aBuscar);
 
+    //PRE:  --
+    //POST: Llama al metodo privado quitar pasandole el parametro IATA
     BSTNode<T>* quitar(string IATA);
 
+    //PRE:  --
+    //POST: Llama al metodo privado aeropuertoReemplazante.
     T aeropuertoReemplazante(string IATA, T aeroAborrar);
 
+    //PRE:  --
+    //POST: Busca dentro del arbol por el aeropuerto basandose en el codigo IATA.
+    //      Si no lo entuentra devuelve null.
     BSTNode<T>* buscarIATA(BSTNode<T>* node, string IATA);
 
+    //PRE:  --
+    //POST: Llama al metodo sobrecargado buscarMenorPorIATA.
     T buscarMenorPorIATA();
 
     int obtenerAltura ();
@@ -56,7 +89,6 @@ public:
 
     void imprime_en_ancho();
 
-    //void eliminarDirecto(BSTNode<T>* node);
      // Adds a new node to the actual BST. If its the tree is empty
      // the node inserted will be the root
     void insert(T data, string codigoIATA);
