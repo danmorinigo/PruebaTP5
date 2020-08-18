@@ -179,14 +179,24 @@ void Menu::eliminarAeropuerto(string codigo){
     this->limpiarPantalla();
     BSTNode<Aeropuerto*>* aux;
     aux = aeropuertos->quitar(codigo);
+    //cout<< "AUX VALE: "<<aux<<endl;
 }
 
 void Menu::darDeBajaAeropuerto(){
     string codigo;
+    BSTNode<Aeropuerto*>* aux;
+
     cout<<"DAR DE BAJA UN AEROPUERTO."<<endl;
     cout<< "Ingrese el codigo IATA del aeropuerto que desea dar de baja: ";
     cin >> codigo;
-    eliminarAeropuerto(codigo);
+    aux = aeropuertos->buscarIATA(aeropuertos->get_root(),codigo);
+    if (aux){
+        eliminarAeropuerto(codigo);
+        cout << endl << "Se eliminó el aeropuerto "<< codigo<<endl;
+    } else {
+        cout << "No se encontro aeropuerto para eliminar."<<endl;
+    }
+    
 }
 
 void Menu::solicitarPartidaYDestino(){

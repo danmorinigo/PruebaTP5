@@ -22,7 +22,6 @@ private:
     void imprime_acostado(BSTNode<T> * node, int cont);
     void imprime_en_ancho(BSTNode<T> * node);
     BSTNode<T>* search(BSTNode<T>* node, T data);
-    BSTNode<T>* buscarIATA(BSTNode<T>* node, string IATA);
     BSTNode<T>* buscarNombre(BSTNode<T>* node, string IATA);
     T find_min(BSTNode<T>* node);
     T find_max(BSTNode<T>* node);
@@ -46,6 +45,8 @@ public:
     BSTNode<T>* quitar(string IATA);
 
     T aeropuertoReemplazante(string IATA, T aeroAborrar);
+
+    BSTNode<T>* buscarIATA(BSTNode<T>* node, string IATA);
 
     T buscarMenorPorIATA();
 

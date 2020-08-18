@@ -33,7 +33,7 @@ public:
     //PRE: Tiene que estar creado el objeto de clase Menu.
     //POST:Se obtiene el valor char del atributo opcionVuelos.
     char getOpcionVuelos();
-    
+
     //PRE: Tiene que estar creado el objeto de clase Menu.
     //POST: Se asigna el valor del atributo aeropuertos ingresado por parametro. Recibe un puntero a un ABB de punteros a objetos Aeropuerto.
     void setAeropuertos(BST<Aeropuerto*>*);
