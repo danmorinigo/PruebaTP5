@@ -27,11 +27,7 @@ void Grafo::agregarVertice(string nombre){
         tamanio++;
         return;
     }
-    Vertice* aux = primero;
-    while(aux -> obtenerProxVertice() != 0){
-        aux = aux -> obtenerProxVertice();
-    }
-    aux -> asignarProxVertice(ingresante);
+    ultimo->asignarProxVertice(ingresante);
     ultimo = ingresante;
     tamanio++;
 }
@@ -75,10 +71,6 @@ Vertice* Grafo::obtenerVertice(string nombre){
         aux = aux -> obtenerProxVertice();
     }
     return 0;
-}
-
-int Grafo::cantVertices(){
-    return this -> tamanio;
 }
 
 void Grafo::agregarArista(Vertice* inicio, Vertice* destino, int precio, double horasVuelo){
@@ -207,7 +199,7 @@ void Grafo::caminoMinimo(Vertice* salida, Vertice* destino){
         bool primerLlamado = true;
         mostrarCaminos(destino, salida, pilaVertices, primerLlamado);
     }else{
-        cout <<endl<< "No existen vuelos entre el origen y el destino ingresados. \n"; 
+        cout <<endl<< "No existen vuelos entre el origen y el destino ingresados. \n";
     }
     liberarEtiquetas();
 }
@@ -375,7 +367,7 @@ Grafo::~Grafo(){
 }
 
 
-/*void Grafo::mostarEtiquetas(){
+void Grafo::mostarEtiquetas(){
     list<Etiqueta*>::iterator itEtiq;
     cout << "----------------------------------------------------------------------\n";
     cout << "----------------------------------------------------------------------\n";
@@ -411,4 +403,4 @@ void Grafo::mostrarVerticesMarcados(list<Vertice*> vistos){
         auxilio = *i;
         cout << auxilio->obtenerNombreVertice() << endl;
     }
-}*/
+}
