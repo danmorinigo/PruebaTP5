@@ -5,11 +5,14 @@ Vertice::Vertice(string nombre){
     arista = 0;
     this->nombre = nombre;
 }
+
 Vertice::~Vertice(){
 }
+
 void Vertice::asignarProxVertice(Vertice* siguiente){
     this->siguiente = siguiente;
 }
+
 void Vertice::eliminarArista(Arista* aristaAeliminar){
     if(this->arista == aristaAeliminar){
         this->arista = aristaAeliminar->consultarSiguiente();
@@ -44,9 +47,11 @@ void Vertice::agregarArista(Arista* nuevaArista){
 Vertice* Vertice::obtenerProxVertice(){
     return siguiente;
 }
+
 Arista* Vertice::obtenerAristas(){
     return arista;
 }
+
 string Vertice::obtenerNombreVertice(){
     return nombre;
 }

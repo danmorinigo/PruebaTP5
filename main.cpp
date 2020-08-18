@@ -15,7 +15,7 @@ int main()
 {
 
     VerificadorDatos chequeo;
-    manejoDeArchivos archivo;
+    ManejoDeArchivos archivo;
     Menu menu;
     BST<Aeropuerto*>* aeropuertos = new BST<Aeropuerto*>();
     Grafo* vuelos = new Grafo;

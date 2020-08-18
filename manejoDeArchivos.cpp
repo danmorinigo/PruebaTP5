@@ -1,9 +1,9 @@
 #include "manejoDeArchivos.h"
 
-manejoDeArchivos::manejoDeArchivos(){
+ManejoDeArchivos::ManejoDeArchivos(){
 }
 
-string manejoDeArchivos::quitarGuion(string texto){
+string ManejoDeArchivos::quitarGuion(string texto){
     for(unsigned i = 0; i < texto.length(); i++){
         if(texto[i] == '-'){
             texto[i] = ' ';
@@ -12,7 +12,7 @@ string manejoDeArchivos::quitarGuion(string texto){
     return texto;
 }
 
-void manejoDeArchivos::agregarAero(BST<Aeropuerto*>* arbol, string linea){
+void ManejoDeArchivos::agregarAero(BST<Aeropuerto*>* arbol, string linea){
     istringstream cadena(linea);
     Aeropuerto* auxAero = new Aeropuerto;
     string auxS;
@@ -37,7 +37,7 @@ void manejoDeArchivos::agregarAero(BST<Aeropuerto*>* arbol, string linea){
     arbol->insert(auxAero, auxAero->obtenerCodigo());
 }
 
-void manejoDeArchivos::cargarAeropuertos(BST<Aeropuerto*>* arbol, string nombreArchivo){
+void ManejoDeArchivos::cargarAeropuertos(BST<Aeropuerto*>* arbol, string nombreArchivo){
     cout << "Procesando [" << nombreArchivo << "]..." << endl;
     unsigned contador = 0, errores = 0;
     ifstream archivoConDatos(nombreArchivo);
@@ -61,7 +61,7 @@ void manejoDeArchivos::cargarAeropuertos(BST<Aeropuerto*>* arbol, string nombreA
 }
 
 
-void manejoDeArchivos::agregarVuelo(Grafo* vuelos, string linea){
+void ManejoDeArchivos::agregarVuelo(Grafo* vuelos, string linea){
     istringstream cadena(linea);
     string auxS;
     string auxS2;
@@ -82,7 +82,7 @@ void manejoDeArchivos::agregarVuelo(Grafo* vuelos, string linea){
     vuelos->agregarArista(vuelos->obtenerVertice(auxS),vuelos->obtenerVertice(auxS2),auxU,auxD);
 }
 
-void manejoDeArchivos::cargarVuelos(Grafo* vuelos, string nombreArchivo){
+void ManejoDeArchivos::cargarVuelos(Grafo* vuelos, string nombreArchivo){
     cout << "Procesando [" << nombreArchivo << "]..." << endl;
     unsigned contador = 0, errores = 0;
     ifstream archivoConDatos(nombreArchivo);
@@ -98,12 +98,12 @@ void manejoDeArchivos::cargarVuelos(Grafo* vuelos, string nombreArchivo){
     archivoConDatos.close();
 }
 
-bool manejoDeArchivos::existe(string nombreArchivo){
+bool ManejoDeArchivos::existe(string nombreArchivo){
     ifstream auxiliar(nombreArchivo);
     bool hallado = !auxiliar.fail(); //TRUE existe
     auxiliar.close();
     return hallado;
 }
 
-manejoDeArchivos::~manejoDeArchivos(){
+ManejoDeArchivos::~ManejoDeArchivos(){
 }

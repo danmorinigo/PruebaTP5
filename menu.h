@@ -120,18 +120,3 @@ public:
     ~Menu();
 };
 #endif // MENU_H_INCLUDED
-
- /*Uso para buscar el menor de los dos hijos*/
-    //PRE:--
-    //POST: 
-   // BSTNode<Aeropuerto*>* buscarMenor(BSTNode<Aeropuerto*> *aeropuerto);
-
-    /*Uso para reemplazar un nodo por otro*/
-    //PRE:--
-    //POST: 
-  //  void reemplazar(BSTNode<Aeropuerto*>* antiguo, BSTNode<Aeropuerto*>* nuevo);
-
-    /*Uso para destruir un nodo*/
-    //PRE:--
-    //POST: 
-  //  void destruir(BSTNode<Aeropuerto*>* aeropuerto);
