@@ -156,6 +156,7 @@ void Menu::agregarAeropuerto(){
     nuevoAeropuerto->asignarPais(palabra);
     cout<<endl;
     cout<<"Ingrese el superficie: ";
+    cin >>real;
     nuevoAeropuerto->asignarSup(real);
     cout<<endl;
     cout<<"Ingrese cantindad de terminales: ";
