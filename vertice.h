@@ -15,7 +15,7 @@ public:
     ~Vertice();
     void asignarProxVertice(Vertice* siguiente);
     void agregarArista(Arista* nuevaArista);
-    void aliminarArista(Arista* aristaAeliminar);
+    void eliminarArista(Arista* aristaAeliminar);
 
     Vertice* obtenerProxVertice();
     Arista* obtenerAristas();

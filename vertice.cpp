@@ -10,7 +10,7 @@ Vertice::~Vertice(){
 void Vertice::asignarProxVertice(Vertice* siguiente){
     this->siguiente = siguiente;
 }
-void Vertice::aliminarArista(Arista* aristaAeliminar){
+void Vertice::eliminarArista(Arista* aristaAeliminar){
     if(this->arista == aristaAeliminar){
         this->arista = aristaAeliminar->consultarSiguiente();
         delete aristaAeliminar;

@@ -24,7 +24,7 @@ Arista * Arista::consultarSiguiente(){
 Vertice * Arista::ConsultarDestino(){
     return destino;
 }
-int Arista::cunsultarPrecio(){
+int Arista::consultarPrecio(){
     return precio;
 }
 double Arista::consultarHoras(){

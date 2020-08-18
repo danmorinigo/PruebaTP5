@@ -119,6 +119,8 @@ void Menu::consultarAeropuerto(){
     aeropuerto = this->aeropuertos->buscar (abuscar);
     if (aeropuerto){
        aeropuerto->get_data()->mostrarInformacion();
+    } else {
+        cout<< "No existe el aeropuerto buscado."<<endl;
     }
 }
 

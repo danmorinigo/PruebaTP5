@@ -40,7 +40,7 @@ int Grafo::obtenerPrecio(Vertice* inicio, Vertice* destino){
     Arista* aux1 = inicio -> obtenerAristas();
     while(aux1){
         if(aux1 -> ConsultarDestino() == destino){
-            return aux1 -> cunsultarPrecio();
+            return aux1 -> consultarPrecio();
         }
         aux1 = aux1 -> consultarSiguiente();
     }

@@ -20,7 +20,7 @@ public:
 
     Arista* consultarSiguiente();
     Vertice* ConsultarDestino();
-    int cunsultarPrecio();
+    int consultarPrecio();
     double consultarHoras();
 
 };
